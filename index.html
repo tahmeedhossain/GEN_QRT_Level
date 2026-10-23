@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quantum Resource Network Pages</title>
+<style>
+/* Landing page: the network page + the derived-proposition and gap record. */
+:root{
+  --bg:#f5f6f4; --panel:#fdfdfc; --fg:#20262b; --muted:#5d6871; --line:#d7dcd8; --accent:#35598f;
+  --poss:#0e7a6f; --nogo:#b3382f; --openc:#b06b2a;
+  --disp:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#14181d; --panel:#1a2026; --fg:#e5e9ec; --muted:#9daab4; --line:#323c45; --accent:#86a9e0;
+  --poss:#4fbdae; --nogo:#e07a6f; --openc:#d99a5b;
+  color-scheme:dark;
+}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;
+  padding:0 max(16px,env(safe-area-inset-left,0px)) 56px max(16px,env(safe-area-inset-right,0px));}
+.wrap{max-width:920px;margin:0 auto;}
+h1{font-family:var(--disp);font-weight:500;font-size:clamp(26px,4vw,38px);margin:40px 0 8px;letter-spacing:.2px;}
+h2{font-family:var(--disp);font-weight:500;font-size:21px;margin:34px 0 10px;}
+.sub{color:var(--muted);max-width:76ch;}
+.mono{font-family:var(--mono);font-size:12px;color:var(--muted);}
+a{color:var(--accent);}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:18px 0;}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:16px 18px;}
+.card h3{font-family:var(--disp);font-weight:500;font-size:18px;margin:0 0 6px;}
+.card p{margin:0;font-size:14px;color:var(--muted);}
+.card a.go{display:inline-block;margin-top:10px;font-weight:600;}
+ul.qp{padding-left:20px;} ul.qp li{margin-bottom:10px;}
+ul.qp b{font-family:var(--mono);font-size:12.5px;}
+ol.gaps{padding-left:22px;} ol.gaps li{margin-bottom:8px;font-size:14px;}
+.census{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px 18px;
+  font-family:var(--mono);font-size:12.5px;color:var(--muted);margin:16px 0;}
+.census b{color:var(--fg);}
+.note{font-size:13px;color:var(--muted);max-width:78ch;}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:14px;font-size:13px;color:var(--muted);}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<div class="wrap">
+
+<h1>Quantum Resource Network</h1>
+<p class="sub">Thirteen quantum resource theories — purity, athermality, asymmetry, coherence,
+imaginarity, magic, CV Wigner negativity, entanglement, steering, Bell nonlocality, contextuality,
+measurement incompatibility, and discord as the cautionary counterexample — compiled as one typed,
+signed graph. Each theory is a band of <b>role-resolved nodes</b>: free states vs resource states,
+free operations vs resource-utilizing operations vs impossible-even-with-resources, detector vs
+quantifier witnesses. Cross-theory edges land on the exact object they concern, and every conversion
+names the operation class (<i>via</i>) under which it holds. No edge means <i>unsettled</i>, never
+"false" — the open problems are enumerable mechanically. Companion to the
+<a href="https://github.com/tahmeedhossain/GEN_GPT_Level">Nonclassicality Network</a>.</p>
+
+<p class="sub" style="margin-top:12px">Built for three uses: <b>automating research-idea generation</b>
+(the 13×13 via-class conversion matrix is the queryable agenda: 13 of 156 directed cells charted),
+<b>reviewing the field as curation</b> (one claim = one edge with verbatim statement, references and a
+per-reference provenance tag), and <b>visualizing</b> where free sets overlap, where resources convert,
+where spending is powerful and where it is provably futile. The review process is itself the
+generator: surveying the field in this format yields its own research agenda as a by-product.</p>
+
+<div class="cards">
+  <div class="card">
+    <h3>The network page</h3>
+    <p>v1.1 (2026-10-23): 13 theory bands × role-resolved columns; 116 nodes, 85 edges with verbatim
+    statements, via-classes and provenance-tagged references. Tabs: graph · edge catalog · theory
+    table · derived &amp; gaps.</p>
+    <a class="go" href="qrt.html">Open qrt.html →</a>
+  </div>
+  <div class="card">
+    <h3>Data &amp; catalog</h3>
+    <p><span class="mono">data/qrt_network.json</span> — machine-readable network (schema in the
+    README). <span class="mono">catalog/qrt_catalog.md</span> — axiom-overlap analysis, free-set
+    membership table, conversion list, proof sketches, gaps.</p>
+    <a class="go" href="data/qrt_network.json">JSON</a> &nbsp;·&nbsp; <a class="go" href="catalog/qrt_catalog.md">Catalog</a>
+  </div>
+  <div class="card">
+    <h3>Concept paper</h3>
+    <p>LaTeX source and compiled PDF under <span class="mono">paper/</span>: design decisions,
+    curated backbone, derived propositions with proofs, open problems, curation protocol.</p>
+    <a class="go" href="paper/main.pdf">main.pdf →</a>
+  </div>
+</div>
+
+<div class="census">
+<b>Census (v1.1):</b> 116 nodes · 85 edges (<b>38</b> possibility · <b>13</b> no-go · <b>34</b> structural;
+68 theorem · 12 derived · 3 partial · 2 counterexample) · <b>13 / 156</b> directed conversion cells charted
+(143 uncharted) · 4 impossible-process nodes · problems QG1–QG10.
+</div>
+
+<h2>Derived propositions (QP1–QP5)</h2>
+<p class="note">Assembled by closing gaps the compilation exposed; proofs/sketches in the catalog and
+the paper. No novelty pass has been run yet — QP2–QP4 are plausibly folklore; none is claimed as a first.</p>
+<ul class="qp">
+  <li><b>QP1 — Typology of free operations.</b> The twelve proper theories split into symmetry-,
+  subtheory-, partition- and constraint-type by how their free operations are physically justified;
+  athermality is the unique two-type intersection (Gibbs constraint ∩ U(1)-covariance), and the
+  intersection reappears verbatim at state level (unique free state γ) and witness level (free-energy
+  family + asymmetry-mode family, jointly complete, separately incomplete).</li>
+  <li><b>QP2 — Tensor-stability failure of state-level Bell locality.</b> Superactivation makes tensor
+  powers of Bell-local entangled states nonlocal, so the monoidal axiom fails for "local states";
+  it holds for common-cause boxes under LOSR — when an axiom fails, the objects were wrong.</li>
+  <li><b>QP3 — Bound resources are operation-class-relative.</b> Entanglement has bound states (PPT),
+  magic has them (Wigner-positive), thermal-covariant coherence is <i>all</i> bound (full rank),
+  IO-coherence has none, purity has none: "boundness" is a joint property of (F, O), not of the free
+  set alone.</li>
+  <li><b>QP4 — The purity → coherence → entanglement cascade.</b> P ≥ C_max (via free unitaries,
+  exact for distance-based quantifiers) and C ≥ E_max (via bipartite incoherent operations): one
+  quantitative chain of generation bounds across three theories, with each link's operation class stated.</li>
+  <li><b>QP5 — Thermal magic.</b> For a generic interacting Hamiltonian the Gibbs state is outside
+  the stabilizer polytope: the unique free state of athermality — also free for coherence, asymmetry
+  and imaginarity in the energy basis — is a magic resource. Quantifying mana(γ(β)) is gap QG5.</li>
+</ul>
+
+<h2>Registered gaps (QG1–QG10)</h2>
+<ol class="gaps">
+  <li>Multiqubit (even-d) magic ⇔ contextuality: exact scope without a covariant Wigner function.</li>
+  <li>Is TO = GPO ∩ TIO? The strict inclusions are settled; the exact characterization is not.</li>
+  <li>NCW|Bell ≠ LOSR: what single free-operation class unifies contextuality and nonlocality, and which monotones survive both?</li>
+  <li>The reversibility-frontier table: for each theory, (exactly-RNG reversible? asymptotically-RNG reversible? physical-class reversible?). Known points: ENT (no/yes/no), IO-coherence (no for cost/yes/partial), thermal asymmetry (no, maximally), magic (no under STAB/axioms to check), purity (yes/yes/yes).</li>
+  <li>Uncharted conversion cells: thermal magic, real thermal operations, imaginarity cost of T states — the 13×13 via-class matrix is the automation hook.</li>
+  <li>A steering analogue of the entangleability of cones.</li>
+  <li>An erasure-cost calculus beyond entanglement (asymmetry, magic, imaginarity).</li>
+  <li>A maximal physically motivated operation class for non-convex free sets (the discord repair).</li>
+  <li>Catalytic/battery routes around exact-RNG irreversibility.</li>
+  <li>Thermodynamics of bound entanglement — and now of bound magic.</li>
+</ol>
+
+<h2>Provenance</h2>
+<p class="note">Every reference carries one of three tags: <b>[verified]</b> — bibliographic data
+confirmed against sources on 2026-10-23 (the load-bearing cross-theory anchors, including the 2024
+generalized quantum Stein's lemma proofs and the Lami–Regula irreversibility theorem);
+<b>[knowledge]</b> — standard results cited from curation knowledge, verify page data before quoting;
+<b>[verify]</b> — flagged uncertain details, must be checked before any release. The per-edge
+<span class="mono">refs</span> field is the citation of record for compiled results.</p>
+
+<footer>
+MIT-licensed pages and data; cite the underlying papers for the physics (see CITATION.cff).
+Part of the observable–model–state network series:
+<a href="https://github.com/tahmeedhossain/GEN_GPT_Level">Nonclassicality Network</a> ·
+this repository.
+</footer>
+</div>

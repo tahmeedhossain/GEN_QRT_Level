@@ -1,0 +1,363 @@
+\begin{thebibliography}{10}
+
+\bibitem{chitambargour2019}
+Eric Chitambar and Gilad Gour.
+\newblock Quantum resource theories.
+\newblock {\em Rev. Mod. Phys.}, 91:025001, 2019.
+
+\bibitem{streltsov2015}
+Alexander Streltsov, Uttam Singh, Himadri~Shekhar Dhar, Manabendra~Nath Bera,
+  and Gerardo Adesso.
+\newblock Measuring quantum coherence with entanglement.
+\newblock {\em Phys. Rev. Lett.}, 115:020403, 2015.
+
+\bibitem{piani2011}
+Marco Piani, Sevag Gharibian, Gerardo Adesso, John Calsamiglia, Pawe{\l}
+  Horodecki, and Andreas Winter.
+\newblock All nonclassical correlations can be activated into distillable
+  entanglement.
+\newblock {\em Phys. Rev. Lett.}, 106:220403, 2011.
+
+\bibitem{uola2015}
+Roope Uola, Costantino Budroni, Otfried G{\"u}hne, and Juha-Pekka
+  Pellonp{\"a}{\"a}.
+\newblock One-to-one mapping between steering and joint measurability problems.
+\newblock {\em Phys. Rev. Lett.}, 115:230402, 2015.
+
+\bibitem{streltsov2018njp}
+Alexander Streltsov, Hermann Kampermann, Sabine W{\"o}lk, Manuel Gessner, and
+  Dagmar Bru{\ss}.
+\newblock Maximal coherence and the resource theory of purity.
+\newblock {\em New J. Phys.}, 20:053058, 2018.
+
+\bibitem{hayashiyamasaki2024}
+Masahito Hayashi and Hayata Yamasaki.
+\newblock Generalized quantum stein's lemma and second law of quantum resource
+  theories.
+\newblock arXiv:2408.02722, 2024.
+
+\bibitem{lami2024}
+Ludovico Lami.
+\newblock A solution of the generalised quantum stein's lemma.
+\newblock arXiv:2408.06410, 2024.
+
+\bibitem{lamiregula2023}
+Ludovico Lami and Bartosz Regula.
+\newblock No second law of entanglement manipulation after all.
+\newblock {\em Nat. Phys.}, 19:184, 2023.
+
+\bibitem{marvian2020}
+Iman Marvian.
+\newblock Coherence distillation machines are impossible in quantum
+  thermodynamics.
+\newblock {\em Nat. Commun.}, 11:25, 2020.
+
+\bibitem{lostaglio2015natcomm}
+Matteo Lostaglio, David Jennings, and Terry Rudolph.
+\newblock Description of quantum coherence in thermodynamic processes requires
+  constraints beyond free energy.
+\newblock {\em Nat. Commun.}, 6:6383, 2015.
+
+\bibitem{winteryang2016}
+Andreas Winter and Dong Yang.
+\newblock Operational resource theory of coherence.
+\newblock {\em Phys. Rev. Lett.}, 116:120404, 2016.
+
+\bibitem{horodecki2009}
+Ryszard Horodecki, Pawe{\l} Horodecki, Micha{\l} Horodecki, and Karol
+  Horodecki.
+\newblock Quantum entanglement.
+\newblock {\em Rev. Mod. Phys.}, 81:865, 2009.
+
+\bibitem{veitch2012}
+Victor Veitch, Christopher Ferrie, David Gross, and Joseph Emerson.
+\newblock Negative quasi-probability as a resource for quantum computation.
+\newblock {\em New J. Phys.}, 14:113011, 2012.
+
+\bibitem{wolfe2020}
+Elie Wolfe, David Schmid, Ana~Bel{\'e}n Sainz, Ravi Kunjwal, and Robert~W.
+  Spekkens.
+\newblock Quantifying bell: the resource theory of nonclassicality of
+  common-cause boxes.
+\newblock {\em Quantum}, 4:280, 2020.
+
+\bibitem{chitambarhsieh2016}
+Eric Chitambar and Min-Hsiu Hsieh.
+\newblock Relating the resource theories of entanglement and quantum coherence.
+\newblock {\em Phys. Rev. Lett.}, 117:020402, 2016.
+
+\bibitem{streltsov2011}
+Alexander Streltsov, Hermann Kampermann, and Dagmar Bru{\ss}.
+\newblock Linking quantum discord to entanglement in a measurement.
+\newblock {\em Phys. Rev. Lett.}, 106:160401, 2011.
+
+\bibitem{modi2012}
+Kavan Modi, Aharon Brodutch, Hugo Cable, Tomasz Paterek, and Vlatko Vedral.
+\newblock The classical-quantum boundary for correlations: Discord and related
+  measures.
+\newblock {\em Rev. Mod. Phys.}, 84:1655, 2012.
+
+\bibitem{ciccarello2012}
+Francesco Ciccarello and Vittorio Giovannetti.
+\newblock Creating quantum correlations through local nonunitary memoryless
+  channels.
+\newblock {\em Phys. Rev. A}, 85:010102, 2012.
+
+\bibitem{bcz2020}
+Francesco Buscemi, Eric Chitambar, and Wenbin Zhou.
+\newblock Complete resource theory of quantum incompatibility as quantum
+  programmability.
+\newblock {\em Phys. Rev. Lett.}, 124:120401, 2020.
+
+\bibitem{gour2015}
+Gilad Gour, Markus~P. M{\"u}ller, Varun Narasimhachar, Robert~W. Spekkens, and
+  Nicole Yunger~Halpern.
+\newblock The resource theory of informational nonequilibrium in
+  thermodynamics.
+\newblock {\em Phys. Rep.}, 583:1, 2015.
+
+\bibitem{brandao2013}
+Fernando G. S.~L. Brand{\~a}o, Micha{\l} Horodecki, Jonathan Oppenheim,
+  Joseph~M. Renes, and Robert~W. Spekkens.
+\newblock Resource theory of quantum states out of thermal equilibrium.
+\newblock {\em Phys. Rev. Lett.}, 111:250404, 2013.
+
+\bibitem{horodeckioppenheim2013}
+Micha{\l} Horodecki and Jonathan Oppenheim.
+\newblock Fundamental limitations for quantum and nanoscale thermodynamics.
+\newblock {\em Nat. Commun.}, 4:2059, 2013.
+
+\bibitem{gourspekkens2008}
+Gilad Gour and Robert~W. Spekkens.
+\newblock The resource theory of quantum reference frames: manipulations and
+  monotones.
+\newblock {\em New J. Phys.}, 10:033023, 2008.
+
+\bibitem{marvianspekkens2016}
+Iman Marvian and Robert~W. Spekkens.
+\newblock How to quantify coherence: Distinguishing speakable and unspeakable
+  notions.
+\newblock {\em Phys. Rev. A}, 94:052324, 2016.
+
+\bibitem{baumgratz2014}
+Tillmann Baumgratz, Marcus Cramer, and Martin~B. Plenio.
+\newblock Quantifying coherence.
+\newblock {\em Phys. Rev. Lett.}, 113:140401, 2014.
+
+\bibitem{streltsov2017rmp}
+Alexander Streltsov, Gerardo Adesso, and Martin~B. Plenio.
+\newblock Colloquium: Quantum coherence as a resource.
+\newblock {\em Rev. Mod. Phys.}, 89:041003, 2017.
+
+\bibitem{hickeygour2018}
+Alexander Hickey and Gilad Gour.
+\newblock Quantifying the imaginarity of quantum mechanics.
+\newblock {\em J. Phys. A}, 51:414009, 2018.
+
+\bibitem{wu2021prl}
+Kang-Da Wu, Tulja~Varun Kondra, Swapan Rana, Carlo~Maria Scandolo, Guo-Yong
+  Xiang, Chuan-Feng Li, Guang-Can Guo, and Alexander Streltsov.
+\newblock Operational resource theory of imaginarity.
+\newblock {\em Phys. Rev. Lett.}, 126:090401, 2021.
+
+\bibitem{veitch2014}
+Victor Veitch, S.~A.~Hamed Mousavian, Daniel Gottesman, and Joseph Emerson.
+\newblock The resource theory of stabilizer quantum computation.
+\newblock {\em New J. Phys.}, 16:013009, 2014.
+
+\bibitem{seddoncampbell2019}
+James~R. Seddon and Earl~T. Campbell.
+\newblock Quantifying magic for multi-qubit operations.
+\newblock {\em Proc. R. Soc. A}, 475:20190251, 2019.
+
+\bibitem{takagizhuang2018}
+Ryuji Takagi and Quntao Zhuang.
+\newblock Convex resource theory of non-gaussianity.
+\newblock {\em Phys. Rev. A}, 97:062337, 2018.
+
+\bibitem{marieisert2012}
+Andrea Mari and Jens Eisert.
+\newblock Positive wigner functions render classical simulation of quantum
+  computation efficient.
+\newblock {\em Phys. Rev. Lett.}, 109:230503, 2012.
+
+\bibitem{wjd2007}
+Howard~M. Wiseman, Steve~J. Jones, and Andrew~C. Doherty.
+\newblock Steering, entanglement, nonlocality, and the einstein-podolsky-rosen
+  paradox.
+\newblock {\em Phys. Rev. Lett.}, 98:140402, 2007.
+
+\bibitem{gallegoaolita2015}
+Rodrigo Gallego and Leandro Aolita.
+\newblock Resource theory of steering.
+\newblock {\em Phys. Rev. X}, 5:041008, 2015.
+
+\bibitem{amaral2018}
+Barbara Amaral, Ad{\'a}n Cabello, Marcelo Terra~Cunha, and Leandro Aolita.
+\newblock Noncontextual wirings.
+\newblock {\em Phys. Rev. Lett.}, 120:130403, 2018.
+
+\bibitem{heinosaari2016}
+Teiko Heinosaari, Takayuki Miyadera, and M{\'a}rio Ziman.
+\newblock An invitation to quantum incompatibility.
+\newblock {\em J. Phys. A}, 49:123001, 2016.
+
+\bibitem{ollivierzurek2001}
+Harold Ollivier and Wojciech~H. Zurek.
+\newblock Quantum discord: A measure of the quantumness of correlations.
+\newblock {\em Phys. Rev. Lett.}, 88:017901, 2001.
+
+\bibitem{werner1989}
+Reinhard~F. Werner.
+\newblock Quantum states with einstein-podolsky-rosen correlations admitting a
+  hidden-variable model.
+\newblock {\em Phys. Rev. A}, 40:4277, 1989.
+
+\bibitem{barrett2002}
+Jonathan Barrett.
+\newblock Nonsequential positive-operator-valued measurements on entangled
+  mixed states do not always violate a bell inequality.
+\newblock {\em Phys. Rev. A}, 65:042302, 2002.
+
+\bibitem{quintino2015}
+Marco~T{\'u}lio Quintino, Tam{\'a}s V{\'e}rtesi, Daniel Cavalcanti, Remigiusz
+  Augusiak, Maciej Demianowicz, Antonio Ac{\'i}n, and Nicolas Brunner.
+\newblock Inequivalence of entanglement, steering, and bell nonlocality for
+  general measurements.
+\newblock {\em Phys. Rev. A}, 92:032107, 2015.
+
+\bibitem{bravyikitaev2005}
+Sergey Bravyi and Alexei Kitaev.
+\newblock Universal quantum computation with ideal clifford gates and noisy
+  ancillas.
+\newblock {\em Phys. Rev. A}, 71:022316, 2005.
+
+\bibitem{vertesi2014}
+Tam{\'a}s V{\'e}rtesi and Nicolas Brunner.
+\newblock Disproving the peres conjecture by showing bell nonlocality from
+  bound entanglement.
+\newblock {\em Nat. Commun.}, 5:5297, 2014.
+
+\bibitem{faist2015}
+Philippe Faist, Jonathan Oppenheim, and Renato Renner.
+\newblock Gibbs-preserving maps outperform thermal operations in the quantum
+  regime.
+\newblock {\em New J. Phys.}, 17:043003, 2015.
+
+\bibitem{santos2024}
+Tiago Santos, Rafael Wagner, and B{\'a}rbara Amaral.
+\newblock Convexity of noncontextual wirings and how they order the set of
+  correlations.
+\newblock arXiv:2407.02120, 2024.
+
+\bibitem{quintino2014}
+Marco~T{\'u}lio Quintino, Tam{\'a}s V{\'e}rtesi, and Nicolas Brunner.
+\newblock Joint measurability, einstein-podolsky-rosen steering, and bell
+  nonlocality.
+\newblock {\em Phys. Rev. Lett.}, 113:160402, 2014.
+
+\bibitem{palazuelos2012}
+Carlos Palazuelos.
+\newblock Superactivation of quantum nonlocality.
+\newblock {\em Phys. Rev. Lett.}, 109:190401, 2012.
+
+\bibitem{buscemi2012}
+Francesco Buscemi.
+\newblock All entangled quantum states are nonlocal.
+\newblock {\em Phys. Rev. Lett.}, 108:200401, 2012.
+
+\bibitem{howard2014}
+Mark Howard, Joel Wallman, Victor Veitch, and Joseph Emerson.
+\newblock Contextuality supplies the `magic' for quantum computation.
+\newblock {\em Nature}, 510:351, 2014.
+
+\bibitem{booth2022}
+Robert~I. Booth, Ulysse Chabaud, and Pierre-Emmanuel Emeriau.
+\newblock Contextuality and wigner negativity are equivalent for
+  continuous-variable quantum measurements.
+\newblock {\em Phys. Rev. Lett.}, 129:230401, 2022.
+
+\bibitem{wu2021pra}
+Kang-Da Wu, Tulja~Varun Kondra, Swapan Rana, Carlo~Maria Scandolo, Guo-Yong
+  Xiang, Chuan-Feng Li, Guang-Can Guo, and Alexander Streltsov.
+\newblock Resource theory of imaginarity: Quantification and state conversion.
+\newblock {\em Phys. Rev. A}, 103:032401, 2021.
+
+\bibitem{jonathanplenio1999}
+Daniel Jonathan and Martin~B. Plenio.
+\newblock Entanglement-assisted local manipulation of pure quantum states.
+\newblock {\em Phys. Rev. Lett.}, 83:3566, 1999.
+
+\bibitem{aberg2014}
+Johan {\AA}berg.
+\newblock Catalytic coherence.
+\newblock {\em Phys. Rev. Lett.}, 113:150402, 2014.
+
+\bibitem{datta2023}
+Chandan Datta, Tulja~Varun Kondra, Marek Miller, and Alexander Streltsov.
+\newblock Catalysis of entanglement and other quantum resources.
+\newblock {\em Rep. Prog. Phys.}, 86:116002, 2023.
+
+\bibitem{berta2023}
+Mario Berta, Fernando G. S.~L. Brand{\~a}o, Gilad Gour, Ludovico Lami,
+  Martin~B. Plenio, Bartosz Regula, and Marco Tomamichel.
+\newblock On a gap in the proof of the generalised quantum stein's lemma and
+  its consequences for the reversibility of quantum resources.
+\newblock {\em Quantum}, 7:1103, 2023.
+
+\bibitem{brandaogour2015}
+Fernando G. S.~L. Brand{\~a}o and Gilad Gour.
+\newblock Reversible framework for quantum resource theories.
+\newblock {\em Phys. Rev. Lett.}, 115:070503, 2015.
+
+\bibitem{takagi2019}
+Ryuji Takagi, Bartosz Regula, Kaifeng Bu, Zi-Wen Liu, and Gerardo Adesso.
+\newblock Operational advantage of quantum resources in subchannel
+  discrimination.
+\newblock {\em Phys. Rev. Lett.}, 122:140402, 2019.
+
+\bibitem{takagiregula2019}
+Ryuji Takagi and Bartosz Regula.
+\newblock General resource theories in quantum mechanics and beyond:
+  Operational characterization via discrimination tasks.
+\newblock {\em Phys. Rev. X}, 9:031053, 2019.
+
+\bibitem{vidaltarrach1999}
+Guifr{\'e} Vidal and Rolf Tarrach.
+\newblock Robustness of entanglement.
+\newblock {\em Phys. Rev. A}, 59:141, 1999.
+
+\bibitem{kuroiwa2024}
+Kohdai Kuroiwa, Ryuji Takagi, Gerardo Adesso, and Hayata Yamasaki.
+\newblock Every quantum helps: Operational advantage of quantum resources
+  beyond convexity.
+\newblock Phys. Rev. Lett. (2024); see also arXiv:2310.09154, 2024.
+
+\bibitem{pianiwatrous2015}
+Marco Piani and John Watrous.
+\newblock Necessary and sufficient quantum information characterization of
+  einstein-podolsky-rosen steering.
+\newblock {\em Phys. Rev. Lett.}, 114:060404, 2015.
+
+\bibitem{brandao2015pnas}
+Fernando G. S.~L. Brand{\~a}o, Micha{\l} Horodecki, Nelly Ng, Jonathan
+  Oppenheim, and Stephanie Wehner.
+\newblock The second laws of quantum thermodynamics.
+\newblock {\em Proc. Natl. Acad. Sci. USA}, 112:3275, 2015.
+
+\bibitem{lostaglio2015prx}
+Matteo Lostaglio, Kamil Korzekwa, David Jennings, and Terry Rudolph.
+\newblock Quantum coherence, time-translation symmetry, and thermodynamics.
+\newblock {\em Phys. Rev. X}, 5:021001, 2015.
+
+\bibitem{cfs2016}
+Bob Coecke, Tobias Fritz, and Robert~W. Spekkens.
+\newblock A mathematical theory of resources.
+\newblock {\em Inf. Comput.}, 250:59, 2016.
+
+\bibitem{msz2016}
+Iman Marvian, Robert~W. Spekkens, and Paolo Zanardi.
+\newblock Quantum speed limits, coherence, and asymmetry.
+\newblock {\em Phys. Rev. A}, 93:052331, 2016.
+
+\end{thebibliography}

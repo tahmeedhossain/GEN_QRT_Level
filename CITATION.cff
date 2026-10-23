@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use the Quantum Resource Network, please cite it as below, and cite the original papers referenced on the edges you use."
+title: "Quantum Resource Network: a role-resolved typed graph of thirteen quantum resource theories"
+authors:
+  - family-names: "[Fill in]"
+    given-names: "[Fill in]"
+version: "1.1"
+date-released: "2026-10-23"
+license: MIT
+repository-code: "https://github.com/tahmeedhossain/GEN_QRT_Level"

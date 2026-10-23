@@ -1,0 +1,3393 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0;font:14px system-ui,-apple-system,sans-serif}</style>
+<p style="font-family:ui-monospace,monospace;font-size:12px;margin:10px 16px"><a href="./" style="color:inherit">&#8592; network overview</a></p>
+<title>Quantum Resource Network</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: 13 theory bands (rows) x 5 layer columns (framework | model | states | processes | witnesses).
+   Inside each band the states column stacks free / resource / distinguished, the process column stacks
+   free ops / resource-utilizing / impossible, the witness column stacks detector / quantifier.
+   Detail rail right; tabs: graph / edge catalog / theories / derived & gaps. */
+:root{
+  --bg:#f5f6f4; --panel:#fdfdfc; --card:#ffffff; --fg:#20262b; --muted:#5d6871; --line:#d7dcd8;
+  --accent:#35598f;
+  --poss:#0e7a6f; --nogo:#b3382f; --struct:#5d6871; --openc:#b06b2a;
+  --r-model:#6d53b5; --r-free:#0e7a6f; --r-res:#b06b2a; --r-use:#3f6ea5; --r-noop:#b3382f;
+  --r-det:#4a6b8a; --r-quant:#7a5fa0; --r-dst:#8a6d1f; --r-fw:#0e7a6f;
+  --chipbg:#eef1ee; --hot:#20262b;
+  --tag-ver:#e0efe7; --tag-ver-fg:#19603d; --tag-kn:#e9ebec; --tag-kn-fg:#49535c; --tag-vf:#f6ecd2; --tag-vf-fg:#7c5a0b;
+  --disp:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#14181d; --panel:#1a2026; --card:#1f262d; --fg:#e5e9ec; --muted:#9daab4; --line:#323c45;
+  --accent:#86a9e0;
+  --poss:#4fbdae; --nogo:#e07a6f; --struct:#93a0ab; --openc:#d99a5b;
+  --r-model:#a28bdf; --r-free:#4fbdae; --r-res:#d99a5b; --r-use:#7ea8d6; --r-noop:#e07a6f;
+  --r-det:#8fb3d4; --r-quant:#ab93d6; --r-dst:#cdb25e; --r-fw:#4fbdae;
+  --chipbg:#242c33; --hot:#e5e9ec;
+  --tag-ver:#1c3a2b; --tag-ver-fg:#8fd4ad; --tag-kn:#262e35; --tag-kn-fg:#aab4bf; --tag-vf:#3a3012; --tag-vf-fg:#e0bd62;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#14181d; --panel:#1a2026; --card:#1f262d; --fg:#e5e9ec; --muted:#9daab4; --line:#323c45;
+  --accent:#86a9e0;
+  --poss:#4fbdae; --nogo:#e07a6f; --struct:#93a0ab; --openc:#d99a5b;
+  --r-model:#a28bdf; --r-free:#4fbdae; --r-res:#d99a5b; --r-use:#7ea8d6; --r-noop:#e07a6f;
+  --r-det:#8fb3d4; --r-quant:#ab93d6; --r-dst:#cdb25e; --r-fw:#4fbdae;
+  --chipbg:#242c33; --hot:#e5e9ec;
+  --tag-ver:#1c3a2b; --tag-ver-fg:#8fd4ad; --tag-kn:#262e35; --tag-kn-fg:#aab4bf; --tag-vf:#3a3012; --tag-vf-fg:#e0bd62;
+  color-scheme:dark;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:14.5px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 48px;}
+.wrap{max-width:1600px;margin:0 auto;}
+header.top{padding-block:26px 14px;border-bottom:1px solid var(--line);}
+h1{font-family:var(--disp);font-weight:500;font-size:clamp(24px,3.4vw,34px);margin:0 0 6px;text-wrap:balance;letter-spacing:.2px;}
+.sub{color:var(--muted);max-width:80ch;margin:0;}
+.sub b{color:var(--fg);font-weight:600;}
+.counts{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--muted);}
+.counts b{color:var(--fg);font-weight:600;}
+nav.tabs{display:flex;gap:8px;flex-wrap:wrap;padding-block:14px 0;}
+nav.tabs button{font:inherit;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 16px;cursor:pointer;}
+nav.tabs button[aria-selected="true"]{color:var(--bg);background:var(--fg);border-color:var(--fg);}
+nav.tabs button:focus-visible,button:focus-visible,input:focus-visible,.node:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.controls{display:flex;gap:12px 14px;flex-wrap:wrap;align-items:center;padding-block:14px 6px;}
+.controls input[type="search"]{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 12px;min-width:210px;}
+.fl{display:flex;gap:5px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap;}
+.fl input{accent-color:var(--accent);}
+.sw{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;}
+.legend{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding-bottom:12px;}
+.legend .k{display:inline-flex;align-items:center;gap:6px;}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 372px;gap:18px;align-items:start;}
+@media (max-width:1020px){.main{grid-template-columns:1fr;}}
+.graphbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:auto;min-width:0;max-height:calc(100vh - 36px);}
+svg{display:block;}
+.colhead{font-family:var(--mono);font-size:11px;letter-spacing:.14em;fill:var(--muted);}
+.bandhead{font-family:var(--mono);font-size:11px;letter-spacing:.12em;fill:var(--fg);font-weight:600;}
+.bandsub{font-family:var(--mono);font-size:10px;letter-spacing:.06em;fill:var(--muted);}
+.bandline{stroke:var(--line);stroke-width:1;}
+.node rect.box{fill:var(--card);stroke:var(--line);rx:7;cursor:pointer;}
+.node.dst rect.box{rx:19;}
+.node.fw rect.box{stroke-dasharray:5 4;}
+.node.noopn rect.box{stroke:var(--r-noop);stroke-opacity:.55;}
+.node.sel rect.box{stroke:var(--hot);stroke-width:1.8;}
+.node.faded{opacity:.18;}
+.node.hitq rect.box{stroke:var(--openc);stroke-width:2;}
+.node text{pointer-events:none;}
+.node .t1{font-family:var(--body);font-size:11.5px;font-weight:600;fill:var(--fg);}
+.node .t2{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;fill:var(--muted);}
+path.edge{fill:none;stroke-width:1.5;opacity:.4;cursor:pointer;}
+path.edge.pol-possibility{stroke:var(--poss);}
+path.edge.pol-no_go{stroke:var(--nogo);}
+path.edge.pol-structural{stroke:var(--struct);}
+path.edge.st-open{stroke-dasharray:6 4;}
+path.edge.hot{opacity:1;stroke-width:2.6;}
+path.edge.dim{opacity:.05;}
+path.edge.hidden-e{display:none;}
+aside.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0;
+  position:sticky;top:12px;max-height:calc(100vh - 32px);overflow:auto;}
+@media (max-width:1020px){aside.panel{position:static;max-height:none;}}
+aside.panel h2{font-family:var(--disp);font-size:19px;font-weight:500;margin:0 0 2px;text-wrap:balance;}
+.pid{font-family:var(--mono);font-size:11px;color:var(--muted);}
+.kchips{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0 10px;}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;background:var(--chipbg);color:var(--fg);border-radius:4px;padding:2px 7px;}
+.via{font-family:var(--mono);font-size:12px;color:var(--accent);margin:0 0 8px;}
+.stmt{font-size:13.5px;margin:8px 0 10px;}
+.psec{margin:12px 0 0;}
+.psec h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--muted);margin:0 0 5px;font-weight:500;text-transform:uppercase;}
+.psec ul{margin:0;padding-left:16px;font-size:13px;}
+.psec li{margin-bottom:5px;}
+.psec .nd{color:var(--accent);cursor:pointer;font-weight:600;background:none;border:none;font:inherit;padding:0;text-align:left;}
+.psec .nt{color:var(--muted);}
+.refs{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:0;padding-left:16px;}
+.refs li{margin-bottom:5px;}
+.tag{font-family:var(--mono);font-size:9.5px;border-radius:4px;padding:1px 6px;margin-left:6px;white-space:nowrap;}
+.tag.ver{background:var(--tag-ver);color:var(--tag-ver-fg);} .tag.kn{background:var(--tag-kn);color:var(--tag-kn-fg);}
+.tag.vf{background:var(--tag-vf);color:var(--tag-vf-fg);}
+section.sheet{padding-block:18px;}
+.sheet h3{font-family:var(--disp);font-weight:500;font-size:20px;margin:22px 0 10px;}
+.note{color:var(--muted);font-size:13px;max-width:84ch;margin:4px 0 12px;}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);}
+table{border-collapse:collapse;width:100%;font-size:13px;background:var(--panel);}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);font-weight:500;text-transform:uppercase;}
+td.id{font-family:var(--mono);color:var(--muted);white-space:nowrap;font-size:11.5px;}
+table.edges{min-width:1000px;} table.th13{min-width:1020px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;}
+.card{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:14px 16px;min-width:0;}
+.card h4{font-family:var(--disp);font-weight:500;font-size:16.5px;margin:0;}
+.card .pid{display:block;margin-top:2px;}
+.card p{font-size:13.5px;margin:8px 0 0;}
+ol.gaps{margin:10px 0 0;padding-left:24px;font-size:14px;max-width:86ch;}
+ol.gaps li{margin-top:8px;}
+ol.gaps li::marker{font-family:var(--mono);color:var(--muted);font-size:12px;}
+a{color:var(--accent);}
+.footnote{margin-top:30px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;max-width:86ch;}
+@media (prefers-reduced-motion:no-preference){path.edge{transition:opacity .15s,stroke-width .15s;}.node{transition:opacity .15s;}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<div class="wrap">
+<header class="top">
+  <h1>Quantum Resource Network</h1>
+  <p class="sub">Thirteen quantum resource theories as one typed graph — fourth instance of the observable–model–state network. Each theory is one horizontal <b>band</b>; the columns inside it split the layers the way the theories actually work: <b>model</b> (defining axioms) · <b>states</b>, split into the <b>free set</b>, the <b>resource states</b> and a distinguished shared state · <b>processes</b>, split into <b>free operations</b> (cannot create the resource), <b>resource-utilizing operations</b> (what spending it buys) and <b>impossible processes</b> (no-go even with the resource) · <b>witnesses</b>, split into <b>detectors</b> and <b>quantifiers</b>. Cross-theory edges now land on the exact node they concern: a free-set overlap meets a free-set node, a conversion runs resource-to-resource and names its <i>via</i> operation class.</p>
+  <div class="counts" id="counts"></div>
+  <nav class="tabs" role="tablist" id="tabs">
+    <button role="tab" data-tab="graph" aria-selected="true">Graph</button>
+    <button role="tab" data-tab="edges" aria-selected="false">Edge catalog</button>
+    <button role="tab" data-tab="theories" aria-selected="false">The 13 theories</button>
+    <button role="tab" data-tab="notes" aria-selected="false">Derived &amp; gaps</button>
+  </nav>
+</header>
+
+<section class="sheet" id="tab-graph">
+  <div class="controls">
+    <input id="search" type="search" placeholder="Find node… (magic, Gibbs, LOCC)" aria-label="Find node">
+    <label class="fl"><input type="checkbox" data-g="MM" checked>axiom links (MM)</label>
+    <label class="fl"><input type="checkbox" data-g="SS" checked>state overlaps (SS)</label>
+    <label class="fl"><input type="checkbox" data-g="C" checked>conversions (C)</label>
+    <label class="fl"><input type="checkbox" data-g="P" checked>operation lattice (P)</label>
+    <label class="fl"><input type="checkbox" data-g="W" checked>witness links (W)</label>
+    <label class="fl"><input type="checkbox" data-p="possibility" checked><span class="sw" style="background:var(--poss)"></span>possibility</label>
+    <label class="fl"><input type="checkbox" data-p="no_go" checked><span class="sw" style="background:var(--nogo)"></span>no-go ⊣</label>
+    <label class="fl"><input type="checkbox" data-p="structural" checked><span class="sw" style="background:var(--struct)"></span>structural</label>
+  </div>
+  <div class="legend">
+    <span class="k"><i style="background:var(--r-model)"></i>model (axioms)</span>
+    <span class="k"><i style="background:var(--r-free)"></i>free states</span>
+    <span class="k"><i style="background:var(--r-res)"></i>resource states</span>
+    <span class="k"><i style="background:var(--r-dst)"></i>distinguished state</span>
+    <span class="k"><i style="background:var(--r-free)"></i>free ops</span>
+    <span class="k"><i style="background:var(--r-use)"></i>resource use</span>
+    <span class="k"><i style="background:var(--r-noop)"></i>impossible (no-go)</span>
+    <span class="k"><i style="background:var(--r-det)"></i>detector</span>
+    <span class="k"><i style="background:var(--r-quant)"></i>quantifier</span>
+    <span class="k">dashed border = framework node · dashed edge = partial/open · ⊣ = impossibility</span>
+  </div>
+  <div class="main">
+    <div class="graphbox"><svg id="net" role="img" aria-label="Quantum resource theory network graph"></svg></div>
+    <aside class="panel" id="panel" aria-live="polite">
+      <div id="panelbody">
+        <h2>Select a node or edge</h2>
+        <p class="stmt">Each theory band reads left to right: axioms → free set vs resource states → free / resource-utilizing / impossible operations → detector and quantifier witnesses. Cross-band edges are typed: green arrows are conversions or enablings, red flat-bar edges are no-gos, grey are set relations; every conversion names the operation class under which it holds. Hover isolates a neighborhood; click for the statement and tagged references.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="sheet" id="tab-edges" hidden>
+  <h3>Edge catalog — every relation with polarity, status, via-class and references</h3>
+  <p class="note">Convention: a cross-theory conversion is well-defined only relative to an operation class; the <b>via</b> column records it. Provenance per reference: verified (web-checked 2026-10-23) · knowledge (standard result; verify page data before quoting) · verify (uncertain detail).</p>
+  <div class="tblwrap"><table class="edges" id="etable">
+    <thead><tr><th>id</th><th>relation</th><th>kind</th><th>polarity</th><th>status</th><th>via</th><th>statement</th></tr></thead>
+    <tbody></tbody></table></div>
+</section>
+
+<section class="sheet" id="tab-theories" hidden>
+  <h3>The thirteen theories — model-layer data</h3>
+  <div class="tblwrap"><table class="th13" id="ttable">
+    <thead><tr><th>theory</th><th>type</th><th>free states F</th><th>free operations O</th><th>golden unit</th><th>monotones</th></tr></thead>
+    <tbody></tbody></table></div>
+</section>
+
+<section class="sheet" id="tab-notes" hidden>
+  <h3>Derived propositions (QP1–QP5)</h3>
+  <p class="note">Assembled in this run with proof sketches in the catalog; not claimed to be in the literature as stated — run a novelty pass before citing any as new.</p>
+  <div class="cards" id="qpcards"></div>
+  <h3>Research gaps (QG1–QG10)</h3>
+  <p class="note">The generated-idea output of this run: missing or uncharted edges promoted to explicit targets. The 13×13 pairwise via-class conversion matrix is mostly empty — the automation hook of this network.</p>
+  <ol class="gaps" id="gaplist"></ol>
+  <h3>Provenance</h3>
+  <p class="note" id="provtext"></p>
+  <p class="footnote">QRT-Net v1.1 · 2026-10-23 · Companion files delivered in chat: <span style="font-family:var(--mono)">qrt_network.json</span> (full data) and <span style="font-family:var(--mono)">qrt_catalog.md</span> (axiom-overlap analysis, proof sketches, gap list). Earlier instances of the series (nonclassicality networks v1/v2) remain published unchanged.</p>
+</section>
+</div>
+
+<script id="qrtdata" type="application/json">{
+ "meta": {
+  "title": "Quantum Resource Theory Network (QRT-Net v1.1)",
+  "date": "2026-10-23",
+  "series": "Fourth instance of the observable-model-state epistemic network (after EM network, nonclassicality network v1, nonclassicality network v2)",
+  "layers": [
+   "model",
+   "state",
+   "process_cptp",
+   "witness",
+   "task"
+  ],
+  "edge_kinds": [
+   "specializes",
+   "distinct",
+   "contains",
+   "equiv",
+   "converts_to",
+   "activates",
+   "bounds",
+   "member_free",
+   "member_resource",
+   "violates",
+   "satisfies",
+   "enables",
+   "witness",
+   "irreversible",
+   "reversible",
+   "open"
+  ],
+  "polarity": {
+   "possibility": "resource of A yields/implies resource of B",
+   "no_go": "impossibility/strict separation",
+   "structural": "set relation or identification",
+   "open": "unsettled"
+  },
+  "status_values": [
+   "theorem (literature, verified 2026-10-23)",
+   "theorem (literature, from knowledge - verify page data before quoting)",
+   "partial",
+   "counterexample",
+   "derived (assembled here, proof sketch in catalog; not claimed to be in the literature)",
+   "open"
+  ],
+  "provenance_tiers": {
+   "verified": "citation confirmed by web search on 2026-10-23",
+   "knowledge": "standard result cited from model knowledge; verify page numbers before quoting",
+   "verify": "uncertain bibliographic detail; must be checked before any release"
+  },
+  "conversion_convention": "Every cross-theory conversion edge names the operation class ('via') under which it holds. 'A-resource generates B-resource' is meaningless without this datum.",
+  "version_note": "v1.1 (2026-10-23): per-theory fine structure - states split into free/resource, processes into free ops / resource-utilizing ops / impossible-even-with-resources, witnesses into detector/quantifier; all edges rewired onto the fine endpoints. v1 (coarse nodes) superseded.",
+  "node_roles": {
+   "model": "the theory's defining axioms",
+   "free_state": "the free set F",
+   "resource_state": "the resource states",
+   "dist": "distinguished shared state (sits in several theories' free/resource sets)",
+   "free_ops": "free operations O (cannot create the resource)",
+   "use_ops": "resource-utilizing operations: what spending the resource enables beyond O",
+   "no_ops": "impossible processes even with the resource (no-go theorems)",
+   "detector": "witness: detects the resource",
+   "quantifier": "monotone: quantifies it (detection and quantification can come apart, see wQ-nlo)",
+   "framework": "shared axiom or cross-theory class"
+  }
+ },
+ "theories": [
+  {
+   "id": "pur",
+   "name": "Purity / nonuniformity",
+   "family": "constraint",
+   "free_states": "{I/d} (maximally mixed state only)",
+   "free_ops": "noisy operations (unitaries + maximally mixed ancillas + partial trace); unital maps give the same state pre-order",
+   "golden_unit": "pure state |0><0|",
+   "monotones": [
+    "log d - S(rho)",
+    "Renyi nonuniformities",
+    "majorization (complete)"
+   ],
+   "refs": [
+    "Gour, Muller, Narasimhachar, Spekkens, Yunger Halpern, Phys. Rep. 583, 1 (2015) [knowledge]",
+    "Horodecki, Horodecki, Oppenheim, PRA 67, 062104 (2003) [verify]"
+   ]
+  },
+  {
+   "id": "ath",
+   "name": "Athermality (quantum thermodynamics)",
+   "family": "constraint x symmetry",
+   "free_states": "Gibbs state gamma = e^{-beta H}/Z (unique)",
+   "free_ops": "thermal operations TO (energy-conserving unitaries + Gibbs ancillas); larger classes: TIO-covariant, enhanced/Gibbs-preserving GPO",
+   "golden_unit": "work bit / pure excited state",
+   "monotones": [
+    "Renyi free energies F_alpha (second laws)",
+    "thermomajorization",
+    "asymmetry modes of energy coherence"
+   ],
+   "refs": [
+    "Brandao, Horodecki, Oppenheim, Renes, Spekkens, PRL 111, 250404 (2013) [knowledge]",
+    "Horodecki, Oppenheim, Nat. Commun. 4, 2059 (2013) [knowledge]",
+    "Brandao, Horodecki, Ng, Oppenheim, Wehner, PNAS 112, 3275 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "asy",
+   "name": "Asymmetry / quantum reference frames (group G)",
+   "family": "symmetry",
+   "free_states": "symmetric states: U_g rho U_g^dag = rho for all g in G",
+   "free_ops": "G-covariant operations",
+   "golden_unit": "reference frame / coherent clock state",
+   "monotones": [
+    "relative entropy of asymmetry",
+    "quantum Fisher information family",
+    "mode decomposition"
+   ],
+   "refs": [
+    "Gour, Spekkens, NJP 10, 033023 (2008) [knowledge]",
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]"
+   ]
+  },
+  {
+   "id": "coh",
+   "name": "Coherence (speakable, basis-relative)",
+   "family": "symmetry-adjacent (dephasing-defined)",
+   "free_states": "incoherent states Delta(rho)=rho (diagonal in fixed basis)",
+   "free_ops": "MIO > DIO, IO > SIO; TIO < DIO (physically motivated U(1) subclass)",
+   "golden_unit": "maximally coherent state |+_d>",
+   "monotones": [
+    "relative entropy of coherence C_r",
+    "l1-norm",
+    "robustness of coherence",
+    "coherence of formation C_f"
+   ],
+   "refs": [
+    "Baumgratz, Cramer, Plenio, PRL 113, 140401 (2014) [knowledge]",
+    "Streltsov, Adesso, Plenio, RMP 89, 041003 (2017) [knowledge]",
+    "Winter, Yang, PRL 116, 120404 (2016) [knowledge]"
+   ]
+  },
+  {
+   "id": "ima",
+   "name": "Imaginarity",
+   "family": "symmetry-adjacent (antiunitary Z2)",
+   "free_states": "real states (real density matrix in a fixed basis)",
+   "free_ops": "real operations (Kraus operators with real entries)",
+   "golden_unit": "maximally imaginary state (|0> + i|1>)/sqrt(2)",
+   "monotones": [
+    "robustness of imaginarity",
+    "geometric imaginarity"
+   ],
+   "refs": [
+    "Hickey, Gour, J. Phys. A 51, 414009 (2018) [knowledge]",
+    "Wu et al., PRL 126, 090401 (2021) [verified]",
+    "Wu et al., PRA 103, 032401 (2021) [verified]"
+   ]
+  },
+  {
+   "id": "mag",
+   "name": "Magic / nonstabilizerness (DV)",
+   "family": "subtheory",
+   "free_states": "STAB = convex hull of stabilizer states",
+   "free_ops": "stabilizer operations; larger: completely stabilizer-preserving CSPO",
+   "golden_unit": "T state / H state",
+   "monotones": [
+    "mana (odd d)",
+    "robustness of magic",
+    "stabilizer extent/fidelity"
+   ],
+   "refs": [
+    "Veitch, Mousavian, Gottesman, Emerson, NJP 16, 013009 (2014) [knowledge]",
+    "Howard, Campbell, PRL 118, 090501 (2017) [knowledge]",
+    "Bravyi, Kitaev, PRA 71, 022316 (2005) [knowledge]",
+    "Seddon, Campbell, Proc. R. Soc. A 475, 20190251 (2019) [verify]"
+   ]
+  },
+  {
+   "id": "nga",
+   "name": "Wigner negativity / genuine non-Gaussianity (CV)",
+   "family": "subtheory",
+   "free_states": "Wigner-positive states (resp. convex hull of Gaussian states)",
+   "free_ops": "Gaussian protocols / Wigner-positivity-preserving operations",
+   "golden_unit": "Fock state |1>",
+   "monotones": [
+    "Wigner logarithmic negativity",
+    "robustness"
+   ],
+   "refs": [
+    "Takagi, Zhuang, PRA 97, 062337 (2018) [knowledge]",
+    "Albarelli, Genoni, Serafini, Ferraro, PRA 98, 052350 (2018) [knowledge]",
+    "Mari, Eisert, PRL 109, 230503 (2012) [knowledge]"
+   ]
+  },
+  {
+   "id": "ent",
+   "name": "Entanglement",
+   "family": "partition (common cause + classical communication)",
+   "free_states": "separable states SEP",
+   "free_ops": "LOCC; larger: SEP-ops, PPT-ops, non-entangling NE (maximal)",
+   "golden_unit": "ebit |Phi+>",
+   "monotones": [
+    "distillable entanglement E_D",
+    "entanglement cost E_C",
+    "relative entropy of entanglement E_r",
+    "negativity",
+    "robustness"
+   ],
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ]
+  },
+  {
+   "id": "ste",
+   "name": "EPR steering",
+   "family": "partition (one-sided trust)",
+   "free_states": "unsteerable assemblages (LHS models)",
+   "free_ops": "one-way LOCC (trusted to untrusted wing)",
+   "golden_unit": "maximally steerable assemblage",
+   "monotones": [
+    "steering robustness",
+    "steering weight"
+   ],
+   "refs": [
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]",
+    "Gallego, Aolita, PRX 5, 041008 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "nlo",
+   "name": "Bell nonlocality (common-cause boxes)",
+   "family": "partition (no communication)",
+   "free_states": "boxes with classical common-cause (local) models",
+   "free_ops": "LOSR wirings on boxes (free-op polytope)",
+   "golden_unit": "PR box (beyond-quantum top)",
+   "monotones": [
+    "nonlocal fraction, trace-distance measures; facet violations witness but do not quantify"
+   ],
+   "refs": [
+    "Wolfe, Schmid, Sainz, Kunjwal, Spekkens, Quantum 4, 280 (2020) [verified]",
+    "de Vicente, J. Phys. A 47, 424017 (2014) [knowledge]"
+   ]
+  },
+  {
+   "id": "ctx",
+   "name": "Kochen-Specker contextuality (behaviors)",
+   "family": "partition (compatibility structure)",
+   "free_states": "noncontextual behaviors",
+   "free_ops": "noncontextual wirings NCW",
+   "golden_unit": "maximally contextual box (scenario-dependent)",
+   "monotones": [
+    "relative entropy of contextuality",
+    "contextual fraction"
+   ],
+   "refs": [
+    "Amaral, Cabello, Terra Cunha, Aolita, PRL 120, 130403 (2018) [verified]",
+    "Abramsky, Barbosa, Mansfield, PRL 119, 050504 (2017) [verify]"
+   ]
+  },
+  {
+   "id": "inc",
+   "name": "Measurement incompatibility",
+   "family": "partition/programmability (resource on devices)",
+   "free_states": "jointly measurable POVM collections (equivalently: devices programmable with classical programs)",
+   "free_ops": "quantum pre-processing (channels) + classical post-processing of programmable devices",
+   "golden_unit": "mutually unbiased sharp pair",
+   "monotones": [
+    "incompatibility robustness",
+    "complete family from guessing games with post-measurement information"
+   ],
+   "refs": [
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]",
+    "Designolle, Farkas, Kaniewski, NJP 21, 113053 (2019) [verify]",
+    "Heinosaari, Miyadera, Ziman, J. Phys. A 49, 123001 (2016) [knowledge]"
+   ]
+  },
+  {
+   "id": "dis",
+   "name": "Discord-type quantumness of correlations (cautionary)",
+   "family": "correlation (NOT a standard QRT)",
+   "free_states": "classical-classical (resp. classical-quantum) states - a NON-CONVEX set",
+   "free_ops": "no nontrivial golden-rule class containing local channels exists (local channels create discord)",
+   "golden_unit": "none canonical",
+   "monotones": [
+    "quantum discord",
+    "relative entropy of quantumness"
+   ],
+   "refs": [
+    "Ollivier, Zurek, PRL 88, 017901 (2001) [knowledge]",
+    "Modi, Brodutch, Cable, Paterek, Vedral, RMP 84, 1655 (2012) [knowledge]"
+   ]
+  }
+ ],
+ "nodes": [
+  {
+   "id": "F-QRT",
+   "layer": "model",
+   "theory": "framework",
+   "role": "framework",
+   "label": "QRT axioms (F, O)",
+   "statement": "A quantum resource theory is a pair (F, O): free states F and free operations O with the golden rule O(F) subset of F. The maximal class is RNG (resource non-generating). Theories are classified by how O is justified physically.",
+   "refs": [
+    "Chitambar, Gour, RMP 91, 025001 (2019) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "F-CONVEX",
+   "layer": "model",
+   "theory": "framework",
+   "role": "framework",
+   "label": "Convexity axiom",
+   "statement": "F convex and closed. Then every resource state is separated from F by a hyperplane: witnesses exist, and the generalized robustness R(rho) = min{s : (rho + s sigma)/(1+s) in F} is well defined.",
+   "refs": [
+    "Chitambar, Gour, RMP 91, 025001 (2019) [knowledge]",
+    "Vidal, Tarrach, PRA 59, 141 (1999) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "F-TENSOR",
+   "layer": "model",
+   "theory": "framework",
+   "role": "framework",
+   "label": "Tensor / monoidal axiom",
+   "statement": "F closed under tensor products and partial trace (symmetric monoidal structure of Coecke-Fritz-Spekkens). Prerequisite for asymptotic (many-copy) rates.",
+   "refs": [
+    "Coecke, Fritz, Spekkens, Inf. Comput. 250, 59 (2016) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "F-STEIN",
+   "layer": "model",
+   "theory": "framework",
+   "role": "framework",
+   "label": "Generalized Stein lemma / second law",
+   "statement": "For F satisfying the Brandao-Plenio axioms, the Stein exponent of resource testing equals the regularized relative entropy of resource; consequence: asymptotic reversibility under asymptotically resource-non-generating operations, with the regularized relative entropy as the unique 'entropy'. History: claimed 2010, proof gap found 2023 (Berta et al., Quantum 7, 1103 (2023) [verify page]), proven 2024.",
+   "refs": [
+    "Hayashi, Yamasaki, arXiv:2408.02722 [verified]",
+    "Lami, arXiv:2408.06410 [verified]",
+    "Brandao, Gour, PRL 115, 070503 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "F-ADV",
+   "layer": "model",
+   "theory": "framework",
+   "role": "framework",
+   "label": "Universal operational advantage",
+   "statement": "In any convex QRT, every resource state strictly outperforms all free states in some (sub)channel discrimination task, and the generalized robustness is the exact maximal advantage. Extended beyond convexity via multi-copy discrimination.",
+   "refs": [
+    "Takagi, Regula, Bu, Liu, Adesso, PRL 122, 140402 (2019) [verified]",
+    "Takagi, Regula, PRX 9, 031053 (2019) [verified]",
+    "Kuroiwa, Takagi, Adesso, Yamasaki, 'Every quantum helps' [verify venue]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "F-TYPE",
+   "layer": "model",
+   "theory": "framework",
+   "role": "framework",
+   "label": "QP1: typology of free operations",
+   "statement": "DERIVED classification. The 12 proper theories split by the physical justification of O: symmetry-type (asymmetry; unspeakable coherence; imaginarity as antiunitary Z2 analogue), subtheory-type (magic, CV non-Gaussianity), partition-type (entanglement, steering, nonlocality, contextuality, incompatibility), constraint-type (purity, athermality). Athermality is the unique two-type intersection, mirrored at state level (unique free state = the one symmetric Gibbs state) and witness level (second laws factor into free-energy + coherence families).",
+   "refs": [
+    "classification assembled here; cf. Chitambar, Gour, RMP 91, 025001 (2019) [knowledge]"
+   ],
+   "status": "derived"
+  },
+  {
+   "id": "p-lqicc",
+   "layer": "process_cptp",
+   "theory": "shared",
+   "role": "framework",
+   "label": "LQICC / LICC (ENT x COH)",
+   "statement": "Intersection classes (local quantum-incoherent operations and classical communication): the arena in which entanglement and coherence are interconverted and assisted-distilled.",
+   "refs": [
+    "Chitambar, Hsieh, PRL 117, 020402 (2016) [knowledge]",
+    "Streltsov et al., PRL 116, 240405 (2016) [verify]",
+    "Chitambar et al., PRL 116, 070402 (2016) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "p-cat",
+   "layer": "process_cptp",
+   "theory": "shared",
+   "role": "framework",
+   "label": "Catalysis",
+   "statement": "Catalysts enlarge the reachable set in many theories: entanglement catalysis (Jonathan-Plenio), catalytic coherence (Aberg), catalytic thermodynamics; a cross-theory phenomenon of the operations layer and a candidate route around exact-RNG irreversibility (entanglement battery, QG9).",
+   "refs": [
+    "Jonathan, Plenio, PRL 83, 3566 (1999) [knowledge]",
+    "Aberg, PRL 113, 150402 (2014) [knowledge]",
+    "Datta, Kondra, Miller, Streltsov, Rep. Prog. Phys. 86, 116002 (2023) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "p-rng",
+   "layer": "process_cptp",
+   "theory": "shared",
+   "role": "framework",
+   "label": "Maximal (RNG) classes",
+   "statement": "NE (entanglement), MIO (coherence), GPO (athermality), CSPO-type (magic), covariant (asymmetry), unital (purity). Reversibility statements live here and are class-sensitive: exact vs asymptotic non-generation is the load-bearing distinction.",
+   "refs": [
+    "Chitambar, Gour, RMP 91, 025001 (2019) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "w-hahn",
+   "layer": "witness",
+   "theory": "framework",
+   "role": "framework",
+   "label": "Witness existence (Hahn-Banach)",
+   "statement": "Convexity + closedness of F implies every resource state is detected by some linear witness. The convexity axiom translated to the witness layer.",
+   "refs": [
+    "Chitambar, Gour, RMP 91, 025001 (2019) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "w-robust",
+   "layer": "witness",
+   "theory": "framework",
+   "role": "framework",
+   "label": "Robustness = discrimination advantage",
+   "statement": "Generalized robustness is exactly the maximal advantage of a resource state over all free states in a class of subchannel discrimination tasks - one witness/task pair that every convex theory instantiates.",
+   "refs": [
+    "Takagi et al., PRL 122, 140402 (2019) [verified]",
+    "Takagi, Regula, PRX 9, 031053 (2019) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "t-discrim",
+   "layer": "witness",
+   "theory": "framework",
+   "role": "framework",
+   "label": "Channel discrimination (universal task)",
+   "statement": "The universal task: every resource of every convex theory buys a strict advantage here; steering's version is subchannel discrimination with 1W-LOCC measurements.",
+   "refs": [
+    "Takagi et al., PRL 122, 140402 (2019) [verified]",
+    "Piani, Watrous, PRL 114, 060404 (2015) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-pur",
+   "layer": "model",
+   "theory": "pur",
+   "role": "model",
+   "label": "Constraint: no purity source",
+   "statement": "Constraint-type model: the only free state is the maximally mixed one; free ops = noisy operations; state pre-order = majorization; equivalent to athermality with trivial Hamiltonian.",
+   "refs": [
+    "Gour et al., Phys. Rep. 583, 1 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-ath",
+   "layer": "model",
+   "theory": "ath",
+   "role": "model",
+   "label": "Gibbs constraint x U(1) covariance",
+   "statement": "Constraint x symmetry type: energy conservation (U(1)-covariance of TO) + unique full-rank fixed point gamma (Gibbs preservation). Block-diagonal sector governed by thermomajorization; coherent sector by asymmetry theory. The unique two-axiom intersection of the typology (QP1).",
+   "refs": [
+    "Brandao et al., PRL 111, 250404 (2013) [knowledge]",
+    "Lostaglio, Korzekwa, Jennings, Rudolph, PRX 5, 021001 (2015) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-asy",
+   "layer": "model",
+   "theory": "asy",
+   "role": "model",
+   "label": "G-covariance (reference frames)",
+   "statement": "Symmetry-type: group G acts by a unitary representation; free = invariant states; O = covariant channels. Monotone set strictly larger than speakable-coherence monotone set.",
+   "refs": [
+    "Gour, Spekkens, NJP 10, 033023 (2008) [knowledge]",
+    "Marvian, Spekkens, Zanardi, PRA 93, 052331 (2016) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-coh",
+   "layer": "model",
+   "theory": "coh",
+   "role": "model",
+   "label": "Dephasing-defined (basis-relative)",
+   "statement": "F = fixed points of the dephasing map Delta. Free-op zoo MIO > {IO, DIO} > SIO reflects the absence of a single physical justification (Marvian-Spekkens critique); TIO < DIO is the symmetry-justified subclass.",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]",
+    "Chitambar, Gour, PRL 117, 030401 (2016) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-ima",
+   "layer": "model",
+   "theory": "ima",
+   "role": "model",
+   "label": "Antiunitary Z2 (conjugation)",
+   "statement": "Z2 analogue of coherence with respect to an ANTIUNITARY (complex conjugation K): free = K-invariant states. Not a G-covariance theory in the usual sense because K is not a channel; free ops defined by real Kraus operators.",
+   "refs": [
+    "Hickey, Gour, J. Phys. A 51, 414009 (2018) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-mag",
+   "layer": "model",
+   "theory": "mag",
+   "role": "model",
+   "label": "Stabilizer subtheory (Gottesman-Knill)",
+   "statement": "Subtheory-type: the stabilizer subtheory is classically simulable; resource = whatever lies outside its convex hull. Odd d: distillation-relevant boundary characterized by discrete-Wigner positivity.",
+   "refs": [
+    "Veitch et al., NJP 16, 013009 (2014) [knowledge]",
+    "Veitch, Ferrie, Gross, Emerson, NJP 14, 113011 (2012) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-nga",
+   "layer": "model",
+   "theory": "nga",
+   "role": "model",
+   "label": "Gaussian subtheory (CV)",
+   "statement": "Subtheory-type CV twin of magic: Gaussian subtheory simulable; Wigner negativity is the resource for CV quantum-computational advantage (positive Wigner implies efficient classical simulation).",
+   "refs": [
+    "Mari, Eisert, PRL 109, 230503 (2012) [knowledge]",
+    "Takagi, Zhuang, PRA 97, 062337 (2018) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-ent",
+   "layer": "model",
+   "theory": "ent",
+   "role": "model",
+   "label": "LOCC partition (two labs)",
+   "statement": "Partition-type: spatially separated labs; O = LOCC (classical communication allowed). Maximal class NE (non-entangling).",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-ste",
+   "layer": "model",
+   "theory": "ste",
+   "role": "model",
+   "label": "One-sided trust (1W-LOCC)",
+   "statement": "Partition-type with asymmetric trust: one characterized (trusted) and one uncharacterized wing; O = one-way LOCC from the trusted wing.",
+   "refs": [
+    "Gallego, Aolita, PRX 5, 041008 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-nlo",
+   "layer": "model",
+   "theory": "nlo",
+   "role": "model",
+   "label": "Common cause, no communication",
+   "statement": "Partition-type with no communication: resources are common-cause boxes; O = the polytope of LOSR wirings; classical/nonclassical defined by the causal model required.",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]",
+    "Schmid, Rosset, Buscemi, Quantum 4, 262 (2020) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-ctx",
+   "layer": "model",
+   "theory": "ctx",
+   "role": "model",
+   "label": "Compatibility structures (NCW)",
+   "statement": "Partition-type over compatibility structures: behaviors on measurement scenarios; O = noncontextual wirings; unifies KS contextuality and Bell nonlocality in one framework.",
+   "refs": [
+    "Amaral, Cabello, Terra Cunha, Aolita, PRL 120, 130403 (2018) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-inc",
+   "layer": "model",
+   "theory": "inc",
+   "role": "model",
+   "label": "Device programmability",
+   "statement": "Resource on measurement DEVICES, not states: incompatibility = quantum programmability of a classical-output device; complete convertibility conditions via discrimination with post-measurement information. Shows the QRT schema extends to dynamical objects.",
+   "refs": [
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "m-dis",
+   "layer": "model",
+   "theory": "dis",
+   "role": "model",
+   "label": "Fails convexity + golden rule",
+   "statement": "FAILS two framework axioms: (i) the classical-state set is non-convex; (ii) local channels can create discord, so no golden-rule free-op class contains even local processing. Discord quantities remain meaningful but discord is not a QRT in the standard sense.",
+   "refs": [
+    "Modi et al., RMP 84, 1655 (2012) [knowledge]",
+    "Ciccarello, Giovannetti, PRA 85, 010102(R) (2012) [verify]",
+    "Hu et al., PRA 85, 032102 (2012) [verify]"
+   ],
+   "status": "counterexample"
+  },
+  {
+   "id": "sF-pur",
+   "layer": "state",
+   "theory": "pur",
+   "role": "free_state",
+   "label": "I/d (unique free state)",
+   "statement": "The free set is the single state I/d - the smallest free set in the compilation, making purity the bottom currency: every other theory's free set contains it.",
+   "refs": [
+    "Gour et al., Phys. Rep. 583, 1 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-pur",
+   "layer": "state",
+   "theory": "pur",
+   "role": "resource_state",
+   "label": "Nonuniform states",
+   "statement": "Any rho != I/d is a resource. Pre-order: majorization (complete); asymptotic rate log d - S(rho); fully reversible with no bound resources - the benchmark reversible theory.",
+   "refs": [
+    "Gour et al., Phys. Rep. 583, 1 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-ath",
+   "layer": "state",
+   "theory": "ath",
+   "role": "free_state",
+   "label": "Gibbs state gamma (unique)",
+   "statement": "Unique free state e^{-beta H}/Z: the only state that is both a fixed point of the Gibbs constraint AND U(1)-symmetric - the state-level shadow of the two-axiom intersection (QP1).",
+   "refs": [
+    "Horodecki, Oppenheim, Nat. Commun. 4, 2059 (2013) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-ath",
+   "layer": "state",
+   "theory": "ath",
+   "role": "resource_state",
+   "label": "Athermal states",
+   "statement": "Any rho != gamma. Block-diagonal sector ordered by thermomajorization; coherent sector constrained independently by asymmetry modes (neither family alone complete).",
+   "refs": [
+    "Horodecki, Oppenheim, Nat. Commun. 4, 2059 (2013) [knowledge]",
+    "Lostaglio et al., PRX 5, 021001 (2015) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-asy",
+   "layer": "state",
+   "theory": "asy",
+   "role": "free_state",
+   "label": "Symmetric (G-invariant) states",
+   "statement": "U_g rho U_g^dag = rho for all g. For U(1) generated by H with nondegenerate spectrum: exactly the energy-incoherent states.",
+   "refs": [
+    "Gour, Spekkens, NJP 10, 033023 (2008) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-asy",
+   "layer": "state",
+   "theory": "asy",
+   "role": "resource_state",
+   "label": "Asymmetric states (clocks/frames)",
+   "statement": "[rho, H] != 0 for translations: unspeakable coherence. Quantified by the QFI family; pure-state asymmetry not captured by any single entropic measure.",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-coh",
+   "layer": "state",
+   "theory": "coh",
+   "role": "free_state",
+   "label": "Incoherent (diagonal) states",
+   "statement": "Diagonal in the fixed reference basis: Delta(rho) = rho.",
+   "refs": [
+    "Baumgratz, Cramer, Plenio, PRL 113, 140401 (2014) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-coh",
+   "layer": "state",
+   "theory": "coh",
+   "role": "resource_state",
+   "label": "Coherent states",
+   "statement": "Off-diagonal in the fixed basis; golden unit |+_d>. Every coherent state is distillable at rate C_r under IO - no bound coherence exists.",
+   "refs": [
+    "Winter, Yang, PRL 116, 120404 (2016) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-ima",
+   "layer": "state",
+   "theory": "ima",
+   "role": "free_state",
+   "label": "Real states",
+   "statement": "Density matrices with real entries in the fixed basis (invariant under conjugation K).",
+   "refs": [
+    "Hickey, Gour, J. Phys. A 51, 414009 (2018) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-ima",
+   "layer": "state",
+   "theory": "ima",
+   "role": "resource_state",
+   "label": "Imaginary states",
+   "statement": "States with nonzero imaginary parts; golden unit (|0> + i|1>)/sqrt(2); qubit and pure-state conversion fully solved.",
+   "refs": [
+    "Wu et al., PRA 103, 032401 (2021) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-mag",
+   "layer": "state",
+   "theory": "mag",
+   "role": "free_state",
+   "label": "STAB (stabilizer polytope)",
+   "statement": "Convex hull of stabilizer states; classically simulable (Gottesman-Knill). Contains maximally entangled states (Bell, GHZ): free-of-magic is not free-of-entanglement.",
+   "refs": [
+    "Veitch et al., NJP 16, 013009 (2014) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-mag",
+   "layer": "state",
+   "theory": "mag",
+   "role": "resource_state",
+   "label": "Magic (non-stabilizer) states",
+   "statement": "Outside STAB; golden unit T state. Odd d: mana > 0 iff discrete-Wigner-negative; Wigner-positive non-stabilizer states are BOUND magic (undistillable).",
+   "refs": [
+    "Veitch, Ferrie, Gross, Emerson, NJP 14, 113011 (2012) [knowledge]",
+    "Bravyi, Kitaev, PRA 71, 022316 (2005) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-nga",
+   "layer": "state",
+   "theory": "nga",
+   "role": "free_state",
+   "label": "Wigner-positive states",
+   "statement": "Nonnegative CV Wigner function (resp. convex hull of Gaussians); positive-Wigner dynamics is classically simulable.",
+   "refs": [
+    "Mari, Eisert, PRL 109, 230503 (2012) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-nga",
+   "layer": "state",
+   "theory": "nga",
+   "role": "resource_state",
+   "label": "Wigner-negative states",
+   "statement": "Negativity of the CV Wigner function; golden unit Fock |1>; necessary for CV computational advantage and equivalent to CV contextuality.",
+   "refs": [
+    "Takagi, Zhuang, PRA 97, 062337 (2018) [knowledge]",
+    "Booth, Chabaud, Emeriau, PRL 129, 230401 (2022) [knowledge, verified in prior network run]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-ent",
+   "layer": "state",
+   "theory": "ent",
+   "role": "free_state",
+   "label": "SEP (separable states)",
+   "statement": "Convex mixtures of product states. Deciding membership is NP-hard; witnesses complete by Hahn-Banach.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-ent",
+   "layer": "state",
+   "theory": "ent",
+   "role": "resource_state",
+   "label": "Entangled states",
+   "statement": "Outside SEP; golden unit ebit |Phi+>. E_D < E_C in general: bound entangled (PPT) states have E_D = 0 < E_C.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-ste",
+   "layer": "state",
+   "theory": "ste",
+   "role": "free_state",
+   "label": "LHS (unsteerable) assemblages",
+   "statement": "Assemblages admitting local-hidden-state models. Strictly between the neighbors: SEP < unsteerable < Bell-local, both inclusions strict (Werner ranges).",
+   "refs": [
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]",
+    "Quintino et al., PRA 92, 032107 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-ste",
+   "layer": "state",
+   "theory": "ste",
+   "role": "resource_state",
+   "label": "Steerable assemblages",
+   "statement": "No LHS model. Steering requires BOTH entanglement of the state and incompatibility of the untrusted measurements, jointly.",
+   "refs": [
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]",
+    "Uola et al., PRL 115, 230402 (2015) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-nlo",
+   "layer": "state",
+   "theory": "nlo",
+   "role": "free_state",
+   "label": "Local (classical-cause) boxes",
+   "statement": "Common-cause boxes explained by a classical causal model. Caveat QP2: the STATE-level Bell-local set is not tensor-stable (superactivation); boxes under LOSR, not states, are the proper free objects.",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]",
+    "Palazuelos, PRL 109, 190401 (2012) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-nlo",
+   "layer": "state",
+   "theory": "nlo",
+   "role": "resource_state",
+   "label": "Nonlocal boxes",
+   "statement": "Boxes violating some Bell inequality; every convexly extremal quantumly realizable box is at the top of the quantum LOSR pre-order; the PR box is the beyond-quantum top.",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-ctx",
+   "layer": "state",
+   "theory": "ctx",
+   "role": "free_state",
+   "label": "Noncontextual behaviors",
+   "statement": "Behaviors with noncontextual models on the scenario's compatibility structure. Bell-local behaviors are the special case where contexts are spacelike (SS15).",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-ctx",
+   "layer": "state",
+   "theory": "ctx",
+   "role": "resource_state",
+   "label": "Contextual behaviors",
+   "statement": "Violate some noncontextuality inequality; maximally contextual boxes ('contextuality bits') exist for broad scenario classes.",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-inc",
+   "layer": "state",
+   "theory": "inc",
+   "role": "free_state",
+   "label": "Jointly measurable sets",
+   "statement": "POVM collections with a parent measurement - equivalently, devices programmable with classical programs.",
+   "refs": [
+    "Heinosaari, Miyadera, Ziman, J. Phys. A 49, 123001 (2016) [knowledge]",
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sR-inc",
+   "layer": "state",
+   "theory": "inc",
+   "role": "resource_state",
+   "label": "Incompatible sets",
+   "statement": "No parent POVM. In one-to-one correspondence with steerable assemblages (SS10); golden unit: mutually unbiased sharp pair.",
+   "refs": [
+    "Uola et al., PRL 115, 230402 (2015) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "sF-dis",
+   "layer": "state",
+   "theory": "dis",
+   "role": "free_state",
+   "label": "Classical-classical states",
+   "statement": "Diagonal in a product basis; locally broadcastable. The set is NON-CONVEX: mixing CC states of different bases is discordant - the convexity-axiom violation (MM9).",
+   "refs": [
+    "Ollivier, Zurek, PRL 88, 017901 (2001) [knowledge]",
+    "Modi et al., RMP 84, 1655 (2012) [knowledge]"
+   ],
+   "status": "counterexample"
+  },
+  {
+   "id": "sR-dis",
+   "layer": "state",
+   "theory": "dis",
+   "role": "resource_state",
+   "label": "Discordant states",
+   "statement": "Any state not classical-classical, separable states included. Relative entropy of quantumness = minimal distillable entanglement generated by the activation protocol.",
+   "refs": [
+    "Piani et al., PRL 106, 220403 (2011) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "d-maxmix",
+   "layer": "state",
+   "theory": "pur",
+   "role": "dist",
+   "label": "I/d - shared bottom",
+   "statement": "Member of every free set considered here EXCEPT purity, where it is the unique free state, and athermality, where it is free only at infinite temperature (trivial H). The universal bottom of all pre-orders.",
+   "refs": [
+    "derived (membership checks are elementary)"
+   ],
+   "status": "derived"
+  },
+  {
+   "id": "d-gibbs",
+   "layer": "state",
+   "theory": "ath",
+   "role": "dist",
+   "label": "Gibbs gamma - thermal magic",
+   "statement": "Unique athermality-free state; incoherent in the energy basis (nondegenerate H); U(1)-symmetric; real in the energy basis; separable for noninteracting local H. But for a generic interacting H, gamma is NOT a stabilizer state: the thermal state of one theory is a magic resource of another (QP5).",
+   "refs": [
+    "derived (proof sketch in catalog)"
+   ],
+   "status": "derived"
+  },
+  {
+   "id": "d-plus",
+   "layer": "state",
+   "theory": "coh",
+   "role": "dist",
+   "label": "|+> - coherent yet magic-free",
+   "statement": "Stabilizer and real and pure: free in magic and imaginarity, maximal resource in coherence (basis Z), purity, and U(1)-asymmetry (H prop Z). Witnesses that coherence is NOT sufficient for magic.",
+   "refs": [
+    "derived (elementary)"
+   ],
+   "status": "derived"
+  },
+  {
+   "id": "d-tstate",
+   "layer": "state",
+   "theory": "mag",
+   "role": "dist",
+   "label": "T state - four-theory resource",
+   "statement": "(|0> + e^{i pi/4}|1>)/sqrt(2): simultaneously a resource of magic, coherence, purity AND imaginarity; injection yields the T gate and universality.",
+   "refs": [
+    "Bravyi, Kitaev, PRA 71, 022316 (2005) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "d-wpos",
+   "layer": "state",
+   "theory": "nga",
+   "role": "dist",
+   "label": "Wigner-positive magic (bound)",
+   "statement": "Odd d: states outside STAB yet with mana = 0; useless for magic distillation and classically simulable - the magic analogue of bound entanglement.",
+   "refs": [
+    "Veitch, Ferrie, Gross, Emerson, NJP 14, 113011 (2012) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "d-bell",
+   "layer": "state",
+   "theory": "ent",
+   "role": "dist",
+   "label": "Bell |Phi+> - entangled, magic-free",
+   "statement": "Maximally entangled, maximally steering-capable, Bell-violating (with incompatible measurements) - yet a stabilizer state (magic-free) and real (imaginarity-free). Shows STAB is not inside SEP: free sets of different theories cut across each other.",
+   "refs": [
+    "derived (elementary)"
+   ],
+   "status": "derived"
+  },
+  {
+   "id": "d-werner",
+   "layer": "state",
+   "theory": "ste",
+   "role": "dist",
+   "label": "Werner states - strictness witness",
+   "statement": "Entangled for p > 1/3; admit LHV models for projective measurements in a range (Werner) and even for POVMs (Barrett); unsteerable range (WJD). The canonical witness that SEP < unsteerable < Bell-local is strict.",
+   "refs": [
+    "Werner, PRA 40, 4277 (1989) [knowledge]",
+    "Barrett, PRA 65, 042302 (2002) [knowledge]",
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "d-bound",
+   "layer": "state",
+   "theory": "nlo",
+   "role": "dist",
+   "label": "Bound entangled states",
+   "statement": "PPT entangled: E_D = 0 < E_C. Some bound entangled states violate Bell inequalities (Peres conjecture false): nonlocality without distillability.",
+   "refs": [
+    "Vertesi, Brunner, Nat. Commun. 5, 5297 (2014) [verify page]",
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "d-ccdis",
+   "layer": "state",
+   "theory": "dis",
+   "role": "dist",
+   "label": "Discordant separable states",
+   "statement": "Separable (entanglement-free) yet discordant; the input class for discord-to-entanglement activation.",
+   "refs": [
+    "Ollivier, Zurek, PRL 88, 017901 (2001) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-pur",
+   "layer": "process_cptp",
+   "theory": "pur",
+   "role": "free_ops",
+   "label": "Noisy / unital operations",
+   "statement": "Noisy operations (unitaries + maximally mixed ancillas + partial trace); unital maps give the same single-system state pre-order (majorization).",
+   "refs": [
+    "Gour et al., Phys. Rep. 583, 1 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-pur",
+   "layer": "process_cptp",
+   "theory": "pur",
+   "role": "use_ops",
+   "label": "Work from purity; coherence prep",
+   "statement": "Purity as fuel: kT ln2 of work per pure bit (Landauer/Szilard); and via free unitaries it converts into maximal coherence in any chosen basis, which bounds downstream entanglement and discord generation (QP4 cascade).",
+   "refs": [
+    "Landauer/Szilard [knowledge]",
+    "Streltsov, Kampermann, Wolk, Gessner, Bruss, NJP 20, 053058 (2018) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-ath",
+   "layer": "process_cptp",
+   "theory": "ath",
+   "role": "free_ops",
+   "label": "Thermal operations (TO)",
+   "statement": "Energy-conserving unitaries + Gibbs ancillas: Gibbs-preserving AND U(1)-covariant. Strictly inside GPO: a Gibbs-preserving map can create energy coherence while TO cannot. Whether TO = GPO intersect TIO exactly is open here (QG2).",
+   "refs": [
+    "Faist, Oppenheim, Renner, NJP 17, 043003 (2015) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-ath",
+   "layer": "process_cptp",
+   "theory": "ath",
+   "role": "use_ops",
+   "label": "Work extraction & conversion",
+   "statement": "Spending athermality: single-shot deterministic work set by min-free-energy; the F_alpha second laws govern which conversions TO can perform; correlations (incl. entanglement) carry extra extractable work beyond the marginals.",
+   "refs": [
+    "Horodecki, Oppenheim, Nat. Commun. 4, 2059 (2013) [knowledge]",
+    "Brandao et al., PNAS 112, 3275 (2015) [knowledge]",
+    "Perarnau-Llobet et al., PRX 5, 041011 (2015) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pX-ath",
+   "layer": "process_cptp",
+   "theory": "ath",
+   "role": "no_ops",
+   "label": "No coherence distillation; work locking",
+   "statement": "Impossible even with resources: coherence distillation machines do not exist - under thermal/covariant processing the distillable coherence of every full-rank state is ZERO even with unlimited work, while the coherence cost equals the QFI; and work stored in coherence is locked - not extractable without an external phase reference.",
+   "refs": [
+    "Marvian, Nat. Commun. 11, 25 (2020) [verified]",
+    "Lostaglio, Jennings, Rudolph, Nat. Commun. 6, 6383 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-asy",
+   "layer": "process_cptp",
+   "theory": "asy",
+   "role": "free_ops",
+   "label": "G-covariant channels",
+   "statement": "Channels commuting with the group action. For U(1) time translations: TIO, strictly inside DIO (group averaging implements dephasing covariance).",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-asy",
+   "layer": "process_cptp",
+   "theory": "asy",
+   "role": "use_ops",
+   "label": "Metrology, clocks, catalytic use",
+   "statement": "Spending asymmetry: phase-estimation precision = QFI (an asymmetry monotone); clock synchronization and reference-frame alignment consume it; catalytic coherence (Aberg) permits repeated use of one coherent battery.",
+   "refs": [
+    "Marvian, Nat. Commun. 11, 25 (2020) [verified]",
+    "Aberg, PRL 113, 150402 (2014) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-coh",
+   "layer": "process_cptp",
+   "theory": "coh",
+   "role": "free_ops",
+   "label": "Incoherent-op lattice (MIO...SIO)",
+   "statement": "SIO subset of IO and DIO; IO, DIO subset of MIO; TIO subset of DIO; IO and DIO incomparable. MIO = maximal (RNG) class.",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]",
+    "Chitambar, Gour, PRL 117, 030401 (2016) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-coh",
+   "layer": "process_cptp",
+   "theory": "coh",
+   "role": "use_ops",
+   "label": "Distillation & dilution (IO)",
+   "statement": "Spending coherence: every coherent state distills |+> at rate C_r under IO; dilution from |+> costs C_f; coherent inputs power what incoherent ones cannot - e.g. entanglement generation via bipartite IO (C1).",
+   "refs": [
+    "Winter, Yang, PRL 116, 120404 (2016) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pX-coh",
+   "layer": "process_cptp",
+   "theory": "coh",
+   "role": "no_ops",
+   "label": "No reversible IO cycle (mixed)",
+   "statement": "Impossible even with resources: under IO, C_f > C_r for generic mixed states, so distill-then-dilute cannot return the input at par. Reversibility holds only under asymptotically resource-non-generating (MIO-type) operations at rate C_r (Stein-lemma regime).",
+   "refs": [
+    "Winter, Yang, PRL 116, 120404 (2016) [knowledge]",
+    "Brandao, Gour, PRL 115, 070503 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-ima",
+   "layer": "process_cptp",
+   "theory": "ima",
+   "role": "free_ops",
+   "label": "Real operations (real Kraus)",
+   "statement": "Channels with real Kraus operators; local real ops + classical communication (LRCC) define the distributed theory.",
+   "refs": [
+    "Wu et al., PRL 126, 090401 (2021) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-ima",
+   "layer": "process_cptp",
+   "theory": "ima",
+   "role": "use_ops",
+   "label": "Local discrimination with i",
+   "statement": "Spending imaginarity: real orthogonal pure-state pairs that LOCC distinguishes perfectly become indistinguishable (no better than guessing in the worst case) when one party is restricted to real operations - the imaginary resource buys the gap.",
+   "refs": [
+    "Wu et al., PRL 126, 090401 (2021) [verified]",
+    "Wu et al., PRA 103, 032401 (2021) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-mag",
+   "layer": "process_cptp",
+   "theory": "mag",
+   "role": "free_ops",
+   "label": "Stabilizer ops / CSPO",
+   "statement": "Stabilizer protocols (Clifford unitaries, Pauli measurements, stabilizer ancillas, feed-forward) subset of completely stabilizer-preserving operations (channel-maximal class for simulation bounds).",
+   "refs": [
+    "Seddon, Campbell, Proc. R. Soc. A 475, 20190251 (2019) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-mag",
+   "layer": "process_cptp",
+   "theory": "mag",
+   "role": "use_ops",
+   "label": "State injection -> universality",
+   "statement": "Spending magic: T-state injection promotes stabilizer circuits to universal quantum computation; robustness of magic prices the classical-simulation overhead of the spent states.",
+   "refs": [
+    "Bravyi, Kitaev, PRA 71, 022316 (2005) [knowledge]",
+    "Howard, Campbell, PRL 118, 090501 (2017) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pX-mag",
+   "layer": "process_cptp",
+   "theory": "mag",
+   "role": "no_ops",
+   "label": "Bound magic; no unit-rate cycle",
+   "statement": "Impossible even with resources: Wigner-positive magic states cannot be distilled by stabilizer operations (bound magic); and equal-mana state classes exist that do NOT interconvert at unit rate - magic is asymptotically irreversible under STAB ops.",
+   "refs": [
+    "Veitch, Ferrie, Gross, Emerson, NJP 14, 113011 (2012) [knowledge]",
+    "Wang, Wilde, Su [verify: PRL 124, 090505 (2020) / NJP 21, 103002 (2019)]"
+   ],
+   "status": "partial"
+  },
+  {
+   "id": "pF-nga",
+   "layer": "process_cptp",
+   "theory": "nga",
+   "role": "free_ops",
+   "label": "Gaussian protocols",
+   "statement": "Gaussian unitaries, Gaussian measurements, feed-forward; cannot create Wigner negativity.",
+   "refs": [
+    "Takagi, Zhuang, PRA 97, 062337 (2018) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-nga",
+   "layer": "process_cptp",
+   "theory": "nga",
+   "role": "use_ops",
+   "label": "Negativity -> CV advantage",
+   "statement": "Spending Wigner negativity: injected into Gaussian circuits it lifts them beyond efficient classical simulation - the CV analogue of magic injection.",
+   "refs": [
+    "Mari, Eisert, PRL 109, 230503 (2012) [knowledge]",
+    "Lloyd, Braunstein, PRL 82, 1784 (1999) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-ent",
+   "layer": "process_cptp",
+   "theory": "ent",
+   "role": "free_ops",
+   "label": "LOCC (< SEP < PPT < NE)",
+   "statement": "Local operations + classical communication; the ladder continues upward through separable, PPT-preserving and non-entangling operations, each step changing which states count as equivalent.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-ent",
+   "layer": "process_cptp",
+   "theory": "ent",
+   "role": "use_ops",
+   "label": "Teleportation, dense coding, distillation",
+   "statement": "Spending ebits: teleportation and dense coding consume maximal entanglement; distillation protocols concentrate noisy entanglement; every entangled state wins some semiquantum game (Buscemi) - a measurement-device-independent certificate that all entanglement is usable.",
+   "refs": [
+    "Buscemi, PRL 108, 200401 (2012) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pX-ent",
+   "layer": "process_cptp",
+   "theory": "ent",
+   "role": "no_ops",
+   "label": "No second law (exact NE); bound ENT",
+   "statement": "Impossible even with resources: under EXACTLY non-entangling operations, entanglement manipulation is asymptotically irreversible - no single measure governs all transformations, so no axiomatic second law; and bound entangled states cannot be distilled by LOCC at all (E_D = 0 < E_C).",
+   "refs": [
+    "Lami, Regula, Nat. Phys. 19, 184 (2023) [verified]",
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-ste",
+   "layer": "process_cptp",
+   "theory": "ste",
+   "role": "free_ops",
+   "label": "One-way LOCC (trusted -> untrusted)",
+   "statement": "Local ops + one-way classical communication from the trusted party: the free operations that cannot create steering.",
+   "refs": [
+    "Gallego, Aolita, PRX 5, 041008 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-ste",
+   "layer": "process_cptp",
+   "theory": "ste",
+   "role": "use_ops",
+   "label": "1sDI QKD; subchannel discrimination",
+   "statement": "Spending steering: one-sided device-independent key distribution is secured exactly by steerability; steering = advantage in subchannel discrimination restricted to 1W-LOCC measurements (Piani-Watrous).",
+   "refs": [
+    "Branciard et al., PRA 85, 010301(R) (2012) [verify]",
+    "Piani, Watrous, PRL 114, 060404 (2015) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-nlo",
+   "layer": "process_cptp",
+   "theory": "nlo",
+   "role": "free_ops",
+   "label": "LOSR wirings (polytope)",
+   "statement": "The free operations on common-cause boxes form a polytope; convertibility between boxes is decidable by linear programming.",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-nlo",
+   "layer": "process_cptp",
+   "theory": "nlo",
+   "role": "use_ops",
+   "label": "DI certification; superactivation",
+   "statement": "Spending nonlocality: Bell violation certifies device-independent keys and randomness; and tensoring + local measurements SUPERACTIVATES hidden nonlocality - k copies of some Bell-local entangled states jointly violate a Bell inequality (Palazuelos).",
+   "refs": [
+    "Brunner et al., RMP 86, 419 (2014) [knowledge]",
+    "Palazuelos, PRL 109, 190401 (2012) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-ctx",
+   "layer": "process_cptp",
+   "theory": "ctx",
+   "role": "free_ops",
+   "label": "Noncontextual wirings (NCW)",
+   "statement": "Explicit parametrized class of contextuality-free operations on behaviors; forms a convex set; restricted to Bell scenarios NCW is NOT the same operation set as LOSR (P6).",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]",
+    "Santos, Wagner, Amaral, arXiv:2407.02120 [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-ctx",
+   "layer": "process_cptp",
+   "theory": "ctx",
+   "role": "use_ops",
+   "label": "POM / RAC advantage",
+   "statement": "Spending contextuality: preparation contextuality powers parity-oblivious multiplexing beyond any noncontextual bound; contextual fraction quantifies the advantage.",
+   "refs": [
+    "Spekkens, Buzacott, Keehn, Toner, Pryde, PRL 102, 010401 (2009) [verify]",
+    "Abramsky, Barbosa, Mansfield, PRL 119, 050504 (2017) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-inc",
+   "layer": "process_cptp",
+   "theory": "inc",
+   "role": "free_ops",
+   "label": "Pre- + classical post-processing",
+   "statement": "Compatibility-non-decreasing maps on devices: quantum pre-processing by a channel + classical post-processing of outcomes.",
+   "refs": [
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pU-inc",
+   "layer": "process_cptp",
+   "theory": "inc",
+   "role": "use_ops",
+   "label": "Discrimination with PMI",
+   "statement": "Spending incompatibility: every incompatible set strictly beats all compatible ones in some state-discrimination game with post-measurement information; the game family is COMPLETE for the convertibility pre-order.",
+   "refs": [
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]",
+    "Carmeli, Heinosaari, Toigo, PRL 122, 130402 (2019) [verify]",
+    "Skrzypczyk, Supic, Cavalcanti, PRL 122, 130403 (2019) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "pF-dis",
+   "layer": "process_cptp",
+   "theory": "dis",
+   "role": "free_ops",
+   "label": "No free-op class exists",
+   "statement": "Golden-rule failure: a local channel acting on one share of a classical-classical state can CREATE discord, so no free-operation class containing even local processing exists - the operations-layer pathology that disqualifies discord as a standard QRT.",
+   "refs": [
+    "Ciccarello, Giovannetti, PRA 85, 010102(R) (2012) [verify]",
+    "Hu et al., PRA 85, 032102 (2012) [verify]"
+   ],
+   "status": "counterexample"
+  },
+  {
+   "id": "pU-dis",
+   "layer": "process_cptp",
+   "theory": "dis",
+   "role": "use_ops",
+   "label": "Activation protocol (CNOT)",
+   "statement": "Spending discord: local CNOT interactions with ancillas map any discordant state (separable included) to one with distillable system-ancilla entanglement; REQ = the minimal entanglement so generated. Also: discord = minimal entanglement created between system and apparatus in a measurement.",
+   "refs": [
+    "Piani et al., PRL 106, 220403 (2011) [verified]",
+    "Streltsov, Kampermann, Bruss, PRL 106, 160401 (2011) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-pur",
+   "layer": "witness",
+   "theory": "pur",
+   "role": "detector",
+   "label": "Purity detectors",
+   "statement": "Tr rho^2 > 1/d, or any measurement statistics deviating from uniform - the simplest witness in the compilation.",
+   "refs": [
+    "elementary [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-pur",
+   "layer": "witness",
+   "theory": "pur",
+   "role": "quantifier",
+   "label": "Nonuniformity monotones",
+   "statement": "log d - S(rho) and the Renyi nonuniformity family; majorization is a COMPLETE monotone family - detection and quantification coincide here.",
+   "refs": [
+    "Gour et al., Phys. Rep. 583, 1 (2015) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-ath",
+   "layer": "witness",
+   "theory": "ath",
+   "role": "detector",
+   "label": "Athermality witnesses",
+   "statement": "Deviation from Gibbs statistics; operationally, any positive extractable work certifies athermality.",
+   "refs": [
+    "Horodecki, Oppenheim, Nat. Commun. 4, 2059 (2013) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-ath",
+   "layer": "witness",
+   "theory": "ath",
+   "role": "quantifier",
+   "label": "Second laws F_alpha + modes",
+   "statement": "The Renyi free energies F_alpha (complete on block-diagonal states) PLUS the asymmetry-mode monotones for coherences: two families, jointly complete, separately incomplete - the witness-level image of the two-axiom model (QP1).",
+   "refs": [
+    "Brandao et al., PNAS 112, 3275 (2015) [knowledge]",
+    "Lostaglio et al., PRX 5, 021001 (2015) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-asy",
+   "layer": "witness",
+   "theory": "asy",
+   "role": "detector",
+   "label": "Covariance tests",
+   "statement": "Any noninvariance of outcome statistics under the group action; mode-resolved tomography detects which asymmetry modes are populated.",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-asy",
+   "layer": "witness",
+   "theory": "asy",
+   "role": "quantifier",
+   "label": "QFI family; speed limits",
+   "statement": "Quantum Fisher information is an asymmetry monotone; Mandelstam-Tamm and Margolus-Levitin speed limits are asymmetry bounds; under thermal covariant processing QFI is exactly the coherence COST.",
+   "refs": [
+    "Marvian, Spekkens, Zanardi, PRA 93, 052331 (2016) [verified]",
+    "Marvian, Nat. Commun. 11, 25 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-coh",
+   "layer": "witness",
+   "theory": "coh",
+   "role": "detector",
+   "label": "Interferometric witnesses",
+   "statement": "Robustness of coherence is directly measurable via witness-based lower bounds and interferometric visibility.",
+   "refs": [
+    "Napoli et al., PRL 116, 150502 (2016) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-coh",
+   "layer": "witness",
+   "theory": "coh",
+   "role": "quantifier",
+   "label": "C_r, C_f, l1, robustness",
+   "statement": "Relative entropy of coherence C_r (= distillable), coherence of formation C_f (= cost), l1-norm, robustness (= discrimination advantage, W2 instance).",
+   "refs": [
+    "Winter, Yang, PRL 116, 120404 (2016) [knowledge]",
+    "Takagi et al., PRL 122, 140402 (2019) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-ima",
+   "layer": "witness",
+   "theory": "ima",
+   "role": "detector",
+   "label": "LOCC vs real-LOCC gap",
+   "statement": "Operational witness: the discrimination gap that appears when one party is restricted to real operations; realized in optical experiments.",
+   "refs": [
+    "Wu et al., PRL 126, 090401 (2021) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-ima",
+   "layer": "witness",
+   "theory": "ima",
+   "role": "quantifier",
+   "label": "Imaginarity monotones",
+   "statement": "Robustness of imaginarity and geometric imaginarity; pure-state and qubit conversion fully characterized by them.",
+   "refs": [
+    "Wu et al., PRA 103, 032401 (2021) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-mag",
+   "layer": "witness",
+   "theory": "mag",
+   "role": "detector",
+   "label": "Magic witnesses",
+   "statement": "Mana > 0 (odd d), robustness > 1, stabilizer-fidelity thresholds: each certifies nonstabilizerness.",
+   "refs": [
+    "Veitch et al., NJP 16, 013009 (2014) [knowledge]",
+    "Howard, Campbell, PRL 118, 090501 (2017) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-mag",
+   "layer": "witness",
+   "theory": "mag",
+   "role": "quantifier",
+   "label": "Mana; robustness of magic",
+   "statement": "Mana (additive, odd d), robustness of magic (prices classical-simulation overhead), stabilizer extent - quantifiers tied to distillation and simulation bounds.",
+   "refs": [
+    "Veitch et al., NJP 16, 013009 (2014) [knowledge]",
+    "Howard, Campbell, PRL 118, 090501 (2017) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-nga",
+   "layer": "witness",
+   "theory": "nga",
+   "role": "detector",
+   "label": "Negativity estimators",
+   "statement": "Displaced-parity measurements reconstruct W(alpha) point by point; any measured negative value certifies the resource.",
+   "refs": [
+    "standard CV tomography [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-nga",
+   "layer": "witness",
+   "theory": "nga",
+   "role": "quantifier",
+   "label": "Wigner log-negativity",
+   "statement": "Monotone under Gaussian protocols; bounds the cost of classical simulation of CV circuits.",
+   "refs": [
+    "Takagi, Zhuang, PRA 97, 062337 (2018) [knowledge]",
+    "Albarelli et al., PRA 98, 052350 (2018) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-ent",
+   "layer": "witness",
+   "theory": "ent",
+   "role": "detector",
+   "label": "Entanglement witnesses; PPT",
+   "statement": "Linear witnesses are complete for the convex SEP set (Hahn-Banach); PPT is a one-sided criterion; deciding separability is NP-hard.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-ent",
+   "layer": "witness",
+   "theory": "ent",
+   "role": "quantifier",
+   "label": "E_D, E_C, E_r, negativity",
+   "statement": "Distillable entanglement, entanglement cost, relative entropy of entanglement, negativity, robustness. The E_D < E_C gap on bound states is the single-shot face of the irreversibility formalized in pX-ent.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-ste",
+   "layer": "witness",
+   "theory": "ste",
+   "role": "detector",
+   "label": "Steering inequalities; LHS-SDP",
+   "statement": "SDP membership tests for LHS models; steering inequalities import one-to-one from joint-measurability (incompatibility) criteria.",
+   "refs": [
+    "Uola et al., PRL 115, 230402 (2015) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-ste",
+   "layer": "witness",
+   "theory": "ste",
+   "role": "quantifier",
+   "label": "Steering robustness & weight",
+   "statement": "Steering robustness equals the advantage in subchannel discrimination with 1W-LOCC measurements - the steering instance of the universal robustness theorem.",
+   "refs": [
+    "Piani, Watrous, PRL 114, 060404 (2015) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-nlo",
+   "layer": "witness",
+   "theory": "nlo",
+   "role": "detector",
+   "label": "Bell inequalities (detect only)",
+   "statement": "Facet Bell-inequality violations certify nonclassicality of the common cause.",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-nlo",
+   "layer": "witness",
+   "theory": "nlo",
+   "role": "quantifier",
+   "label": "LOSR monotones (quantify)",
+   "statement": "The information in the degrees of violation of ALL facet Bell inequalities does NOT determine the LOSR pre-order: quantification strictly exceeds witnessing in this theory.",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-ctx",
+   "layer": "witness",
+   "theory": "ctx",
+   "role": "detector",
+   "label": "Noncontextuality inequalities",
+   "statement": "Scenario inequalities; the contextual fraction detects and grades violation.",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]",
+    "Abramsky, Barbosa, Mansfield, PRL 119, 050504 (2017) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-ctx",
+   "layer": "witness",
+   "theory": "ctx",
+   "role": "quantifier",
+   "label": "Rel. entropy of contextuality",
+   "statement": "An NCW-monotone (the completeness question for a monotone family under NCW is open territory, cf. QG3).",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-inc",
+   "layer": "witness",
+   "theory": "inc",
+   "role": "detector",
+   "label": "Incompatibility witnesses",
+   "statement": "Detection via steering (SS10), via noise robustness thresholds, and via discrimination advantages.",
+   "refs": [
+    "Designolle, Farkas, Kaniewski, NJP 21, 113053 (2019) [verify]",
+    "Carmeli, Heinosaari, Toigo, PRL 122, 130402 (2019) [verify]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-inc",
+   "layer": "witness",
+   "theory": "inc",
+   "role": "quantifier",
+   "label": "Guessing-game family (complete)",
+   "statement": "State discrimination with post-measurement information yields a COMPLETE monotone family: it decides convertibility of programmable devices, not just detection.",
+   "refs": [
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wD-dis",
+   "layer": "witness",
+   "theory": "dis",
+   "role": "detector",
+   "label": "Local-broadcasting test",
+   "statement": "A state is locally broadcastable iff it has zero discord; operational failure of local broadcasting witnesses discord.",
+   "refs": [
+    "Piani, Horodecki, Horodecki, PRL 100, 090502 (2008) [knowledge]"
+   ],
+   "status": "theorem"
+  },
+  {
+   "id": "wQ-dis",
+   "layer": "witness",
+   "theory": "dis",
+   "role": "quantifier",
+   "label": "Discord; REQ",
+   "statement": "Quantum discord; relative entropy of quantumness = minimal distillable entanglement generated by activation - a quantifier with an entanglement-denominated operational meaning.",
+   "refs": [
+    "Ollivier, Zurek, PRL 88, 017901 (2001) [knowledge]",
+    "Piani et al., PRL 106, 220403 (2011) [verified]"
+   ],
+   "status": "theorem"
+  }
+ ],
+ "edges": [
+  {
+   "id": "MM1",
+   "from": "m-asy",
+   "to": "m-coh",
+   "kind": "specializes",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Unspeakable coherence w.r.t. the eigenbasis of an observable = asymmetry under the translation group it generates; the asymmetry theory (TIO for U(1)) is the physically justified coherence theory.",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]"
+   ]
+  },
+  {
+   "id": "MM2",
+   "from": "m-coh",
+   "to": "m-asy",
+   "kind": "distinct",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "Speakable coherence (IO/MIO) is NOT asymmetry: measures of speakable coherence are a proper subset of measures of asymmetry; IO and TIO are inequivalent classes and the IO/MIO framework lacks a symmetry justification.",
+   "refs": [
+    "Marvian, Spekkens, Zanardi, PRA 93, 052331 (2016) [verified]",
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]"
+   ]
+  },
+  {
+   "id": "MM3",
+   "from": "m-ath",
+   "to": "F-TYPE",
+   "kind": "satisfies",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Athermality = constraint (Gibbs preservation) x symmetry (U(1)-covariance): its second-law constraints factor into free-energy monotones (block-diagonal data) + asymmetry-mode constraints (coherences); neither family alone is complete.",
+   "refs": [
+    "Lostaglio, Korzekwa, Jennings, Rudolph, PRX 5, 021001 (2015) [verified]",
+    "Brandao et al., PNAS 112, 3275 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "MM4",
+   "from": "m-ath",
+   "to": "m-pur",
+   "kind": "specializes",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Trivial Hamiltonian limit: Gibbs -> I/d, thermal ops -> noisy ops; purity/nonuniformity is athermality with H proportional to I.",
+   "refs": [
+    "Gour et al., Phys. Rep. 583, 1 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "MM5",
+   "from": "m-ima",
+   "to": "m-coh",
+   "kind": "distinct",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "Imaginarity is the Z2/antiunitary analogue of coherence (free = conjugation-invariant vs dephasing-invariant); it is NOT a G-covariance theory because complex conjugation is not a channel.",
+   "refs": [
+    "Hickey, Gour, J. Phys. A 51, 414009 (2018) [knowledge]"
+   ]
+  },
+  {
+   "id": "MM6",
+   "from": "m-nga",
+   "to": "m-mag",
+   "kind": "equiv",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "CV/DV twins: in odd d, mana(rho) = 0 iff discrete-Wigner-positive; in CV, Wigner positivity defines the simulable free cone. Same quasiprobability mechanism, different phase spaces.",
+   "refs": [
+    "Veitch et al., NJP 14, 113011 (2012) [knowledge]",
+    "Mari, Eisert, PRL 109, 230503 (2012) [knowledge]"
+   ]
+  },
+  {
+   "id": "MM7",
+   "from": "m-ent",
+   "to": "m-nlo",
+   "kind": "distinct",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "One ladder, three theories: tightening LOCC to 1W-LOCC gives steering, to LOSR gives nonlocality. LOCC is the WRONG free-op class for Bell scenarios; LOSR-entanglement is the resource relevant to nonlocality.",
+   "refs": [
+    "Gallego, Aolita, PRX 5, 041008 (2015) [knowledge]",
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]",
+    "Schmid, Selby, Wolfe, Spekkens, arXiv:1911.12462 [verify published venue]"
+   ]
+  },
+  {
+   "id": "MM8",
+   "from": "m-ctx",
+   "to": "m-nlo",
+   "kind": "contains",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Bell scenarios are contextuality scenarios with spacelike contexts; NCW give a unified resource framework. Caveat: NCW restricted to Bell scenarios is NOT equivalent to LOSR (P6).",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]",
+    "Santos, Wagner, Amaral, arXiv:2407.02120 [verified]"
+   ]
+  },
+  {
+   "id": "MM9",
+   "from": "m-dis",
+   "to": "F-CONVEX",
+   "kind": "violates",
+   "polarity": "no_go",
+   "status": "counterexample",
+   "statement": "The set of classical-classical states is non-convex (mixing classical states of different bases yields discordant states): the convexity axiom fails for discord.",
+   "refs": [
+    "Modi et al., RMP 84, 1655 (2012) [knowledge]"
+   ]
+  },
+  {
+   "id": "MM10",
+   "from": "m-dis",
+   "to": "F-QRT",
+   "kind": "violates",
+   "polarity": "no_go",
+   "status": "counterexample",
+   "statement": "Golden-rule failure: local channels can create discord from classical states, so no free-op class containing local processing exists.",
+   "refs": [
+    "Ciccarello, Giovannetti, PRA 85, 010102(R) (2012) [verify]",
+    "Hu et al., PRA 85, 032102 (2012) [verify]"
+   ]
+  },
+  {
+   "id": "MM11",
+   "from": "F-STEIN",
+   "to": "p-rng",
+   "kind": "reversible",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Second law restored: under ASYMPTOTICALLY resource-non-generating operations every theory meeting the Brandao-Plenio axioms is reversible, with unique rate function = regularized relative entropy of resource (generalized quantum Stein lemma, proven 2024 after the 2023 gap).",
+   "refs": [
+    "Hayashi, Yamasaki, arXiv:2408.02722 [verified]",
+    "Lami, arXiv:2408.06410 [verified]",
+    "Berta et al., Quantum 7, 1103 (2023) [verify page]"
+   ]
+  },
+  {
+   "id": "MM12",
+   "from": "pX-ent",
+   "to": "F-STEIN",
+   "kind": "irreversible",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "The entanglement no-go coexists with the Stein-lemma second law: irreversibility holds under EXACT non-generation, reversibility under ASYMPTOTIC non-generation. The exact/asymptotic frontier is the load-bearing hinge (QG4).",
+   "refs": [
+    "Lami, Regula, Nat. Phys. 19, 184 (2023) [verified]",
+    "Hayashi, Yamasaki, arXiv:2408.02722 [verified]"
+   ]
+  },
+  {
+   "id": "MM13",
+   "from": "F-ADV",
+   "to": "w-robust",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "The advantage axiom instantiates as the robustness-discrimination theorem in every convex theory, and survives (multi-copy form) without convexity - so even discord-type quantumness retains an operational-advantage reading.",
+   "refs": [
+    "Takagi et al., PRL 122, 140402 (2019) [verified]",
+    "Kuroiwa, Takagi, Adesso, Yamasaki [verify venue]"
+   ]
+  },
+  {
+   "id": "MM14",
+   "from": "m-inc",
+   "to": "F-QRT",
+   "kind": "satisfies",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Incompatibility shows the schema extends from states to devices: free objects are classically programmable devices; complete convertibility conditions exist (guessing games).",
+   "refs": [
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "SS1",
+   "from": "sF-coh",
+   "to": "sF-ent",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "Free-set containment: states incoherent in a local PRODUCT basis are diagonal in a product basis, hence separable - INC(product basis) is a strict subset of SEP.",
+   "refs": [
+    "elementary; cf. Streltsov, Adesso, Plenio, RMP 89, 041003 (2017) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS2",
+   "from": "d-maxmix",
+   "to": "sF-pur",
+   "kind": "member_free",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "I/d is the unique purity-free state and lies in every other free set here (SEP, incoherent, symmetric, real, STAB, Wigner-positive); in athermality it is free only for trivial H.",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS3",
+   "from": "d-gibbs",
+   "to": "sR-mag",
+   "kind": "member_resource",
+   "polarity": "possibility",
+   "status": "derived",
+   "statement": "QP5 (thermal magic): the Gibbs state of a generic interacting Hamiltonian is NOT in STAB - thermal states generically carry magic while being free for athermality, coherence (energy basis), asymmetry and imaginarity. Free-of-one, resource-of-another in a single physical state.",
+   "refs": [
+    "proof sketch in catalog; no dedicated literature located - flagged as gap QG5"
+   ]
+  },
+  {
+   "id": "SS3b",
+   "from": "d-gibbs",
+   "to": "sF-ath",
+   "kind": "member_free",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Gamma is the unique free state of athermality, and simultaneously a member of the free sets of coherence (energy basis), asymmetry (U(1)) and imaginarity (energy basis).",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS4",
+   "from": "d-plus",
+   "to": "sF-mag",
+   "kind": "member_free",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "|+> is a stabilizer state and real: magic-free and imaginarity-free. Hence coherence is NOT sufficient for magic.",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS4b",
+   "from": "d-plus",
+   "to": "sR-coh",
+   "kind": "member_resource",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "|+> is the maximal coherence resource (basis Z), a maximal purity resource, and a U(1)-asymmetry resource (H prop Z) - while sitting inside the magic and imaginarity free sets (SS4).",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS5",
+   "from": "d-bell",
+   "to": "sF-mag",
+   "kind": "member_free",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "|Phi+> is a stabilizer state and real: maximal entanglement with zero magic and zero imaginarity. STAB is not contained in SEP and SEP is not contained in STAB: free sets cut across one another (SS13).",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS5b",
+   "from": "d-bell",
+   "to": "sR-ent",
+   "kind": "member_resource",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "|Phi+> is the golden unit of entanglement: maximally entangled, maximally steering-capable, Bell-violating with incompatible measurements.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS6",
+   "from": "d-werner",
+   "to": "sF-nlo",
+   "kind": "member_free",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "Entangled Werner states admit LHV models (projective: Werner 1989; all POVMs: Barrett 2002) and unsteerable ranges (WJD 2007): entangled yet inside the Bell-local and LHS free sets - the strictness witness for the whole hierarchy.",
+   "refs": [
+    "Werner, PRA 40, 4277 (1989) [knowledge]",
+    "Barrett, PRA 65, 042302 (2002) [knowledge]",
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS7",
+   "from": "d-bound",
+   "to": "sR-nlo",
+   "kind": "member_resource",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Some PPT bound entangled states violate a Bell inequality (Peres conjecture false): nonlocality without distillable entanglement.",
+   "refs": [
+    "Vertesi, Brunner, Nat. Commun. 5, 5297 (2014) [verify page]"
+   ]
+  },
+  {
+   "id": "SS8",
+   "from": "d-wpos",
+   "to": "sR-mag",
+   "kind": "member_resource",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "Bound magic: Wigner-positive non-stabilizer states (odd d) are magic resources by set membership yet undistillable and classically simulable.",
+   "refs": [
+    "Veitch, Ferrie, Gross, Emerson, NJP 14, 113011 (2012) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS9",
+   "from": "d-tstate",
+   "to": "sR-mag",
+   "kind": "member_resource",
+   "polarity": "possibility",
+   "status": "derived",
+   "statement": "The T state is simultaneously a resource of magic, coherence, purity AND imaginarity - a maximal multi-theory resource on one qubit; its injection yields universality (pU-mag).",
+   "refs": [
+    "elementary; injection: Bravyi, Kitaev, PRA 71, 022316 (2005) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS10",
+   "from": "sR-ste",
+   "to": "sR-inc",
+   "kind": "equiv",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "One-to-one mapping: every steering problem is a joint-measurability problem and vice versa; steering monotones double as incompatibility monotones.",
+   "refs": [
+    "Uola, Budroni, Guhne, Pellonpaa, PRL 115, 230402 (2015) [verified]",
+    "Quintino, Vertesi, Brunner, PRL 113, 160402 (2014) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS11",
+   "from": "sF-nlo",
+   "to": "F-TENSOR",
+   "kind": "violates",
+   "polarity": "no_go",
+   "status": "derived",
+   "statement": "QP2: at the level of quantum STATES, the Bell-local set is not closed under tensor products - superactivation makes k copies of a local entangled state nonlocal. The tensor axiom fails for state-level locality; resolution: the proper objects are boxes under LOSR, where closure holds.",
+   "refs": [
+    "Palazuelos, PRL 109, 190401 (2012) [knowledge]",
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "SS12",
+   "from": "sF-ath",
+   "to": "sF-coh",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "{gamma} is a subset of the incoherent states (energy basis, nondegenerate H): the athermality free set sits inside the coherence free set - any free transformation of coherence theory leaves gamma free.",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS13",
+   "from": "sF-mag",
+   "to": "sF-ent",
+   "kind": "distinct",
+   "polarity": "no_go",
+   "status": "derived",
+   "statement": "Transversality: STAB is NOT a subset of SEP (Bell state is stabilizer and entangled) and SEP is NOT a subset of STAB (the product state T tensor |0> is separable and magic). Neither theory's free transformations respect the other's free set.",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS14",
+   "from": "sF-coh",
+   "to": "sF-ima",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "derived",
+   "statement": "Incoherent states are real in the same basis (diagonal entries are probabilities): INC is a strict subset of the real states, so every free state of coherence is also free for imaginarity - but not conversely (real off-diagonal states).",
+   "refs": [
+    "elementary"
+   ]
+  },
+  {
+   "id": "SS15",
+   "from": "sF-nlo",
+   "to": "sF-ctx",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Bell-local behaviors are exactly the noncontextual behaviors of Bell-type scenarios (spacelike contexts): the nonlocality free set embeds in the contextuality free set scenario-by-scenario. Operations caveat: NCW restricted to Bell scenarios differs from LOSR (P6).",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]",
+    "Santos, Wagner, Amaral, arXiv:2407.02120 [verified]"
+   ]
+  },
+  {
+   "id": "SS16",
+   "from": "sF-ent",
+   "to": "sF-ste",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "SEP is a strict subset of the unsteerable states: every separable state admits an LHS model by construction; strictness by unsteerable entangled Werner states.",
+   "refs": [
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS17",
+   "from": "sF-ste",
+   "to": "sF-nlo",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Unsteerable is a strict subset of Bell-local: an LHS model is an LHV model with quantum states on one wing; strictness by steerable yet Bell-local states.",
+   "refs": [
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]",
+    "Quintino et al., PRA 92, 032107 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "SS18",
+   "from": "sF-asy",
+   "to": "sF-coh",
+   "kind": "equiv",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "State-level identification: U(1)-symmetric = incoherent in the (nondegenerate) energy eigenbasis. The free sets coincide; the MONOTONE sets do not (MM2) - same states, different theories.",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]"
+   ]
+  },
+  {
+   "id": "SS19",
+   "from": "d-ccdis",
+   "to": "sR-dis",
+   "kind": "member_resource",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Discordant separable states: inside the SEP free set of entanglement, yet discord resources - the inputs that the activation protocol (pU-dis) converts into distillable entanglement.",
+   "refs": [
+    "Ollivier, Zurek, PRL 88, 017901 (2001) [knowledge]"
+   ]
+  },
+  {
+   "id": "C1",
+   "from": "sR-coh",
+   "to": "sR-ent",
+   "kind": "converts_to",
+   "via": "bipartite incoherent operations (system + incoherent ancilla)",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Faithful conversion: a state can be turned into an entangled one by incoherent operations iff it is coherent; max entanglement generated defines coherence monotones; E_r(output) <= C_r(input), achievable (generalized CNOT).",
+   "refs": [
+    "Streltsov, Singh, Dhar, Bera, Adesso, PRL 115, 020403 (2015) [verified]"
+   ]
+  },
+  {
+   "id": "C2",
+   "from": "sR-ent",
+   "to": "sR-coh",
+   "kind": "converts_to",
+   "via": "LQICC (local quantum-incoherent ops + classical communication)",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Assisted frameworks: shared entanglement is consumed to create or localize coherence on the incoherent side; entanglement and coherence become interconvertible currencies in the intersection class p-lqicc.",
+   "refs": [
+    "Chitambar, Hsieh, PRL 117, 020402 (2016) [knowledge]",
+    "Chitambar, Streltsov, Rana, Bera, Adesso, Lewenstein, PRL 116, 070402 (2016) [verify author list]"
+   ]
+  },
+  {
+   "id": "C3",
+   "from": "sR-pur",
+   "to": "sR-coh",
+   "kind": "converts_to",
+   "via": "unitaries (free in the purity theory)",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Purity = maximal coherence achievable by unitaries (distance-based quantifiers coincide exactly); purity also upper-bounds the entanglement and discord producible by global unitaries - the P >= C_max >= E_max cascade (QP4).",
+   "refs": [
+    "Streltsov, Kampermann, Wolk, Gessner, Bruss, NJP 20, 053058 (2018) [verified]"
+   ]
+  },
+  {
+   "id": "C5",
+   "from": "sR-coh",
+   "to": "sR-ath",
+   "kind": "bounds",
+   "via": "thermal operations",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Energy coherence is an athermality resource not captured by free energy: coherence modes evolve under independent constraints, coherence transfer manifests irreversibility beyond free energy, and work is locked in coherence (pX-ath).",
+   "refs": [
+    "Lostaglio, Korzekwa, Jennings, Rudolph, PRX 5, 021001 (2015) [verified]",
+    "Lostaglio, Jennings, Rudolph, Nat. Commun. 6, 6383 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "C6",
+   "from": "sR-asy",
+   "to": "pX-ath",
+   "kind": "irreversible",
+   "via": "thermal/covariant operations, unlimited work allowed",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "The asymmetry resource feeds the no-go: coherence cost of ANY state under thermal processing = its QFI; distillable coherence = 0 for all full-rank states. The asymmetry sector of thermodynamics is maximally irreversible.",
+   "refs": [
+    "Marvian, Nat. Commun. 11, 25 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "C7",
+   "from": "sR-dis",
+   "to": "sR-ent",
+   "kind": "activates",
+   "via": "local CNOT/measurement interaction with ancillas, then entanglement distillation (pU-dis)",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Activation: every nonclassically correlated (discordant) state, including separable ones, generates distillable entanglement with ancillas; relative entropy of quantumness = minimal distillable entanglement so generated.",
+   "refs": [
+    "Piani et al., PRL 106, 220403 (2011) [verified]",
+    "Streltsov, Kampermann, Bruss, PRL 106, 160401 (2011) [knowledge]"
+   ]
+  },
+  {
+   "id": "C8",
+   "from": "sR-ent",
+   "to": "sR-nlo",
+   "kind": "converts_to",
+   "via": "local incompatible measurements (single copy); tensoring + local measurements (superactivation)",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Entanglement is necessary for Bell violation; insufficient per copy (Werner/Barrett local models); but superactivatable: many copies of some Bell-local entangled states violate Bell inequalities. Every entangled state wins some semiquantum game (Buscemi).",
+   "refs": [
+    "Palazuelos, PRL 109, 190401 (2012) [knowledge]",
+    "Buscemi, PRL 108, 200401 (2012) [knowledge]"
+   ]
+  },
+  {
+   "id": "C9",
+   "from": "sR-ent",
+   "to": "sR-ste",
+   "kind": "converts_to",
+   "via": "incompatible measurements on the untrusted wing",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Strict hierarchy: steerable implies entangled, Bell-nonlocal implies steerable; both converses fail (Werner ranges). Steering requires BOTH entanglement (sR-ent) and incompatibility (sR-inc) jointly.",
+   "refs": [
+    "Wiseman, Jones, Doherty, PRL 98, 140402 (2007) [knowledge]",
+    "Quintino et al., PRA 92, 032107 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "C10",
+   "from": "sR-mag",
+   "to": "sR-ctx",
+   "kind": "converts_to",
+   "via": "stabilizer measurements on the magic state",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Contextuality is necessary and (for odd prime d) sufficient for magic-state distillability: nonzero mana implies KS-contextuality w.r.t. stabilizer measurements. Multiqubit case obstructed by state-independent contextuality (QG1).",
+   "refs": [
+    "Howard, Wallman, Veitch, Emerson, Nature 510, 351 (2014) [knowledge, verified in prior network run]"
+   ]
+  },
+  {
+   "id": "C11",
+   "from": "sR-nga",
+   "to": "sR-ctx",
+   "kind": "equiv",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "CV: Wigner negativity iff contextuality (continuous-variable scenario), closing the CV side of the magic-contextuality correspondence.",
+   "refs": [
+    "Booth, Chabaud, Emeriau, PRL 129, 230401 (2022) [knowledge, verified in prior network run]"
+   ]
+  },
+  {
+   "id": "C12",
+   "from": "sR-coh",
+   "to": "sR-mag",
+   "kind": "bounds",
+   "polarity": "structural",
+   "status": "partial",
+   "statement": "Coherence is necessary for magic (every nonstabilizer state is coherent in every stabilizer eigenbasis - a stabilizer-diagonal state is a STAB mixture) but radically insufficient (|+>, SS4). No faithful conversion protocol known - QG5.",
+   "refs": [
+    "'Coherence makes quantum systems magical', arXiv:1801.04807 [verify authors/venue]",
+    "necessity: derived, proof sketch in catalog"
+   ]
+  },
+  {
+   "id": "C13",
+   "from": "sR-ima",
+   "to": "pU-ima",
+   "kind": "enables",
+   "via": "LOCC with vs without local imaginarity",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Imaginarity powers local discrimination: an ENT-free task (discriminating real orthogonal product states) separates imaginarity-free from imaginarity-resourced agents - a cross-theory witness.",
+   "refs": [
+    "Wu et al., PRL 126, 090401 (2021) [verified]",
+    "Wu et al., PRA 103, 032401 (2021) [verified]"
+   ]
+  },
+  {
+   "id": "C14",
+   "from": "sR-ath",
+   "to": "pU-ath",
+   "kind": "enables",
+   "via": "thermal operations",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Second laws: the Renyi free energies govern deterministic work extraction and state interconversion for block-diagonal states.",
+   "refs": [
+    "Brandao et al., PNAS 112, 3275 (2015) [knowledge]",
+    "Horodecki, Oppenheim, Nat. Commun. 4, 2059 (2013) [knowledge]"
+   ]
+  },
+  {
+   "id": "C15",
+   "from": "sR-ent",
+   "to": "pU-ath",
+   "kind": "enables",
+   "via": "thermal processing of correlated systems",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Correlations store work: extractable work from correlated states exceeds that from their marginals; entanglement maximizes the single-shot gain - an entanglement resource spent in the thermodynamic task node.",
+   "refs": [
+    "Perarnau-Llobet et al., PRX 5, 041011 (2015) [verify]"
+   ]
+  },
+  {
+   "id": "C16",
+   "from": "sR-coh",
+   "to": "pU-coh",
+   "kind": "enables",
+   "via": "incoherent operations (IO)",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Every coherent state has distillable coherence C_r > 0 under IO (no bound coherence); cost is C_f >= C_r. The resource is spent faithfully: distillation succeeds for ALL resource states - rare among the 13 theories (QP3).",
+   "refs": [
+    "Winter, Yang, PRL 116, 120404 (2016) [knowledge]"
+   ]
+  },
+  {
+   "id": "C16b",
+   "from": "sR-coh",
+   "to": "pX-coh",
+   "kind": "irreversible",
+   "via": "incoherent operations (IO), generic mixed states",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "The same resource hits the wall: C_f > C_r generically, so an IO distill-dilute cycle loses coherence; par is restored only under asymptotically-MIO (Stein-lemma regime, MM11).",
+   "refs": [
+    "Winter, Yang, PRL 116, 120404 (2016) [knowledge]",
+    "Brandao, Gour, PRL 115, 070503 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "C17",
+   "from": "sR-mag",
+   "to": "pX-mag",
+   "kind": "irreversible",
+   "via": "stabilizer operations",
+   "polarity": "no_go",
+   "status": "partial",
+   "statement": "Magic is asymptotically irreversible under stabilizer protocols: maximal-mana state classes exist that do not interconvert at unit rate; Wigner-positive magic cannot be distilled at all.",
+   "refs": [
+    "Wang, Wilde, Su [verify: PRL 124, 090505 (2020) / NJP 21, 103002 (2019)]",
+    "Veitch et al., NJP 14, 113011 (2012) [knowledge]"
+   ]
+  },
+  {
+   "id": "C18",
+   "from": "p-cat",
+   "to": "pU-ent",
+   "kind": "enables",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Catalysis changes the pre-order: entanglement catalysis (LOCC + returned catalyst) enables otherwise impossible pure-state conversions; catalytic coherence enables repeated coherence use; a candidate route around pX-ent via entanglement batteries (QG9).",
+   "refs": [
+    "Jonathan, Plenio, PRL 83, 3566 (1999) [knowledge]",
+    "Aberg, PRL 113, 150402 (2014) [knowledge]",
+    "Datta et al., Rep. Prog. Phys. 86, 116002 (2023) [verified]"
+   ]
+  },
+  {
+   "id": "C19",
+   "from": "sR-inc",
+   "to": "sR-ste",
+   "kind": "converts_to",
+   "via": "applying the incompatible set to one wing of a full-Schmidt-rank entangled state",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Incompatibility converts to steering: measuring an incompatible set on one half of a maximally entangled state produces a steerable assemblage, and every steerable assemblage arises this way (the constructive direction of SS10).",
+   "refs": [
+    "Uola et al., PRL 115, 230402 (2015) [verified]",
+    "Quintino, Vertesi, Brunner, PRL 113, 160402 (2014) [knowledge]"
+   ]
+  },
+  {
+   "id": "P1",
+   "from": "pF-nlo",
+   "to": "pF-ste",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Operation ladder, first rung: LOSR is a strict subset of 1W-LOCC (adding one-way communication from the trusted wing).",
+   "refs": [
+    "Gallego, Aolita, PRX 5, 041008 (2015) [knowledge]",
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "P1b",
+   "from": "pF-ste",
+   "to": "pF-ent",
+   "kind": "subset",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Operation ladder, second rung: 1W-LOCC is a strict subset of LOCC; above LOCC the ladder continues through SEP-ops, PPT-ops, NE. Each rung changes which states count as equivalent resources.",
+   "refs": [
+    "Gallego, Aolita, PRX 5, 041008 (2015) [knowledge]",
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ]
+  },
+  {
+   "id": "P2",
+   "from": "pF-asy",
+   "to": "pF-coh",
+   "kind": "contains",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "TIO (covariant for U(1)) is a strict subset of DIO; SIO < IO, DIO < MIO; IO and DIO incomparable: the coherence free-op lattice, with the symmetry-justified class at the bottom.",
+   "refs": [
+    "Marvian, Spekkens, PRA 94, 052324 (2016) [verified]",
+    "Chitambar, Gour, PRL 117, 030401 (2016) [verify]"
+   ]
+  },
+  {
+   "id": "P3",
+   "from": "pF-ath",
+   "to": "pF-coh",
+   "kind": "contains",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "TO are time-translation covariant AND Gibbs-preserving; GPO strictly exceeds TO because a Gibbs-preserving map can create energy coherence while TO (covariant) cannot. Whether TO = GPO intersect TIO exactly is QG2.",
+   "refs": [
+    "Faist, Oppenheim, Renner, NJP 17, 043003 (2015) [verified]"
+   ]
+  },
+  {
+   "id": "P4",
+   "from": "pF-pur",
+   "to": "pF-ath",
+   "kind": "specializes",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Noisy operations = thermal operations at trivial Hamiltonian; noisy subset of unital with the same induced state pre-order (majorization).",
+   "refs": [
+    "Gour et al., Phys. Rep. 583, 1 (2015) [knowledge]"
+   ]
+  },
+  {
+   "id": "P5",
+   "from": "p-lqicc",
+   "to": "pF-ent",
+   "kind": "contains",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "LQICC/LICC = LOCC with one or both labs restricted to incoherent local processing: the intersection class in which the ENT-COH exchange rates (C1, C2) are formulated.",
+   "refs": [
+    "Chitambar, Hsieh, PRL 117, 020402 (2016) [knowledge]"
+   ]
+  },
+  {
+   "id": "P6",
+   "from": "pF-ctx",
+   "to": "pF-nlo",
+   "kind": "distinct",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "Noncontextual wirings restricted to Bell scenarios are NOT equivalent to LOSR: the two candidate unifications of 'classical operations' disagree, leaving the correct common free-op class open (QG3).",
+   "refs": [
+    "Santos, Wagner, Amaral, arXiv:2407.02120 [verified]"
+   ]
+  },
+  {
+   "id": "P7",
+   "from": "pF-inc",
+   "to": "pF-ste",
+   "kind": "equiv",
+   "polarity": "structural",
+   "status": "partial",
+   "statement": "Via the steering-incompatibility correspondence, incompatibility-non-increasing pre/post-processing maps onto the 1W-LOCC structure of steering (channel-state duality on assemblages).",
+   "refs": [
+    "Uola et al., PRL 115, 230402 (2015) [verified]",
+    "Kiukas, Budroni, Uola, Pellonpaa, PRA 96, 042331 (2017) [verify]"
+   ]
+  },
+  {
+   "id": "P8",
+   "from": "p-rng",
+   "to": "pX-ent",
+   "kind": "bounds",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "Reversibility is class-sensitive: exact NE -> irreversible (pX-ent); asymptotically NE -> reversible at E_r^infinity (MM11). The pair pinpoints the exact/asymptotic frontier as the load-bearing axiom (QG4).",
+   "refs": [
+    "Lami, Regula, Nat. Phys. 19, 184 (2023) [verified]",
+    "Hayashi, Yamasaki, arXiv:2408.02722 [verified]"
+   ]
+  },
+  {
+   "id": "W1",
+   "from": "F-CONVEX",
+   "to": "w-hahn",
+   "kind": "implies",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Convexity axiom -> witness layer: every resource state of every convex closed theory is linearly witnessed.",
+   "refs": [
+    "Chitambar, Gour, RMP 91, 025001 (2019) [knowledge]"
+   ]
+  },
+  {
+   "id": "W2",
+   "from": "w-robust",
+   "to": "t-discrim",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Generalized robustness = exact maximal advantage in subchannel discrimination; universal across convex theories (entanglement, coherence, magic explicitly included).",
+   "refs": [
+    "Takagi et al., PRL 122, 140402 (2019) [verified]"
+   ]
+  },
+  {
+   "id": "W3",
+   "from": "wD-nlo",
+   "to": "wQ-nlo",
+   "kind": "distinct",
+   "polarity": "no_go",
+   "status": "theorem",
+   "statement": "Witnessing is not quantifying: the degrees of violation of all facet Bell inequalities suffice to DETECT nonclassicality but do not determine the LOSR convertibility pre-order.",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "W4",
+   "from": "wD-ste",
+   "to": "sR-ste",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "LHS membership is SDP-testable; steering inequalities import one-to-one from joint-measurability criteria (SS10).",
+   "refs": [
+    "Uola et al., PRL 115, 230402 (2015) [verified]"
+   ]
+  },
+  {
+   "id": "W5",
+   "from": "wQ-asy",
+   "to": "sR-asy",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "QFI witnesses and quantifies asymmetry; quantum speed limits reinterpreted as asymmetry monotone bounds; QFI = thermal coherence cost (operational meaning via pX-ath).",
+   "refs": [
+    "Marvian, Spekkens, Zanardi, PRA 93, 052331 (2016) [verified]",
+    "Marvian, Nat. Commun. 11, 25 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "W6",
+   "from": "wQ-inc",
+   "to": "sR-inc",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "The guessing-game family with post-measurement information is a COMPLETE monotone set: it decides device convertibility, not just detection.",
+   "refs": [
+    "Buscemi, Chitambar, Zhou, PRL 124, 120401 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "W7",
+   "from": "wQ-ath",
+   "to": "sR-ath",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "The F_alpha family is complete for block-diagonal athermality; the coherent sector needs asymmetry-mode witnesses in addition - the axiom factorization visible at witness level (MM3).",
+   "refs": [
+    "Brandao et al., PNAS 112, 3275 (2015) [knowledge]",
+    "Lostaglio et al., PRX 5, 021001 (2015) [verified]"
+   ]
+  },
+  {
+   "id": "W8",
+   "from": "wD-ima",
+   "to": "sR-ima",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "The LOCC-vs-real-LOCC discrimination gap witnesses imaginarity operationally (realized in optics).",
+   "refs": [
+    "Wu et al., PRL 126, 090401 (2021) [verified]"
+   ]
+  },
+  {
+   "id": "W9",
+   "from": "sR-mag",
+   "to": "pU-mag",
+   "kind": "enables",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Magic spent through injection buys universality; monotones (robustness of magic) quantify the simulation overhead and distillation bounds.",
+   "refs": [
+    "Bravyi, Kitaev, PRA 71, 022316 (2005) [knowledge]",
+    "Howard, Campbell, PRL 118, 090501 (2017) [knowledge]"
+   ]
+  },
+  {
+   "id": "W10",
+   "from": "sR-ctx",
+   "to": "pU-ctx",
+   "kind": "enables",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Preparation contextuality powers parity-oblivious multiplexing beyond any noncontextual bound.",
+   "refs": [
+    "Spekkens et al., PRL 102, 010401 (2009) [verify]"
+   ]
+  },
+  {
+   "id": "W11",
+   "from": "sR-nlo",
+   "to": "pU-nlo",
+   "kind": "enables",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Bell violation certifies device-independent key and randomness.",
+   "refs": [
+    "Brunner et al., RMP 86, 419 (2014) [knowledge]"
+   ]
+  },
+  {
+   "id": "W12",
+   "from": "sR-ste",
+   "to": "pU-ste",
+   "kind": "enables",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Steering is the exact resource of one-sided device-independent QKD.",
+   "refs": [
+    "Branciard et al., PRA 85, 010301(R) (2012) [verify]"
+   ]
+  },
+  {
+   "id": "W13",
+   "from": "sR-asy",
+   "to": "pU-asy",
+   "kind": "enables",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Phase/parameter estimation sensitivity is an asymmetry monotone (QFI); clocks and reference frames are asymmetry batteries.",
+   "refs": [
+    "Marvian, Nat. Commun. 11, 25 (2020) [verified]"
+   ]
+  },
+  {
+   "id": "W14",
+   "from": "sR-ent",
+   "to": "pU-ent",
+   "kind": "enables",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Ebits enable teleportation/dense coding; semiquantum games certify every entangled state as useful.",
+   "refs": [
+    "Buscemi, PRL 108, 200401 (2012) [knowledge]"
+   ]
+  },
+  {
+   "id": "W15",
+   "from": "wQ-ent",
+   "to": "pX-ent",
+   "kind": "bounds",
+   "polarity": "structural",
+   "status": "theorem",
+   "statement": "The E_D < E_C gap measured by the monotones is the single-shot face of the irreversibility the no-go node formalizes; no single monotone can govern all transformations.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]",
+    "Lami, Regula, Nat. Phys. 19, 184 (2023) [verified]"
+   ]
+  },
+  {
+   "id": "W16",
+   "from": "wD-ent",
+   "to": "sR-ent",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Entanglement witnesses detect every entangled state (Hahn-Banach complete); PPT is a one-sided test blind to NPT structure; separability is NP-hard to decide.",
+   "refs": [
+    "Horodecki x4, RMP 81, 865 (2009) [knowledge]"
+   ]
+  },
+  {
+   "id": "W17",
+   "from": "wD-coh",
+   "to": "sR-coh",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Robustness of coherence is directly measurable (witness-based lower bounds; interferometric interpretation).",
+   "refs": [
+    "Napoli et al., PRL 116, 150502 (2016) [verify]"
+   ]
+  },
+  {
+   "id": "W18",
+   "from": "wD-mag",
+   "to": "sR-mag",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Mana and robustness of magic witness nonstabilizerness and quantify classical-simulation overhead and distillation bounds.",
+   "refs": [
+    "Howard, Campbell, PRL 118, 090501 (2017) [knowledge]",
+    "Veitch et al., NJP 16, 013009 (2014) [knowledge]"
+   ]
+  },
+  {
+   "id": "W19",
+   "from": "wD-ctx",
+   "to": "sR-ctx",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Noncontextuality inequalities detect contextual behaviors; the contextual fraction grades them.",
+   "refs": [
+    "Amaral et al., PRL 120, 130403 (2018) [verified]",
+    "Abramsky, Barbosa, Mansfield, PRL 119, 050504 (2017) [verify]"
+   ]
+  },
+  {
+   "id": "W20",
+   "from": "wD-nlo",
+   "to": "sR-nlo",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Facet Bell inequalities detect every nonlocal box of the scenario (they define the local polytope's boundary).",
+   "refs": [
+    "Wolfe et al., Quantum 4, 280 (2020) [verified]",
+    "Brunner et al., RMP 86, 419 (2014) [knowledge]"
+   ]
+  },
+  {
+   "id": "W21",
+   "from": "wD-dis",
+   "to": "sR-dis",
+   "kind": "witness",
+   "polarity": "possibility",
+   "status": "theorem",
+   "statement": "Failure of local broadcasting witnesses discord: a state is locally broadcastable iff classical-classical.",
+   "refs": [
+    "Piani, Horodecki, Horodecki, PRL 100, 090502 (2008) [knowledge]"
+   ]
+  }
+ ],
+ "derived_propositions": [
+  {
+   "id": "QP1",
+   "title": "Typology of free-operation justifications and its two shadows",
+   "status": "derived",
+   "summary": "Symmetry-, subtheory-, partition-, constraint-type classification; athermality the unique intersection type; the axiom-level factorization reappears verbatim at state level (free set = unique symmetric Gibbs state) and witness level (F_alpha family + asymmetry-mode family, jointly complete, separately incomplete)."
+  },
+  {
+   "id": "QP2",
+   "title": "Tensor-stability failure of state-level Bell locality",
+   "status": "derived (assembly of Palazuelos 2012 + Wolfe et al. 2020)",
+   "summary": "The CFS tensor axiom fails for 'Bell-local quantum states' (superactivation); it holds for boxes under LOSR. Moral: when an axiom fails, the objects were wrong, not the axiom."
+  },
+  {
+   "id": "QP3",
+   "title": "Bound resources are operation-class-relative",
+   "status": "derived (assembly)",
+   "summary": "Bound entanglement exists (PPT), bound magic exists (Wigner-positive), thermal-covariant coherence is ALL bound at full rank (Marvian 2020), speakable coherence has NO bound states under IO (Winter-Yang), purity has none (majorization). Whether a theory exhibits bound resources is not intrinsic to the free set: it is a joint property of (F, O) and shifts as O moves within the RNG lattice."
+  },
+  {
+   "id": "QP4",
+   "title": "Purity -> coherence -> entanglement cascade",
+   "status": "derived (assembly of NJP 20, 053058 (2018) + PRL 115, 020403 (2015))",
+   "summary": "P(rho) >= C_max(rho) (unitaries) and C(rho) >= E_max(rho) (bipartite incoherent ops): one quantitative chain of generation bounds connecting three theories, with each link's operation class stated."
+  },
+  {
+   "id": "QP5",
+   "title": "Thermal magic",
+   "status": "derived; literature status = gap QG5",
+   "summary": "For generic interacting H, the Gibbs state is free in athermality, coherence (energy basis), asymmetry, imaginarity - and a magic resource. Candidate program: quantify mana(gamma(beta)) across models; relate to simulability of thermal states."
+  }
+ ],
+ "gaps": [
+  {
+   "id": "QG1",
+   "statement": "Multiqubit (even-d) magic vs contextuality: exact scope of the Howard et al. correspondence without a Wigner function with the right covariance (inherits G3 of the nonclassicality network)."
+  },
+  {
+   "id": "QG2",
+   "statement": "Is TO = GPO intersect TIO? The strict inclusions TO < GPO and TO < TIO are settled; the exact characterization of TO inside the intersection is not settled in this compilation - locate or prove."
+  },
+  {
+   "id": "QG3",
+   "statement": "NCW|Bell != LOSR (Santos-Wagner-Amaral): what is the correct single free-op class unifying contextuality and nonlocality, and which monotones survive both?"
+  },
+  {
+   "id": "QG4",
+   "statement": "Reversibility frontier map: for each theory, classify (exactly-RNG reversible?, asymptotically-RNG reversible?, physically-motivated-class reversible?). Known points: ENT (no / yes / no), speakable COH (no under IO for cost / yes / partial), ASY-thermal (no, maximally), MAG (no under STAB / Stein-lemma applicability to STAB needs the axioms checked), PUR (yes / yes / yes). Fill the table."
+  },
+  {
+   "id": "QG5",
+   "statement": "Unstudied pairwise conversion cells: e.g. imaginarity x athermality (real thermal operations?), magic x thermodynamics (mana of Gibbs states, 'thermal magic'), imaginarity x magic (T-state imaginarity cost). The 13 x 13 via-class conversion matrix is mostly uncharted - the automation hook of this network."
+  },
+  {
+   "id": "QG6",
+   "statement": "Steering analogue of entangleability of cones (carried over as G1 from the nonclassicality network)."
+  },
+  {
+   "id": "QG7",
+   "statement": "Erasure costs across theories: Landauer-type costs known for entanglement erasure; systematic erasure calculus for asymmetry, magic, imaginarity missing."
+  },
+  {
+   "id": "QG8",
+   "statement": "Non-convex quantumness: beyond the Kuroiwa et al. advantage result, is there a maximal physically motivated operation class for a non-convex free set (discord) with a usable pre-order?"
+  },
+  {
+   "id": "QG9",
+   "statement": "Catalysis uniformization: which of the 13 theories admit catalytic activation of the full RNG pre-order (cf. recent entanglement-battery second law, arXiv:2405.10599 [verify]) - a candidate route around Lami-Regula irreversibility."
+  },
+  {
+   "id": "QG10",
+   "statement": "Thermodynamics of bound entanglement (carried over as G8), now joined by: thermodynamics of bound magic."
+  }
+ ]
+}</script>
+<script>
+"use strict";
+const DATA = JSON.parse(document.getElementById("qrtdata").textContent);
+
+/* ---------- naming ---------- */
+const TNAME = {pur:"Purity", ath:"Athermality", asy:"Asymmetry", coh:"Coherence", ima:"Imaginarity",
+  mag:"Magic", nga:"Wigner negativity (CV)", ent:"Entanglement", ste:"Steering", nlo:"Bell nonlocality",
+  ctx:"Contextuality", inc:"Incompatibility", dis:"Discord", framework:"Framework", shared:"Framework"};
+const FAMSHORT = {pur:"constraint", ath:"constraint × symmetry", asy:"symmetry", coh:"dephasing-defined",
+  ima:"antiunitary ℤ₂", mag:"subtheory (stabilizer)", nga:"subtheory (Gaussian)", ent:"partition (LOCC)",
+  ste:"partition (1W-LOCC)", nlo:"partition (LOSR)", ctx:"partition (NCW)", inc:"device programmability",
+  dis:"not a standard QRT"};
+const ROLENAME = {model:"model · axioms", free_state:"free states", resource_state:"resource states",
+  dist:"distinguished state", free_ops:"free operations", use_ops:"resource-utilizing ops",
+  no_ops:"impossible (no-go)", detector:"witness · detector", quantifier:"witness · quantifier",
+  framework:"framework / shared"};
+const ROLECOL = {model:"--r-model", free_state:"--r-free", resource_state:"--r-res", dist:"--r-dst",
+  free_ops:"--r-free", use_ops:"--r-use", no_ops:"--r-noop", detector:"--r-det", quantifier:"--r-quant",
+  framework:"--r-fw"};
+function panelTitle(n){
+  if (n.role==="framework") return n.label;
+  return (TNAME[n.theory]||n.theory)+" · "+n.label;
+}
+function trunc(s,m){ s=String(s); return s.length>m ? s.slice(0,m-1)+"…" : s; }
+
+/* ---------- layout ---------- */
+const ORDER = ["pur","ath","asy","coh","ima","mag","nga","ent","ste","nlo","ctx","inc","dis"];
+const COLS = [
+  {key:"fw",      title:"FRAMEWORK & SHARED"},
+  {key:"model",   title:"MODEL — AXIOMS"},
+  {key:"states",  title:"STATES — FREE / RESOURCE / SHARED"},
+  {key:"process", title:"PROCESSES — FREE / USE / IMPOSSIBLE"},
+  {key:"witness", title:"WITNESSES — DETECT / QUANTIFY"}
+];
+const NW=256, NH=42, CGAP=46, SLOT=50, HEADH=26, BANDGAP=14, X0=16, Y0=56;
+const colX = i => X0 + i*(NW+CGAP);
+const SVG_W = colX(4)+NW+18;
+const BANDH = HEADH + 3*SLOT;
+const bandTop = {};
+ORDER.forEach((t,i)=>{ bandTop[t] = Y0 + i*(BANDH+BANDGAP); });
+const SVG_H = Y0 + ORDER.length*(BANDH+BANDGAP) + 8;
+const ROLEPOS = {model:[1,1], free_state:[2,0], resource_state:[2,1], dist:[2,2],
+  free_ops:[3,0], use_ops:[3,1], no_ops:[3,2], detector:[4,0], quantifier:[4,1]};
+const FWCOL = ["F-QRT","F-CONVEX","F-TENSOR","F-STEIN","F-ADV","F-TYPE","p-lqicc","p-cat","p-rng","w-hahn","w-robust","t-discrim"];
+
+const pos = {};
+for (const n of DATA.nodes){
+  let x,y,cls="";
+  const fi = FWCOL.indexOf(n.id);
+  if (fi>=0){
+    x = colX(0);
+    y = Y0 + 10 + fi*((SVG_H-Y0-NH-30)/(FWCOL.length-1));
+    cls = "fw";
+  } else {
+    const rp = ROLEPOS[n.role];
+    x = colX(rp[0]);
+    y = bandTop[n.theory] + HEADH + rp[1]*SLOT;
+    if (n.role==="model") y = bandTop[n.theory] + HEADH + SLOT*1.5 - NH/2;
+    if (n.role==="dist") cls = "dst";
+    if (n.role==="no_ops") cls = "noopn";
+  }
+  pos[n.id] = {x,y,w:NW,h:NH,cls,node:n};
+}
+
+/* ---------- SVG ---------- */
+const svg = document.getElementById("net");
+const NS = "http://www.w3.org/2000/svg";
+svg.setAttribute("width",SVG_W); svg.setAttribute("height",SVG_H);
+svg.setAttribute("viewBox",`0 0 ${SVG_W} ${SVG_H}`);
+const defs = document.createElementNS(NS,"defs");
+defs.innerHTML = `
+ <marker id="ar-possibility" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--poss)"/></marker>
+ <marker id="ar-structural" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--struct)"/></marker>
+ <marker id="ar-open" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--openc)"/></marker>
+ <marker id="bar-no_go" viewBox="0 0 8 14" refX="5.5" refY="7" markerWidth="6.5" markerHeight="11" orient="auto-start-reverse"><rect x="3.6" y="0" width="2.8" height="14" fill="var(--nogo)"/></marker>`;
+svg.appendChild(defs);
+const gBands = document.createElementNS(NS,"g");
+const gEdges = document.createElementNS(NS,"g");
+const gNodes = document.createElementNS(NS,"g");
+svg.appendChild(gBands); svg.appendChild(gEdges); svg.appendChild(gNodes);
+
+for (let i=0;i<COLS.length;i++){
+  const t = document.createElementNS(NS,"text");
+  t.setAttribute("x",colX(i)); t.setAttribute("y",28); t.setAttribute("class","colhead");
+  t.textContent = COLS[i].title; gNodes.appendChild(t);
+}
+for (const th of ORDER){
+  const y = bandTop[th];
+  const line = document.createElementNS(NS,"line");
+  line.setAttribute("x1",colX(1)-14); line.setAttribute("x2",SVG_W-10);
+  line.setAttribute("y1",y+HEADH-10); line.setAttribute("y2",y+HEADH-10);
+  line.setAttribute("class","bandline"); gBands.appendChild(line);
+  const t = document.createElementNS(NS,"text");
+  t.setAttribute("x",colX(1)); t.setAttribute("y",y+10); t.setAttribute("class","bandhead");
+  t.textContent = TNAME[th].toUpperCase(); gBands.appendChild(t);
+  const s = document.createElementNS(NS,"text");
+  s.setAttribute("x",colX(1)+10+TNAME[th].length*8.2); s.setAttribute("y",y+10); s.setAttribute("class","bandsub");
+  s.textContent = "· "+FAMSHORT[th]; gBands.appendChild(s);
+}
+
+function edgePath(a,b){
+  const ay=a.y+a.h/2, by=b.y+b.h/2;
+  if (Math.round(a.x)===Math.round(b.x)){
+    const left = a.x > X0+10;
+    const x = left ? a.x : a.x+a.w;
+    const bulge = (left?-1:1)*Math.min(36, 14+Math.abs(by-ay)*0.05);
+    return `M${x} ${ay} C ${x+bulge} ${ay}, ${x+bulge} ${by}, ${x} ${by}`;
+  }
+  const fwd = b.x > a.x;
+  const x1 = fwd ? a.x+a.w : a.x, x2 = fwd ? b.x : b.x+b.w;
+  const d = Math.max(34, Math.abs(x2-x1)*0.42);
+  const c1 = fwd ? x1+d : x1-d, c2 = fwd ? x2-d : x2+d;
+  return `M${x1} ${ay} C ${c1} ${ay}, ${c2} ${by}, ${x2} ${by}`;
+}
+const edgeEls=[];
+for (const e of DATA.edges){
+  const a=pos[e.from], b=pos[e.to]; if(!a||!b) continue;
+  const open = /partial|open/.test(e.status||"");
+  const p=document.createElementNS(NS,"path");
+  p.setAttribute("d", edgePath(a,b));
+  p.setAttribute("class", `edge pol-${e.polarity}${open?" st-open":""}`);
+  p.setAttribute("marker-end", e.polarity==="no_go" ? "url(#bar-no_go)" : (open ? "url(#ar-open)" : `url(#ar-${e.polarity==="possibility"?"possibility":"structural"})`));
+  p.addEventListener("click", ()=>select({type:"edge", e}));
+  gEdges.appendChild(p);
+  edgeEls.push({e,p});
+}
+const nodeEls={};
+for (const n of DATA.nodes){
+  const r=pos[n.id];
+  const g=document.createElementNS(NS,"g");
+  g.setAttribute("class",`node ${r.cls}`);
+  g.setAttribute("tabindex","0"); g.setAttribute("role","button");
+  g.setAttribute("aria-label", panelTitle(n)+" — "+(ROLENAME[n.role]||n.role));
+  const box=document.createElementNS(NS,"rect");
+  box.setAttribute("class","box");
+  box.setAttribute("x",r.x); box.setAttribute("y",r.y); box.setAttribute("width",r.w); box.setAttribute("height",r.h);
+  const bar=document.createElementNS(NS,"rect");
+  bar.setAttribute("x",r.x+1.4); bar.setAttribute("y",r.y+7); bar.setAttribute("width",3.4); bar.setAttribute("height",r.h-14);
+  bar.setAttribute("fill", `var(${ROLECOL[n.role]||"--r-fw"})`); bar.setAttribute("pointer-events","none");
+  const t1=document.createElementNS(NS,"text");
+  t1.setAttribute("x",r.x+14); t1.setAttribute("y",r.y+17.5); t1.setAttribute("class","t1");
+  t1.textContent = trunc(n.label, 36);
+  const t2=document.createElementNS(NS,"text");
+  t2.setAttribute("x",r.x+14); t2.setAttribute("y",r.y+32.5); t2.setAttribute("class","t2");
+  t2.textContent = trunc((n.role==="framework" ? "framework · "+n.id : (ROLENAME[n.role]||"")+" · "+n.id), 44);
+  g.appendChild(box); g.appendChild(bar); g.appendChild(t1); g.appendChild(t2);
+  g.addEventListener("click", ()=>select({type:"node", n}));
+  g.addEventListener("keydown", ev=>{ if(ev.key==="Enter"||ev.key===" "){ev.preventDefault(); select({type:"node", n});} });
+  g.addEventListener("mouseenter", ()=>hover(n.id));
+  g.addEventListener("mouseleave", ()=>hover(null));
+  gNodes.appendChild(g);
+  nodeEls[n.id]=g;
+}
+
+/* ---------- interaction ---------- */
+const pb=document.getElementById("panelbody");
+const EID={}; DATA.nodes.forEach(n=>EID[n.id]=n);
+let selected=null;
+function esc(s){const d=document.createElement("div"); d.textContent=s??""; return d.innerHTML;}
+function refLi(ref){
+  let cls="kn", lab="knowledge";
+  if (/\[verified/.test(ref)){cls="ver"; lab="verified";}
+  else if (/\[verify/.test(ref)){cls="vf"; lab="verify";}
+  const text=ref.replace(/\s*\[(verified|knowledge|verify)[^\]]*\]/g,"").trim();
+  const extra=(ref.match(/\[(verify[^\]]*)\]/)||[])[1];
+  return `<li>${esc(text)}<span class="tag ${cls}">${extra?esc(extra):lab}</span></li>`;
+}
+function nodeRef(id){
+  const n=EID[id]; if(!n) return esc(id);
+  return `<button class="nd" data-n="${esc(id)}">${esc(panelTitle(n))}</button> <span class="nt">(${esc(id)})</span>`;
+}
+function clearFx(){
+  for (const el of Object.values(nodeEls)) el.classList.remove("sel","faded");
+  for (const {p} of edgeEls) p.classList.remove("hot","dim");
+}
+function focusSet(ids, edgePred){
+  for (const [nid,el] of Object.entries(nodeEls)) el.classList.toggle("faded", !ids.has(nid));
+  for (const {e,p} of edgeEls){ const on=edgePred(e); p.classList.toggle("hot",on); p.classList.toggle("dim",!on); }
+}
+function hover(id){
+  if (selected) return;
+  if (!id){ clearFx(); return; }
+  const near=new Set([id]);
+  for (const {e} of edgeEls) if (e.from===id||e.to===id){ near.add(e.from); near.add(e.to); }
+  focusSet(near, e=>e.from===id||e.to===id);
+}
+function wirePanel(){
+  pb.querySelectorAll(".nd[data-n]").forEach(b=>b.addEventListener("click",()=>{const n=EID[b.dataset.n]; if(n) select({type:"node",n});}));
+  pb.querySelectorAll(".nd[data-e]").forEach(b=>b.addEventListener("click",()=>{const e=DATA.edges.find(x=>x.id===b.dataset.e); if(e) select({type:"edge",e});}));
+}
+function select(sel){
+  clearFx(); selected=sel;
+  if (sel.type==="node"){
+    const n=sel.n;
+    nodeEls[n.id].classList.add("sel");
+    const inc=DATA.edges.filter(e=>e.from===n.id||e.to===n.id);
+    const near=new Set([n.id]); inc.forEach(e=>{near.add(e.from); near.add(e.to);});
+    focusSet(near, e=>e.from===n.id||e.to===n.id);
+    const outs=inc.filter(e=>e.from===n.id), ins=inc.filter(e=>e.to===n.id);
+    const li=e=>`<li><button class="nd" data-e="${esc(e.id)}">${esc(e.id)}</button> <span class="nt">${esc(e.kind)}${e.via?" · via "+esc(e.via):""}</span><br>${nodeRef(e.from===n.id?e.to:e.from)}</li>`;
+    pb.innerHTML=`<h2>${esc(panelTitle(n))}</h2><span class="pid">${esc(n.id)} · ${esc(ROLENAME[n.role]||n.role)}</span>
+      <div class="kchips"><span class="chip">${esc(TNAME[n.theory]||n.theory)}</span><span class="chip">${esc(n.status)}</span></div>
+      <p class="stmt">${esc(n.statement)}</p>
+      ${outs.length?`<div class="psec"><h3>Outgoing</h3><ul>${outs.map(li).join("")}</ul></div>`:""}
+      ${ins.length?`<div class="psec"><h3>Incoming</h3><ul>${ins.map(li).join("")}</ul></div>`:""}
+      <div class="psec"><h3>References</h3><ul class="refs">${(n.refs||[]).map(refLi).join("")}</ul></div>`;
+  } else {
+    const e=sel.e;
+    if(nodeEls[e.from]) nodeEls[e.from].classList.add("sel");
+    if(nodeEls[e.to]) nodeEls[e.to].classList.add("sel");
+    focusSet(new Set([e.from,e.to]), x=>x.id===e.id);
+    pb.innerHTML=`<h2>${esc(e.id)}</h2>
+      <p class="stmt" style="margin-top:6px">${nodeRef(e.from)} <b>→</b> ${nodeRef(e.to)}</p>
+      <div class="kchips"><span class="chip">${esc(e.kind)}</span><span class="chip">${esc(e.polarity)}</span><span class="chip">${esc(e.status)}</span></div>
+      ${e.via?`<p class="via">via: ${esc(e.via)}</p>`:""}
+      <p class="stmt">${esc(e.statement)}</p>
+      <div class="psec"><h3>References</h3><ul class="refs">${(e.refs||[]).map(refLi).join("")}</ul></div>`;
+  }
+  wirePanel();
+  if (window.matchMedia("(max-width:1020px)").matches) document.getElementById("panel").scrollIntoView({block:"nearest"});
+}
+svg.addEventListener("click", ev=>{ if (ev.target===svg){ selected=null; clearFx(); } });
+
+/* filters */
+const groups=new Set(["MM","SS","C","P","W"]), pols=new Set(["possibility","no_go","structural"]);
+function applyFilters(){
+  for (const {e,p} of edgeEls){
+    const ok = groups.has(e.id.replace(/[0-9]+[a-z]?$/,"")) && pols.has(e.polarity);
+    p.classList.toggle("hidden-e", !ok);
+  }
+}
+document.querySelectorAll('.controls input[type="checkbox"]').forEach(cb=>cb.addEventListener("change",()=>{
+  const g=cb.dataset.g, pp=cb.dataset.p;
+  if (g){ cb.checked?groups.add(g):groups.delete(g); }
+  if (pp){ cb.checked?pols.add(pp):pols.delete(pp); }
+  applyFilters();
+}));
+document.getElementById("search").addEventListener("input", ev=>{
+  const q=ev.target.value.trim().toLowerCase();
+  for (const n of DATA.nodes){
+    const hit=q && (panelTitle(n).toLowerCase().includes(q)||n.id.toLowerCase().includes(q)||(n.statement||"").toLowerCase().includes(q));
+    nodeEls[n.id].classList.toggle("hitq", !!hit);
+  }
+});
+
+/* ---------- tabs ---------- */
+const TABS=["graph","edges","theories","notes"];
+function showTab(k){
+  if (!TABS.includes(k)) k="graph";
+  for (const t of TABS) document.getElementById("tab-"+t).hidden = (t!==k);
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===k ? "true":"false"));
+}
+document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+showTab((location.hash||"").replace("#",""));
+
+/* ---------- sheets ---------- */
+document.getElementById("counts").innerHTML =
+  `<span><b>${DATA.nodes.length}</b> nodes</span><span><b>${DATA.edges.length}</b> edges</span>
+   <span><b>${DATA.theories.length}</b> theories</span>
+   <span><b>${DATA.derived_propositions.length}</b> derived propositions</span>
+   <span><b>${DATA.gaps.length}</b> research gaps</span>
+   <span>compiled <b>${esc(DATA.meta.date)}</b> · v1.1 fine structure</span>`;
+
+document.querySelector("#etable tbody").innerHTML = DATA.edges.map(e=>{
+  const fn=EID[e.from], tn=EID[e.to];
+  return `<tr><td class="id">${esc(e.id)}</td>
+  <td><b>${esc(fn?panelTitle(fn):e.from)}</b> → <b>${esc(tn?panelTitle(tn):e.to)}</b><br><span class="pid">${esc(e.from)} → ${esc(e.to)}</span></td>
+  <td class="id">${esc(e.kind)}</td><td class="id">${esc(e.polarity)}</td><td class="id">${esc(e.status)}</td>
+  <td>${e.via?esc(e.via):"—"}</td>
+  <td>${esc(e.statement)}<ul class="refs" style="margin-top:6px">${(e.refs||[]).map(refLi).join("")}</ul></td></tr>`;
+}).join("");
+
+document.querySelector("#ttable tbody").innerHTML = DATA.theories.map(t=>
+  `<tr><td class="id"><b style="color:var(--fg)">${esc(TNAME[t.id]||t.id)}</b><br>${esc(t.id)}</td><td>${esc(t.family)}</td><td>${esc(t.free_states)}</td>
+   <td>${esc(t.free_ops)}</td><td>${esc(t.golden_unit)}</td><td>${esc((t.monotones||[]).join("; "))}</td></tr>`).join("");
+
+document.getElementById("qpcards").innerHTML = DATA.derived_propositions.map(q=>
+  `<div class="card"><h4>${esc(q.title)}</h4><span class="pid">${esc(q.id)} · ${esc(q.status)}</span><p>${esc(q.summary)}</p></div>`).join("");
+
+document.getElementById("gaplist").innerHTML = DATA.gaps.map(g=>
+  `<li value="${parseInt(g.id.replace("QG",""),10)}">${esc(g.statement)}</li>`).join("");
+
+document.getElementById("provtext").innerHTML =
+  `Every reference carries one of three tags. <span class="tag ver">verified</span> bibliographic data confirmed by web search on ${esc(DATA.meta.date)} (the load-bearing cross-theory results). <span class="tag kn">knowledge</span> standard results cited from model knowledge — verify page numbers before quoting in a manuscript. <span class="tag vf">verify</span> uncertain author lists, venues or page numbers — must be checked before any release.`;
+</script>

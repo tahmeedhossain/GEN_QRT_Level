@@ -1,0 +1,476 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\definecolor{linkcol}{rgb}{0.05,0.3,0.45}
+\usepackage[colorlinks=true,linkcolor=linkcol,citecolor=linkcol,urlcolor=linkcol]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{observation}{Observation}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+\newcommand{\ket}[1]{\lvert #1 \rangle}
+\newcommand{\bra}[1]{\langle #1 \rvert}
+\newcommand{\proj}[1]{\lvert #1 \rangle\!\langle #1 \rvert}
+\newcommand{\tr}{\operatorname{Tr}}
+\newcommand{\id}{\mathbb{1}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Ops}{\mathcal{O}}
+
+\title{The Quantum Resource Network: a role-resolved theorem graph of
+thirteen resource theories with via-annotated conversions and
+machine-visible open problems}
+
+% TODO (author): fill in name(s), affiliation and email before submission.
+% Consider disclosing AI-assisted drafting/curation if required by the venue's policy;
+% the curation and verification protocol is described in Sec. 6.
+\author{[Author name]\\ \small [Affiliation] \quad [email]}
+\date{October 2026 \quad (v1.1 of the network)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present a curated, typed, signed graph of thirteen quantum resource
+theories --- purity, athermality, asymmetry, coherence, imaginarity, magic,
+continuous-variable Wigner negativity, entanglement, steering, Bell
+nonlocality, contextuality, measurement incompatibility, and quantum discord
+as the documented counterexample to the framework axioms --- released as an
+open repository with an interactive page and machine-readable data. The design
+resolves each theory into \emph{role-typed} nodes: free states versus resource
+states; free operations versus \emph{resource-utilizing} operations versus
+\emph{impossible-even-with-resources} processes (no-go theorems as first-class
+nodes); and detector versus quantifier witnesses, a split made load-bearing by
+the fact that facet Bell-inequality violations detect nonclassicality but do
+not determine the convertibility pre-order. Cross-theory edges therefore land
+on the exact object they concern, and the compilation enforces one convention
+throughout: \emph{a conversion between resource theories is well-defined only
+relative to an operation class}, so every conversion edge carries a
+\texttt{via} field naming that class. Absence of an edge always means
+``unsettled'', never ``false'', which turns the $13\times13$ directed
+conversion matrix (13 of 156 cells charted at this release) into a
+machine-generated research agenda. Alongside the compiled backbone --- the
+free-set geography, the operations lattice, the 2023--2024 reversibility
+frontier (irreversibility under exactly resource-non-generating operations
+coexisting with the generalized quantum Stein's lemma), and the
+necessity-pair structure of steering --- we record five derived propositions
+obtained by closing gaps the compilation exposed, including a typology of
+free-operation justifications whose unique two-type intersection
+(athermality) reappears at the state and witness levels, the
+operation-class-relativity of bound resources, and the observation that the
+Gibbs state of a generic interacting Hamiltonian is a magic resource while
+free in four other theories. Ten named open problems are registered. All
+sources, data and pages are provided for community extension.
+\end{abstract}
+
+\section{Introduction}
+
+Quantum resource theories share one skeleton --- a free set $\F$ and a class
+of free operations $\Ops$ with the golden rule $\Ops(\F)\subseteq\F$
+\cite{chitambargour2019} --- and the skeleton has produced a genuinely
+transversal body of results: faithful conversion of coherence into
+entanglement \cite{streltsov2015}, activation of discord into distillable
+entanglement \cite{piani2011}, the one-to-one correspondence between steering
+and measurement incompatibility \cite{uola2015}, the identification of purity
+as the maximal unitarily reachable coherence \cite{streltsov2018njp}, and,
+recently, a second law of resource manipulation restored at the level of
+asymptotically resource-non-generating operations by the proof of the
+generalized quantum Stein's lemma \cite{hayashiyamasaki2024,lami2024}
+coexisting with its impossibility at the exact level
+\cite{lamiregula2023}. Yet these results are stated across subcommunities in
+different operation classes, and the most common source of confusion in the
+cross-theory literature is precisely that ``a resource of $A$ yields a
+resource of $B$'' is not a well-formed claim until the operation class is
+fixed. A second difficulty is structural: survey prose does not distinguish
+``no theorem connects $X$ to $Y$'' from ``a theorem forbids it''.
+
+This paper introduces a working tool addressed at both difficulties: the
+\emph{Quantum Resource Network}, a signed theorem graph over thirteen
+resource theories, companion to the Nonclassicality Network of quantum
+foundations released earlier in the same series. Four design decisions do
+the work.
+
+\begin{enumerate}
+  \item \textbf{Role-resolved bands.} Each theory is a band of typed nodes:
+  its model axioms; its \emph{free states} and its \emph{resource states} as
+  separate nodes; its \emph{free operations}, its \emph{resource-utilizing
+  operations} (what spending the resource enables: injection, activation,
+  work extraction, discrimination advantages), and --- where a genuine
+  theorem exists --- its \emph{impossible processes}, no-gos that hold even
+  with unlimited resource (four at this release: thermal coherence
+  distillation and work locking \cite{marvian2020,lostaglio2015natcomm};
+  mixed-state irreversibility under incoherent operations
+  \cite{winteryang2016}; the absence of a second law of entanglement under
+  exactly non-entangling operations together with bound entanglement
+  \cite{lamiregula2023,horodecki2009}; bound magic and the failure of
+  unit-rate interconversion \cite{veitch2012}). Witnesses are split into
+  \emph{detectors} and \emph{quantifiers}; the split is not pedantry, since
+  for Bell nonlocality the degrees of violation of all facet inequalities
+  detect but provably do not quantify \cite{wolfe2020}.
+
+  \item \textbf{The via convention.} Every cross-theory conversion edge
+  carries a \texttt{via} field naming the operation class under which the
+  conversion holds (bipartite incoherent operations for
+  coherence$\to$entanglement \cite{streltsov2015}; local
+  quantum-incoherent operations and classical communication for the reverse
+  direction \cite{chitambarhsieh2016}; local ancilla interactions plus
+  distillation for discord activation \cite{piani2011,streltsov2011}; and so
+  on). Conversions run resource node to resource node; free-set relations run
+  free node to free node.
+
+  \item \textbf{Three-valued edges.} Positive edges record possibility and
+  structure theorems; negative edges record no-gos, strict separations and
+  counterexamples, drawn with inhibition-style flat-bar terminators
+  ($\dashv$); no edge means \emph{unsettled}. Without first-class negative
+  edges, impossibility theorems would be encoded as absences and a search for
+  open problems would re-propose closed questions.
+
+  \item \textbf{Per-reference provenance.} Every reference string in the data
+  carries one of three tags: \texttt{verified} (bibliographic data confirmed
+  against sources on 2026-10-23 --- the load-bearing cross-theory anchors),
+  \texttt{knowledge} (standard results cited from curation knowledge, page
+  data to be rechecked before quotation), or \texttt{verify} (flagged
+  uncertain details that must be checked before any release).
+\end{enumerate}
+
+\paragraph{Motivation and intended use.}
+The network was built for three purposes. \emph{(i)~Automating research-idea
+generation.} Because no edge means ``unsettled'', the open questions form a
+queryable object. The canonical instance here is the $13\times13$ directed
+conversion matrix, each cell the question ``can a resource of theory $A$
+produce a resource of theory $B$, and under which operation class?'': this
+release charts 13 of 156 directed cells, and the remaining 143, together with
+the ten named problems of Sec.~\ref{sec:open}, constitute the generated
+agenda. \emph{(ii)~Reviewing a field as curation.} Each claim of the review
+is one edge with a verbatim statement, references and per-reference
+provenance; checking the review means auditing edges, and disputing it means
+objecting to an edge identifier. \emph{(iii)~Visualization.} The
+role-resolved bands make visible at a glance where free sets overlap, where
+resources convert and through which operations, where spending is powerful
+and where it is provably futile, and which witnesses merely detect. The
+review process is itself the generator: surveying the field in this format
+yields its own research agenda as a by-product.
+
+Section~\ref{sec:theories} fixes the thirteen theories.
+Section~\ref{sec:backbone} summarizes the curated backbone.
+Section~\ref{sec:derived} contains the derived propositions with proofs or
+proof sketches. Section~\ref{sec:open} lists the registered open problems,
+Section~\ref{sec:protocol} the curation and verification protocol, and
+Section~\ref{sec:repo} the repository.
+
+\section{The thirteen theories}\label{sec:theories}
+
+Table~\ref{tab:theories} lists the compiled theories with their free sets,
+physically motivated free-operation classes and principal monotones; the data
+file carries per-row references. Twelve are proper resource theories; quantum
+discord is carried as the documented counterexample: its classical--classical
+free set is non-convex, and local channels can create discord
+\cite{modi2012,ciccarello2012}, so no golden-rule operation class containing
+local processing exists. Measurement incompatibility is carried as the
+demonstration that the schema extends from states to devices: free objects
+are classically programmable measurement devices, and convertibility is
+completely characterized by guessing games with post-measurement information
+\cite{bcz2020}.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lllll@{}}
+\toprule
+theory & type & free states $\F$ & free ops $\Ops$ & refs \\
+\midrule
+purity & constraint & $\{\id/d\}$ & noisy/unital & \cite{gour2015} \\
+athermality & constraint$\times$symmetry & Gibbs $\gamma$ & thermal ops (TO) & \cite{brandao2013,horodeckioppenheim2013} \\
+asymmetry & symmetry & $G$-invariant & $G$-covariant & \cite{gourspekkens2008,marvianspekkens2016} \\
+coherence & dephasing-defined & diagonal & SIO/IO/DIO/MIO & \cite{baumgratz2014,streltsov2017rmp} \\
+imaginarity & antiunitary $\mathbb{Z}_2$ & real states & real-Kraus ops & \cite{hickeygour2018,wu2021prl} \\
+magic & subtheory & STAB & stabilizer/CSPO & \cite{veitch2014,seddoncampbell2019} \\
+Wigner neg.\ (CV) & subtheory & Wigner-positive & Gaussian protocols & \cite{takagizhuang2018,marieisert2012} \\
+entanglement & partition & SEP & LOCC & \cite{horodecki2009} \\
+steering & partition (1-sided) & LHS assemblages & 1W-LOCC & \cite{wjd2007,gallegoaolita2015} \\
+nonlocality & partition (no comm.) & local boxes & LOSR wirings & \cite{wolfe2020} \\
+contextuality & partition (compat.) & noncontextual & NC wirings & \cite{amaral2018} \\
+incompatibility & device & jointly measurable & pre/post-processing & \cite{bcz2020,heinosaari2016} \\
+discord & (fails axioms) & CC (non-convex) & none & \cite{modi2012,ollivierzurek2001} \\
+\bottomrule
+\end{tabular}
+\caption{The thirteen compiled theories. ``Type'' refers to the typology of
+Proposition~\ref{prop:qp1}.}
+\label{tab:theories}
+\end{table}
+
+\section{The curated backbone}\label{sec:backbone}
+
+\paragraph{Free-set geography.} The free sets are pairwise transversal rather
+than nested, and the network records the exceptions as explicit subset edges:
+$\{\gamma\}\subset$ incoherent(energy basis) $\subset$ real(energy basis);
+incoherent(product basis) $\subset$ SEP; the strict chain SEP $\subsetneq$
+unsteerable $\subsetneq$ Bell-local
+\cite{wjd2007,werner1989,barrett2002,quintino2015}, with Bell-local behaviors
+embedding scenario-by-scenario into the noncontextual behaviors
+\cite{amaral2018}; and, as a two-sided negative edge, the transversality of
+STAB and SEP --- the Bell state is a stabilizer state, and
+$\ket{T}\otimes\ket{0}$ is separable and magic. Distinguished shared states
+carry the membership structure: $\id/d$ (free everywhere except purity),
+the Gibbs state (free in four theories, generically a magic resource,
+Proposition~\ref{prop:qp5}), $\ket{+}$ (maximal coherence, magic- and
+imaginarity-free), the $T$ state (a four-theory resource
+\cite{bravyikitaev2005}), Werner states (the strictness witness of the
+hierarchy \cite{werner1989,barrett2002,wjd2007}), bound entangled states
+(nonlocal despite $E_D=0$ \cite{vertesi2014}), and Wigner-positive magic
+states (bound magic \cite{veitch2012}).
+
+\paragraph{Operations lattice.} The partition ladder LOSR $\subset$ 1W-LOCC
+$\subset$ LOCC $\subset$ SEP-ops $\subset$ PPT-ops $\subset$ NE generates
+nonlocality, steering and entanglement from one bipartite scenario
+\cite{gallegoaolita2015,wolfe2020}; LOCC is the wrong class for Bell
+scenarios, where the relevant resource is LOSR-entanglement \cite{wolfe2020}.
+On the symmetry side, TIO $\subset$ DIO and the coherence
+lattice SIO $\subset$ IO, DIO $\subset$ MIO \cite{marvianspekkens2016};
+thermal operations are simultaneously Gibbs-preserving and covariant, and
+strictly inside the Gibbs-preserving maps because the latter can create
+energy coherence \cite{faist2015}. Noncontextual wirings restricted to Bell
+scenarios differ from LOSR \cite{santos2024}, so the two candidate
+unifications of ``classical operations'' disagree (QG3).
+
+\paragraph{Conversions, with their via classes.} Coherence converts to
+entanglement faithfully under bipartite incoherent operations, with
+$E_r \le C_r$ attainable \cite{streltsov2015}; entanglement converts back to
+coherence in the intersection class LQICC \cite{chitambarhsieh2016}; purity
+is the maximal unitarily reachable coherence and bounds unitary entanglement
+generation \cite{streltsov2018njp}; every discordant state --- separable ones
+included --- activates into distillable entanglement, with the relative
+entropy of quantumness equal to the minimal entanglement generated
+\cite{piani2011,streltsov2011}; entanglement yields steering through
+incompatible measurements on the untrusted wing
+\cite{wjd2007,quintino2014,uola2015} and nonlocality through local
+measurements, insufficiently per copy \cite{werner1989,barrett2002} but
+superactivatably \cite{palazuelos2012}, with every entangled state winning
+some semiquantum game \cite{buscemi2012}; magic yields contextuality under
+stabilizer measurements, with equivalence to distillability in odd prime
+dimension \cite{howard2014} and a continuous-variable twin equivalence
+\cite{booth2022,marieisert2012}; imaginarity buys a local-discrimination gap
+that LOCC with real operations provably cannot close \cite{wu2021prl,wu2021pra}.
+Catalysis is carried as a shared operations-layer phenomenon
+\cite{jonathanplenio1999,aberg2014,datta2023}.
+
+\paragraph{The reversibility frontier.} Under \emph{exactly} non-entangling
+operations, entanglement manipulation is asymptotically irreversible and no
+single measure governs all transformations \cite{lamiregula2023}; under
+\emph{asymptotically} resource-non-generating operations, every theory
+satisfying the Brand\~ao--Plenio axioms is reversible with the regularized
+relative entropy of resource as the unique rate function --- the generalized
+quantum Stein's lemma, claimed in 2010, whose proof gap was identified in
+2023 \cite{berta2023} and closed in 2024
+\cite{hayashiyamasaki2024,lami2024,brandaogour2015}. The exact/asymptotic
+distinction is therefore the load-bearing hinge of second-law statements
+(QG4). The universal witness layer is organized by the robustness theorems:
+in any convex theory every resource state strictly outperforms all free
+states in some subchannel discrimination task, with the generalized
+robustness as the exact advantage
+\cite{takagi2019,takagiregula2019,vidaltarrach1999}, extended beyond
+convexity in multi-copy form \cite{kuroiwa2024}; the steering instance is
+discrimination under one-way LOCC measurements \cite{pianiwatrous2015}.
+
+\section{Derived propositions}\label{sec:derived}
+
+The following were assembled by closing gaps the compilation exposed. They
+are proved or sketched here and in the repository catalog; \emph{no novelty
+pass has been run} (unlike the companion repository's generated
+propositions), QP2--QP4 are plausibly folklore, and none is claimed as a
+first. Statements are numbered as in the data files.
+
+\begin{proposition}[QP1: typology of free-operation justifications]
+\label{prop:qp1}
+Within the compiled set, every proper theory's free operations are justified
+in exactly one of four ways --- symmetry (covariance under a group action:
+asymmetry; unspeakable coherence; imaginarity as the antiunitary
+$\mathbb{Z}_2$ analogue), subtheory (operations of a classically simulable
+subtheory: magic, CV non-Gaussianity), partition (compatibility with a causal
+or communication partition: entanglement, steering, nonlocality,
+contextuality, incompatibility), or constraint (preservation of a
+distinguished state: purity) --- with a single two-type intersection:
+athermality, whose thermal operations are simultaneously Gibbs-preserving
+(constraint) and time-translation covariant (symmetry). The intersection
+reappears at the state level, where the free set is the unique state fixed by
+both axioms (the Gibbs state), and at the witness level, where the complete
+second-law constraints factor into the R\'enyi free-energy family on
+block-diagonal data \cite{brandao2015pnas} and independent asymmetry-mode
+constraints on coherences \cite{lostaglio2015prx}, neither family alone
+complete \cite{lostaglio2015natcomm}; the two parent operation classes
+separate strictly in the quantum regime \cite{faist2015}.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The classification is verified theory by theory against the defining
+free-operation classes of Table~\ref{tab:theories}. That athermality
+instantiates both axioms is the definition of thermal operations
+(energy-conserving unitaries with Gibbs ancillas); uniqueness of the
+two-axiom fixed point for nondegenerate $H$ follows since a U(1)-invariant
+state is energy-diagonal and a Gibbs-preserving fixed point with full rank is
+$\gamma$. The witness-level factorization is the content of
+\cite{brandao2015pnas,lostaglio2015prx,lostaglio2015natcomm}.
+\end{proof}
+
+\begin{observation}[QP2: tensor-stability failure of state-level Bell
+locality]\label{obs:qp2}
+The set of Bell-local quantum states is not closed under tensor products:
+there exist states admitting local-hidden-variable models for all single-copy
+measurements whose tensor powers violate a Bell inequality
+\cite{palazuelos2012}. Hence ``Bell-local states'' fail the monoidal
+free-set axiom of the resource-theory framework \cite{cfs2016}, while
+common-cause \emph{boxes} under LOSR wirings satisfy it \cite{wolfe2020}.
+The diagnosis: when a framework axiom fails, the objects were wrongly chosen,
+not the axiom.
+\end{observation}
+
+\begin{observation}[QP3: bound resources are operation-class-relative]
+\label{obs:qp3}
+Whether a theory exhibits bound (undistillable) resources is a joint property
+of the pair $(\F,\Ops)$, not of the free set alone. Documented cases:
+entanglement under LOCC has bound states (PPT entangled, $E_D=0<E_C$)
+\cite{horodecki2009}; magic under stabilizer operations has bound states
+(Wigner-positive non-stabilizer states) \cite{veitch2012}; coherence under
+thermal/covariant processing is \emph{entirely} bound at full rank ---
+distillable coherence vanishes while the cost equals the quantum Fisher
+information \cite{marvian2020}; coherence under incoherent operations has
+\emph{no} bound states --- every coherent state distills at rate $C_r$
+\cite{winteryang2016}; purity under noisy operations has none
+\cite{gour2015}. The coherence pair is the sharp instance: one free set,
+two operation classes, opposite phenomenology.
+\end{observation}
+
+\begin{proposition}[QP4: the purity--coherence--entanglement cascade]
+\label{prop:qp4}
+For the relative-entropy quantifiers, the purity of a state equals its
+maximal coherence reachable by free unitaries,
+$P_r(\rho)=\max_U C_r(U\rho U^\dagger)$, and this maximal coherence bounds
+the entanglement generable from the state by bipartite incoherent operations
+acting on the state and an incoherent ancilla,
+$E_r(\Lambda_{\mathrm{IO}}[\rho\otimes\sigma_{\mathrm{inc}}])\le C_r(\rho)$,
+the bound attainable by a generalized CNOT. Thus
+$P_r \ge C_r^{\max} \ge E_r^{\max}$, a quantitative generation chain across
+three theories with each link's operation class stated.
+\end{proposition}
+\begin{proof}
+The first equality is Theorem content of \cite{streltsov2018njp} (which also
+shows purity bounds unitary entanglement and discord generation); the second
+inequality and its attainability are the main results of
+\cite{streltsov2015}.
+\end{proof}
+
+\begin{proposition}[QP5: thermal magic]\label{prop:qp5}
+Let $H$ be a Hamiltonian on a finite-dimensional multi-qudit system whose
+ground state $\ket{g}$ (assumed unique) is not a stabilizer state. Then there
+exists $\beta_0<\infty$ such that for all $\beta>\beta_0$ the Gibbs state
+$\gamma(\beta)=e^{-\beta H}/Z$ lies outside the stabilizer polytope: the
+unique free state of athermality --- simultaneously free for coherence,
+asymmetry and imaginarity in the energy eigenbasis --- is a magic resource.
+\end{proposition}
+\begin{proof}
+The stabilizer polytope STAB is closed (a convex hull of finitely many
+states). As $\beta\to\infty$, $\gamma(\beta)\to\proj{g}$ in trace norm, and
+$\proj{g}\notin$ STAB by hypothesis; since the complement of STAB is open,
+$\gamma(\beta)\notin$ STAB for all $\beta$ beyond some $\beta_0$. The curve
+starts inside ($\gamma(0)=\id/d\in$ STAB), so a boundary crossing
+$\beta^*\le\beta_0$ exists. Membership of $\gamma$ in the other three free
+sets is elementary for nondegenerate $H$: $[\gamma,H]=0$ gives energy-basis
+diagonality (incoherence and U(1)-invariance), and the diagonal entries are
+real.
+\end{proof}
+
+\begin{remark}
+The hypothesis holds for generic interacting Hamiltonians (non-stabilizer
+ground states are the rule; stabilizer ground states are the exceptional,
+e.g.\ Clifford-diagonalizable, case), but ``generic'' is used here
+informally; the proposition as stated is the rigorous conditional. The
+quantitative program --- mana or robustness of magic of $\gamma(\beta)$
+across model families, and its relation to the classical simulability of
+thermal states --- is registered as gap QG5. We did not locate a dedicated
+treatment in the curation pass; a literature search before any claim of
+novelty is mandatory (Sec.~\ref{sec:protocol}).
+\end{remark}
+
+\section{Registered open problems}\label{sec:open}
+
+QG1: the exact scope of the multiqubit (even-$d$) magic--contextuality
+correspondence \cite{howard2014}. QG2: is TO $=$ GPO $\cap$ TIO exactly? The
+strict inclusions are settled \cite{faist2015}; the characterization is not.
+QG3: the correct single free-operation class unifying contextuality and
+nonlocality, given NCW$|_{\mathrm{Bell}}\neq$ LOSR \cite{santos2024,amaral2018}.
+QG4: the reversibility-frontier table --- for each theory, reversibility
+under exactly-RNG, asymptotically-RNG \cite{hayashiyamasaki2024,lami2024},
+and the physically motivated class; known points: entanglement (no/yes/no)
+\cite{lamiregula2023}, IO-coherence (no for cost/yes/partial)
+\cite{winteryang2016,brandaogour2015}, thermal asymmetry (no, maximally)
+\cite{marvian2020}, purity (yes/yes/yes) \cite{gour2015}. QG5: the uncharted
+cells of the $13\times13$ via-class conversion matrix (thermal magic; real
+thermal operations; the imaginarity cost of $T$ states), the automation hook
+of the network. QG6: a steering analogue of the entangleability of cones.
+QG7: an erasure-cost calculus beyond entanglement. QG8: a maximal physically
+motivated operation class for non-convex free sets (the discord repair),
+beyond the advantage result of \cite{kuroiwa2024}. QG9: catalytic and
+battery routes around exact-RNG irreversibility \cite{datta2023}. QG10: the
+thermodynamics of bound entanglement and of bound magic.
+
+\section{Curation and verification protocol}\label{sec:protocol}
+
+Reliability is handled by explicit provenance rather than by implication.
+(i)~Every edge carries a verbatim statement and references; the per-edge
+reference list, not this paper, is the citation of record for compiled
+results. (ii)~References are individually tagged: \texttt{verified} entries
+had their bibliographic data confirmed against sources on 2026-10-23
+(approximately twenty load-bearing anchors, including
+\cite{streltsov2015,marvianspekkens2016,msz2016,faist2015,lostaglio2015prx,
+marvian2020,lamiregula2023,hayashiyamasaki2024,lami2024,wolfe2020,uola2015,
+amaral2018,santos2024,wu2021prl,wu2021pra,bcz2020,takagi2019,takagiregula2019,
+piani2011,streltsov2018njp,datta2023}); \texttt{knowledge} entries are
+standard results cited from curation knowledge whose page data should be
+rechecked before quotation; \texttt{verify} entries flag uncertain author
+lists, venues or page numbers that must be checked before any release.
+(iii)~Unlike the companion repository, the bibliography of this paper has
+\emph{not yet} been verified programmatically against Crossref, and no
+novelty searches have been run for QP1--QP5; both passes are advised before
+submission. QP2--QP4 are assemblies of published results whose framing may
+well exist in the literature; QP5's conditional statement is elementary.
+(iv)~Derived items state exactly which recorded results they assemble, so a
+reader can audit each in one step. (v)~The authors take responsibility for
+remaining errors and welcome corrections as repository issues; the graph is
+versioned, and every release records its census (v1.1: 116 nodes; 85 edges
+--- 38 possibility, 13 no-go, 34 structural; 13/156 conversion cells
+charted).
+
+\section{Repository}\label{sec:repo}
+
+The repository (\url{https://github.com/tahmeedhossain/GEN_QRT_Level},
+served as live pages at
+\url{https://tahmeedhossain.github.io/GEN_QRT_Level/}) contains:
+\texttt{index.html} (overview, derived propositions, gap census);
+\texttt{qrt.html} (the interactive network: 13 role-resolved theory bands,
+edge catalog, theory table); \texttt{data/qrt\_network.json}
+(machine-readable: theories, role-typed nodes, via-annotated signed edges
+with statements and tagged references, derived propositions, gaps);
+\texttt{catalog/qrt\_catalog.md} (prose catalog with the axiom-overlap
+analysis, the free-set membership table and proof sketches); and this
+paper's source under \texttt{paper/}. The data schema is documented in the
+README; contributed edges are expected to carry a statement, a reference or
+proof, a kind, a polarity, a status and --- for conversions --- the
+\texttt{via} operation class. Closing a cell of the conversion matrix is the
+canonical contribution.
+
+\paragraph{Acknowledgements.} The curation of the network, the derivations
+and drafting of this paper, the interactive pages and the data files were
+produced with substantial assistance from an AI system (Claude, Anthropic),
+working under the direction of the author, who reviewed the material and
+takes sole responsibility for all claims and any remaining errors.
+% TODO (author): add human acknowledgements/funding if appropriate.
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\end{document}
