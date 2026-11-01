@@ -4,7 +4,7 @@ title: "Quantum Resource Network: a role-resolved typed graph of thirteen quantu
 authors:
   - family-names: "[Fill in]"
     given-names: "[Fill in]"
-version: "1.1"
-date-released: "2026-10-23"
+version: "1.2"
+date-released: "2026-11-01"
 license: MIT
 repository-code: "https://github.com/tahmeedhossain/GEN_QRT_Level"
