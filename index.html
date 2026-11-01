@@ -54,7 +54,7 @@ names the operation class (<i>via</i>) under which it holds. No edge means <i>un
 <a href="https://github.com/tahmeedhossain/GEN_GPT_Level">Nonclassicality Network</a>.</p>
 
 <p class="sub" style="margin-top:12px">Built for three uses: <b>automating research-idea generation</b>
-(the 13×13 via-class conversion matrix is the queryable agenda: 13 of 156 directed cells charted),
+(the 13×13 via-class conversion matrix is the queryable agenda: 14 of 156 directed cells charted in v1.2),
 <b>reviewing the field as curation</b> (one claim = one edge with verbatim statement, references and a
 per-reference provenance tag), and <b>visualizing</b> where free sets overlap, where resources convert,
 where spending is powerful and where it is provably futile. The review process is itself the
@@ -62,7 +62,14 @@ generator: surveying the field in this format yields its own research agenda as 
 
 <div class="cards">
   <div class="card">
-    <h3>The network page</h3>
+    <h3>The network page — current (v1.2)</h3>
+    <p>v1.2 (2026-11-01): the v1.1 network plus the conversion edge C20 (athermality → magic under
+    thermal operations, a literature fill), corrections to QP1 and QG2, and literature notes on thermal
+    magic under QP5 and QG5; 116 nodes, 86 edges.</p>
+    <a class="go" href="qrt_v12.html">Open qrt_v12.html →</a>
+  </div>
+  <div class="card">
+    <h3>The network page — v1.1 (preserved)</h3>
     <p>v1.1 (2026-10-23): 13 theory bands × role-resolved columns; 116 nodes, 85 edges with verbatim
     statements, via-classes and provenance-tagged references. Tabs: graph · edge catalog · theory
     table · derived &amp; gaps.</p>
@@ -70,10 +77,10 @@ generator: surveying the field in this format yields its own research agenda as 
   </div>
   <div class="card">
     <h3>Data &amp; catalog</h3>
-    <p><span class="mono">data/qrt_network.json</span> — machine-readable network (schema in the
-    README). <span class="mono">catalog/qrt_catalog.md</span> — axiom-overlap analysis, free-set
+    <p><span class="mono">data/qrt_network_v1.2.json</span> (current) and <span class="mono">data/qrt_network.json</span> (v1.1) — machine-readable network (schema in the
+    README); <span class="mono">CHANGELOG.md</span> — versions. <span class="mono">catalog/qrt_catalog.md</span> — axiom-overlap analysis, free-set
     membership table, conversion list, proof sketches, gaps.</p>
-    <a class="go" href="data/qrt_network.json">JSON</a> &nbsp;·&nbsp; <a class="go" href="catalog/qrt_catalog.md">Catalog</a>
+    <a class="go" href="data/qrt_network_v1.2.json">JSON (v1.2)</a> &nbsp;·&nbsp; <a class="go" href="data/qrt_network.json">JSON (v1.1)</a> &nbsp;·&nbsp; <a class="go" href="catalog/qrt_catalog.md">Catalog</a>
   </div>
   <div class="card">
     <h3>Concept paper</h3>
@@ -84,9 +91,10 @@ generator: surveying the field in this format yields its own research agenda as 
 </div>
 
 <div class="census">
-<b>Census (v1.1):</b> 116 nodes · 85 edges (<b>38</b> possibility · <b>13</b> no-go · <b>34</b> structural;
-68 theorem · 12 derived · 3 partial · 2 counterexample) · <b>13 / 156</b> directed conversion cells charted
-(143 uncharted) · 4 impossible-process nodes · problems QG1–QG10.
+<b>Census (v1.2, 2026-11-01):</b> 116 nodes · 86 edges (<b>39</b> possibility · <b>13</b> no-go · <b>34</b> structural;
+69 theorem · 12 derived · 3 partial · 2 counterexample) · <b>14 / 156</b> directed conversion cells charted
+(142 uncharted) · 4 impossible-process nodes · problems QG1–QG10 (QG2 answered for a qutrit in the literature).<br>
+<span style="color:var(--muted)">v1.1 (preserved): 85 edges (38 possibility · 13 no-go · 34 structural) · 13 / 156 cells charted.</span>
 </div>
 
 <h2>Derived propositions (QP1–QP5)</h2>
@@ -95,9 +103,11 @@ the paper. No novelty pass has been run yet — QP2–QP4 are plausibly folklore
 <ul class="qp">
   <li><b>QP1 — Typology of free operations.</b> The twelve proper theories split into symmetry-,
   subtheory-, partition- and constraint-type by how their free operations are physically justified;
-  athermality is the unique two-type intersection (Gibbs constraint ∩ U(1)-covariance), and the
-  intersection reappears verbatim at state level (unique free state γ) and witness level (free-energy
-  family + asymmetry-mode family, jointly complete, separately incomplete).</li>
+  athermality is the unique two-type intersection (Gibbs constraint ∩ U(1)-covariance); it shows at
+  operation level (Gibbs-preserving maps can create coherence, thermal operations cannot), at witness level
+  (free-energy family + asymmetry-mode family, jointly complete, separately incomplete), and at state level
+  as the inclusion of the free set {γ} in the symmetric states. <i>Correction (v1.2):</i> the constraint alone
+  already has the free set {γ}; the earlier wording "reappears verbatim at state level" overstated this.</li>
   <li><b>QP2 — Tensor-stability failure of state-level Bell locality.</b> Superactivation makes tensor
   powers of Bell-local entangled states nonlocal, so the monoidal axiom fails for "local states";
   it holds for common-cause boxes under LOSR — when an axiom fails, the objects were wrong.</li>
@@ -110,16 +120,22 @@ the paper. No novelty pass has been run yet — QP2–QP4 are plausibly folklore
   quantitative chain of generation bounds across three theories, with each link's operation class stated.</li>
   <li><b>QP5 — Thermal magic.</b> For a generic interacting Hamiltonian the Gibbs state is outside
   the stabilizer polytope: the unique free state of athermality — also free for coherence, asymmetry
-  and imaginarity in the energy basis — is a magic resource. Quantifying mana(γ(β)) is gap QG5.</li>
+  and imaginarity in the energy basis — is a magic resource (rigorous form: if the ground state is unique and
+  not a stabilizer state, γ(β) leaves STAB below some temperature). <i>Literature (v1.2):</i> magic generation from
+  stabilizer inputs by thermal operations is treated for a qubit in de Oliveira Junior et al., arXiv:2511.13839 (2025),
+  recorded as edge C20; the qubit case of this statement lies within that question (complete thermalization is a thermal
+  operation) but was not found there in explicit form.</li>
 </ul>
 
 <h2>Registered gaps (QG1–QG10)</h2>
 <ol class="gaps">
   <li>Multiqubit (even-d) magic ⇔ contextuality: exact scope without a covariant Wigner function.</li>
-  <li>Is TO = GPO ∩ TIO? The strict inclusions are settled; the exact characterization is not.</li>
+  <li>Is TO = GPO ∩ TIO? The strict inclusions are settled. <i>Answered negatively for a qutrit</i> (Ding, Ding, Hu,
+  PRA 103, 052214 (2021): a transition achievable by Gibbs-preserving covariant operations is not approximately
+  achievable by thermal operations); what remains is a characterization of the gap.</li>
   <li>NCW|Bell ≠ LOSR: what single free-operation class unifies contextuality and nonlocality, and which monotones survive both?</li>
   <li>The reversibility-frontier table: for each theory, (exactly-RNG reversible? asymptotically-RNG reversible? physical-class reversible?). Known points: ENT (no/yes/no), IO-coherence (no for cost/yes/partial), thermal asymmetry (no, maximally), magic (no under STAB/axioms to check), purity (yes/yes/yes).</li>
-  <li>Uncharted conversion cells: thermal magic, real thermal operations, imaginarity cost of T states — the 13×13 via-class matrix is the automation hook.</li>
+  <li>Uncharted conversion cells: real thermal operations, imaginarity cost of T states (thermal magic charted in v1.2 by C20) — the 13×13 via-class matrix is the automation hook.</li>
   <li>A steering analogue of the entangleability of cones.</li>
   <li>An erasure-cost calculus beyond entanglement (asymmetry, magic, imaginarity).</li>
   <li>A maximal physically motivated operation class for non-convex free sets (the discord repair).</li>

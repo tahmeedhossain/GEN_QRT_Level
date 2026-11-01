@@ -141,3 +141,37 @@ QG1 multiqubit magic⇔contextuality scope; QG2 TO vs GPO∩TIO exact characteri
 ## 8. v1.1 structure note (2026-10-23)
 
 The node set was refined after review. Each theory band now carries: **free-state** and **resource-state** nodes (so free-set overlaps land on free sets and conversions run resource→resource); **three process nodes** — free operations (cannot create the resource), resource-utilizing operations (what spending the resource enables: injection, activation, work extraction, discrimination advantages), and impossible processes (no-go theorems that hold even with the resource: pX-ath thermal coherence distillation/work locking, pX-coh IO mixed-state irreversibility, pX-ent no second law under exact NE + bound entanglement, pX-mag bound magic + no unit-rate interconversion); and **two witness nodes** — detector vs quantifier (made load-bearing by Wolfe et al.: facet Bell violations detect but do not quantify). New free-set overlap edges: SS3b, SS4b, SS5b, SS12–SS19 (e.g. {γ} ⊂ incoherent(energy), INC ⊂ real, SEP ⊂ unsteerable ⊂ Bell-local, Bell-local ⊂ noncontextual per scenario, STAB/SEP transversality); new conversion C19 (incompatibility → steering, constructive direction of the Uola correspondence). Totals: 116 nodes, 85 edges. All v1 statements, references and provenance tags carried over unchanged.
+
+---
+
+## 9. v1.2 update (2026-11-01)
+
+Data: `data/qrt_network_v1.2.json` (page `qrt_v12.html`); v1.1 (`data/qrt_network.json`, `qrt.html`) unchanged.
+Source: round 4 of the combined paper *The Great Epistemic Network* (T. Hossain, 2026), Sec. 8.6–8.7, in which the
+literature was searched before any proof was attempted, and the full proofs of QP1–QP5 written out there.
+
+- **C20 (new conversion edge, literature):** athermality → magic, via thermal operations. For a qubit prepared in a
+  stabiliser state and coupled to a heat bath: a necessary and sufficient condition for nonstabiliserness to be generated,
+  an analytic characterisation of the reachable nonstabiliser states with bounds on their nonstabiliserness, the
+  Hamiltonians that maximise generation and the critical temperatures at which it emerges; for energy-diagonal inputs, a
+  Hamiltonian aligned with a stabilizer direction generates no magic (de Oliveira Junior, Macedo, Czartowski, Brask, Chaves,
+  arXiv:2511.13839, 2025; arXiv record and text checked 2026-11-01). Charts the (ath → mag) cell; 14 / 156 cells charted.
+- **QP5 and the preprint (ours, elementary).** Complete thermalisation is a thermal operation, so QP5 lies within the
+  question of the preprint: for a qubit, the Gibbs state of `H = −(ω/2) n̂·σ⃗` with `n̂ = (1,1,1)/√3` has Bloch vector
+  `tanh(βω/2) n̂` and is a magic state iff `tanh(βω/2) > 1/√3` (stabilizer octahedron `|x|+|y|+|z| ≤ 1`). Not found in
+  explicit form in the preprint; the general conditional statement of QP5 stands.
+- **QP1, corrected state-level statement.** A Gibbs-preserving channel from a trivial system can prepare only γ, so the
+  constraint axiom alone already has the free set {γ}. The double justification of athermality shows at operation level
+  (Gibbs-preserving maps can create energy coherence, thermal operations cannot; Faist–Oppenheim–Renner 2015), at witness
+  level (free energies on populations + asymmetry modes on coherences, separately incomplete), and at state level only
+  as the inclusion {γ} ⊂ {states commuting with H}.
+- **QP4, precise form.** For every state ρ on C^d: max_U C_r(UρU†) = P_r(ρ) = log d − S(ρ) (equality for a unitary
+  taking the eigenbasis of ρ to a basis mutually unbiased to the reference basis); for any bipartite incoherent Λ and
+  incoherent ancilla σ, E_r(Λ[ρ⊗σ]) ≤ C_r(ρ) (additivity of C_r on products, monotonicity under IO, E_r ≤ C_r);
+  equality is attained for σ = |0⟩⟨0| on an ancilla of dimension ≥ d by a generalized CNOT (Streltsov et al. 2015),
+  and can fail for mixed σ (ρ = |+⟩⟨+|, σ = 1/2: the CNOT output ½(|++⟩⟨++| + |−−⟩⟨−−|) is separable).
+- **QP3, wording.** Marvian's results are for time-translation-covariant operations: distillable coherence vanishes
+  under covariant operations, hence under thermal operations; the coherence-cost = QFI statement is for covariant operations.
+- **QG2, answered for a qutrit:** a transition achievable by Gibbs-preserving covariant ("enhanced thermal") operations
+  is not approximately achievable by thermal operations for a qutrit with equally spaced levels (Ding, Ding, Hu,
+  PRA 103, 052214 (2021)). Open: a characterization of the gap.

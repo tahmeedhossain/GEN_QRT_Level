@@ -23,7 +23,8 @@ object they concern:
 | Page | Contents |
 |---|---|
 | `index.html` | Landing page: overview, the derived propositions QP1–QP5, the gap census QG1–QG10, links. |
-| `qrt.html` | The network (v1.1, 2026-10-23): 13 theory bands × role-resolved columns, 116 nodes, 85 edges with verbatim statements, via-classes and provenance-tagged references; edge catalog, theory table, derived & gaps tabs. |
+| `qrt_v12.html` | **Current (v1.2, 2026-11-01):** the v1.1 network plus the conversion edge C20 (athermality → magic under thermal operations, a literature fill found in round 4 of the combined paper), corrections to QP1 and QG2, literature notes under QP5 and QG5; 116 nodes, 86 edges. |
+| `qrt.html` | The network (v1.1, 2026-10-23, preserved): 13 theory bands × role-resolved columns, 116 nodes, 85 edges with verbatim statements, via-classes and provenance-tagged references; edge catalog, theory table, derived & gaps tabs. |
 
 ## Motivation
 
@@ -32,7 +33,7 @@ Same three uses as the companion repository:
 1. **Automated research-idea generation.** "No edge = unsettled" makes the open questions a queryable
    set. The canonical object here is the **13×13 via-class conversion matrix**: each directed cell
    asks "can a resource of theory A produce a resource of theory B, and under which operation class?"
-   This release charts 13 of 156 directed cells; the remaining 143, plus gaps QG1–QG10, are the
+   Release v1.2 charts 14 of 156 directed cells (v1.1: 13); the remaining 142, plus gaps QG1–QG10, are the
    machine-generated agenda.
 2. **Easy reviewing.** One claim = one edge with a verbatim statement, references and a per-reference
    provenance tag (`verified` / `knowledge` / `verify`). Checking the review means auditing edges;
@@ -48,11 +49,14 @@ research agenda as a by-product.
 
 ```
 index.html             landing page + derived-proposition record (GitHub Pages ready)
-qrt.html               the network page (standalone)
-data/qrt_network.json  machine-readable network (theories, role-resolved nodes, via-annotated edges,
+qrt_v12.html           the current network page (v1.2, standalone)
+qrt.html               the network page v1.1 (standalone, preserved)
+data/qrt_network_v1.2.json  machine-readable network v1.2 (current)
+data/qrt_network.json  machine-readable network v1.1 (theories, role-resolved nodes, via-annotated edges,
                        derived propositions, gaps, provenance-tagged references)
+CHANGELOG.md           versions and what changed
 catalog/qrt_catalog.md prose catalog: axiom-overlap analysis, free-set membership table,
-                       conversion list with via-classes, proof sketches, gap list
+                       conversion list with via-classes, proof sketches, gap list (+ v1.2 section)
 paper/                 LaTeX concept paper (main.tex, refs.bib, compiled main.pdf)
 CITATION.cff           citation metadata (fill in author before release)
 LICENSE                MIT (code/pages); cite the underlying papers for the physics
